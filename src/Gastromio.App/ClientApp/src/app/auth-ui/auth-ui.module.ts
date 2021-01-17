@@ -6,7 +6,7 @@ import {BlockUIModule} from 'ng-block-ui';
 
 import {AuthUiRoutingModule} from './auth-ui.routing.module';
 
-import {ChangePasswordComponent} from './components/change-password/change-password.component';
+import {ResetPasswordComponent} from './components/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './components/forgot-password/forgot-password.component';
 import {LoginComponent} from './components/login/login.component';
 
@@ -19,7 +19,7 @@ import {LoginComponent} from './components/login/login.component';
     AuthUiRoutingModule
   ],
   declarations: [
-    ChangePasswordComponent,
+    ResetPasswordComponent,
     ForgotPasswordComponent,
     LoginComponent
   ],

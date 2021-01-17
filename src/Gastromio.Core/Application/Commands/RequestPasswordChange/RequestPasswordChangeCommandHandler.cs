@@ -43,7 +43,7 @@ namespace Gastromio.Core.Application.Commands.RequestPasswordChange
             var passwordResetCodeUriPart = Uri.EscapeDataString(Convert.ToBase64String(user.PasswordResetCode));
 
             var url =
-                $"https://www.gastromio.de/changepassword?userId={userIdUriPart}&passwordResetCode={passwordResetCodeUriPart}";
+                $"https://www.gastromio.de/resetpassword?userId={userIdUriPart}&passwordResetCode={passwordResetCodeUriPart}";
 
             var emailData = templateService.GetRequestPasswordChangeEmail(user.Email, url);
 
@@ -59,7 +59,7 @@ namespace Gastromio.Core.Application.Commands.RequestPasswordChange
                 emailData.TextPart,
                 emailData.HtmlPart
             ), cancellationToken);
-            
+
             return SuccessResult<bool>.Create(true);
         }
     }
