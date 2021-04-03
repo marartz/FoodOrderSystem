@@ -19,6 +19,7 @@ import {RestaurantAdminFacade} from "../../restaurant-admin.facade";
   ]
 })
 export class AddDishCategoryComponent implements OnInit {
+
   @Input() public afterCategoryId: string;
   @BlockUI() blockUI: NgBlockUI;
 
@@ -56,4 +57,5 @@ export class AddDishCategoryComponent implements OnInit {
         this.activeModal.close(id);
       });
   }
+
 }

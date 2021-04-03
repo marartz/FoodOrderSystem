@@ -1,2 +1,31 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~@fortawesome/fontawesome-free/css/all.css';
+
+/* Snippet aus node_modules/aos/dist/aos.css */
+[data-aos=gm-move-up]{
+    opacity: 0;
+	transform: translateY(10px);
+    transition-property: transform, opacity
+}
+[data-aos=gm-move-down]{
+    opacity: 0;
+	transform: translateY(-10px);
+    transition-property: transform, opacity
+}
+[data-aos=gm-move-right] {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition-property: transform, opacity
+}
+[data-aos=gm-move-up].aos-animate{
+    opacity: 1;
+    transform: translateY(0px)
+}
+[data-aos=gm-move-down].aos-animate{
+    opacity: 1;
+    transform: translateY(0px)
+}
+[data-aos=gm-move-right].aos-animate {
+    opacity: 1;
+    transform: translateX(0px)
+}

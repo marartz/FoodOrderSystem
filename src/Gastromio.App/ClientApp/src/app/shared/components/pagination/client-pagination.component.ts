@@ -29,7 +29,7 @@ export class ClientPaginationComponent implements OnInit, OnChanges {
   @Output() changePage = new EventEmitter<any>(true);
   @Input() initialPage = 1;
   @Input() pageSize = 10;
-  @Input() maxPages = 10;
+  @Input() maxPages = 5;
 
   pager: PagingInfo = {
     totalItems: 0,

@@ -13,9 +13,9 @@ namespace Gastromio.Persistence.MongoDB
         public byte[] PasswordSalt { get; set; }
 
         public byte[] PasswordHash { get; set; }
-        
+
         public byte[] PasswordResetCode { get; set; }
-        
+
         public DateTime? PasswordResetExpiration { get; set; }
 
         public DateTime CreatedOn { get; set; }

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
-using Gastromio.Core.Domain.Model.Dish;
-using Gastromio.Core.Domain.Model.Order;
-using Gastromio.Core.Domain.Model.PaymentMethod;
-using Gastromio.Core.Domain.Model.Restaurant;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Common;
+using Gastromio.Core.Domain.Model.Dishes;
+using Gastromio.Core.Domain.Model.Orders;
+using Gastromio.Core.Domain.Model.PaymentMethods;
+using Gastromio.Core.Domain.Model.Restaurants;
+using Gastromio.Core.Domain.Model.Users;
 using MongoDB.Driver;
 
 namespace Gastromio.Persistence.MongoDB
@@ -185,13 +186,13 @@ namespace Gastromio.Persistence.MongoDB
                 row.PaymentMethodDescription,
                 (decimal) row.Costs,
                 (decimal) row.TotalPrice,
-                row.ServiceTime,
+                row.ServiceTime?.ToDateTimeOffset(TimeSpan.Zero),
                 row.CustomerNotificationInfo != null
                     ? new NotificationInfo(
                         row.CustomerNotificationInfo.Status,
                         row.CustomerNotificationInfo.Attempt,
                         row.CustomerNotificationInfo.Message,
-                        row.CustomerNotificationInfo.Timestamp
+                        row.CustomerNotificationInfo.Timestamp.ToDateTimeOffset(TimeSpan.Zero)
                     )
                     : null,
                 row.RestaurantNotificationInfo != null
@@ -199,7 +200,7 @@ namespace Gastromio.Persistence.MongoDB
                         row.RestaurantNotificationInfo.Status,
                         row.RestaurantNotificationInfo.Attempt,
                         row.RestaurantNotificationInfo.Message,
-                        row.RestaurantNotificationInfo.Timestamp
+                        row.RestaurantNotificationInfo.Timestamp.ToDateTimeOffset(TimeSpan.Zero)
                     )
                     : null,
                 row.RestaurantMobileNotificationInfo != null
@@ -207,11 +208,11 @@ namespace Gastromio.Persistence.MongoDB
                         row.RestaurantMobileNotificationInfo.Status,
                         row.RestaurantMobileNotificationInfo.Attempt,
                         row.RestaurantMobileNotificationInfo.Message,
-                        row.RestaurantMobileNotificationInfo.Timestamp
+                        row.RestaurantMobileNotificationInfo.Timestamp.ToDateTimeOffset(TimeSpan.Zero)
                     )
                     : null,
-                row.CreatedOn,
-                row.UpdatedOn,
+                row.CreatedOn.ToDateTimeOffset(TimeSpan.Zero),
+                row.UpdatedOn?.ToDateTimeOffset(TimeSpan.Zero),
                 row.UpdatedBy.HasValue ? new UserId(row.UpdatedBy.Value) : null
             );
         }
@@ -279,14 +280,14 @@ namespace Gastromio.Persistence.MongoDB
                 PaymentMethodDescription = obj.PaymentMethodDescription,
                 Costs = (double) obj.Costs,
                 TotalPrice = (double) obj.TotalPrice,
-                ServiceTime = obj.ServiceTime,
+                ServiceTime = obj.ServiceTime?.UtcDateTime,
                 CustomerNotificationInfo = obj.CustomerNotificationInfo != null
                     ? new NotificationInfoModel
                     {
                         Status = obj.CustomerNotificationInfo.Status,
                         Attempt = obj.CustomerNotificationInfo.Attempt,
                         Message = obj.CustomerNotificationInfo.Message,
-                        Timestamp = obj.CustomerNotificationInfo.Timestamp
+                        Timestamp = obj.CustomerNotificationInfo.Timestamp.UtcDateTime
                     }
                     : null,
                 RestaurantNotificationInfo = obj.RestaurantEmailNotificationInfo != null
@@ -295,7 +296,7 @@ namespace Gastromio.Persistence.MongoDB
                         Status = obj.RestaurantEmailNotificationInfo.Status,
                         Attempt = obj.RestaurantEmailNotificationInfo.Attempt,
                         Message = obj.RestaurantEmailNotificationInfo.Message,
-                        Timestamp = obj.RestaurantEmailNotificationInfo.Timestamp
+                        Timestamp = obj.RestaurantEmailNotificationInfo.Timestamp.UtcDateTime
                     }
                     : null,
                 RestaurantMobileNotificationInfo = obj.RestaurantMobileNotificationInfo != null
@@ -304,11 +305,11 @@ namespace Gastromio.Persistence.MongoDB
                         Status = obj.RestaurantMobileNotificationInfo.Status,
                         Attempt = obj.RestaurantMobileNotificationInfo.Attempt,
                         Message = obj.RestaurantMobileNotificationInfo.Message,
-                        Timestamp = obj.RestaurantMobileNotificationInfo.Timestamp
+                        Timestamp = obj.RestaurantMobileNotificationInfo.Timestamp.UtcDateTime
                     }
                     : null,
-                CreatedOn = obj.CreatedOn,
-                UpdatedOn = obj.UpdatedOn,
+                CreatedOn = obj.CreatedOn.UtcDateTime,
+                UpdatedOn = obj.UpdatedOn?.UtcDateTime,
                 UpdatedBy = obj.UpdatedBy?.Value
             };
         }

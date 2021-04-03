@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Commands.ActivateRestaurant
 {
@@ -34,17 +34,14 @@ namespace Gastromio.Core.Application.Commands.ActivateRestaurant
             if (restaurant == null)
                 return FailureResult<bool>.Create(FailureResultCode.RestaurantDoesNotExist);
 
-            if (currentUser.Role == Role.RestaurantAdmin && !restaurant.HasAdministrator(currentUser.Id))
-                return FailureResult<bool>.Forbidden();
-
             var tempResult = restaurant.Activate(currentUser.Id);
             if (tempResult.IsFailure)
                 return tempResult;
 
             await restaurantRepository.StoreAsync(restaurant, cancellationToken);
-            
+
             return SuccessResult<bool>.Create(true);
         }
-        
+
     }
 }

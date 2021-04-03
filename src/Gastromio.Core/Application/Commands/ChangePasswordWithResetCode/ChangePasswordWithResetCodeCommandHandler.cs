@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Commands.ChangePasswordWithResetCode
 {
@@ -15,7 +15,7 @@ namespace Gastromio.Core.Application.Commands.ChangePasswordWithResetCode
         {
             this.userRepository = userRepository;
         }
-        
+
         public async Task<Result<bool>> HandleAsync(ChangePasswordWithResetCodeCommand command, User currentUser,
             CancellationToken cancellationToken = default)
         {
@@ -23,7 +23,7 @@ namespace Gastromio.Core.Application.Commands.ChangePasswordWithResetCode
                 throw new ArgumentNullException(nameof(command));
 
             var user = await userRepository.FindByUserIdAsync(command.UserId, cancellationToken);
-            
+
             if (user == null)
                 return FailureResult<bool>.Create(FailureResultCode.PasswordResetCodeIsInvalid);
 

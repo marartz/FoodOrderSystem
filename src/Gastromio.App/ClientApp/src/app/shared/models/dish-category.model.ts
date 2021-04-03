@@ -13,12 +13,15 @@ export class DishCategoryModel {
 
   public name: string;
 
+  public enabled: boolean;
+
   public dishes: Array<DishModel>;
 
   public clone(): DishCategoryModel {
     return new DishCategoryModel({
       id: this.id,
       name: this.name,
+      enabled: this.enabled,
       dishes: this.dishes?.map(dish => dish?.clone())
     });
   }

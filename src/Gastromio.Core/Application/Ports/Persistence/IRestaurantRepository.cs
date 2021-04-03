@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Gastromio.Core.Domain.Model.Cuisine;
-using Gastromio.Core.Domain.Model.Order;
-using Gastromio.Core.Domain.Model.PaymentMethod;
-using Gastromio.Core.Domain.Model.Restaurant;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Cuisines;
+using Gastromio.Core.Domain.Model.Orders;
+using Gastromio.Core.Domain.Model.PaymentMethods;
+using Gastromio.Core.Domain.Model.Restaurants;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Ports.Persistence
 {
     public interface IRestaurantRepository
     {
         Task<IEnumerable<Restaurant>> SearchAsync(string searchPhrase, OrderType? orderType, CuisineId cuisineId,
-            DateTime? openingHour, bool? isActive, CancellationToken cancellationToken = default);
+            DateTimeOffset? openingHour, bool? isActive, CancellationToken cancellationToken = default);
 
         Task<(long total, IEnumerable<Restaurant> items)> SearchPagedAsync(string searchPhrase, OrderType? orderType,
-            CuisineId cuisineId, DateTime? openingHour, bool? isActive, int skip = 0, int take = -1, CancellationToken cancellationToken = default);
+            CuisineId cuisineId, DateTimeOffset? openingHour, bool? isActive, int skip = 0, int take = -1, CancellationToken cancellationToken = default);
 
         Task<Restaurant> FindByRestaurantIdAsync(RestaurantId restaurantId, CancellationToken cancellationToken = default);
 

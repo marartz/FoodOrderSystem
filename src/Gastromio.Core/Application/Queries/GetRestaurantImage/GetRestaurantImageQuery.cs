@@ -1,5 +1,5 @@
-﻿using Gastromio.Core.Domain.Model.Restaurant;
-using Gastromio.Core.Domain.Model.RestaurantImage;
+﻿using Gastromio.Core.Domain.Model.RestaurantImages;
+using Gastromio.Core.Domain.Model.Restaurants;
 
 namespace Gastromio.Core.Application.Queries.GetRestaurantImage
 {
@@ -10,7 +10,7 @@ namespace Gastromio.Core.Application.Queries.GetRestaurantImage
             RestaurantId = restaurantId;
             Type = type;
         }
-        
+
         public RestaurantId RestaurantId { get; }
 
         public string Type { get; }

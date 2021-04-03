@@ -1,4 +1,4 @@
-﻿using Gastromio.Core.Domain.Model.Restaurant;
+﻿using Gastromio.Core.Domain.Model.Restaurants;
 
 namespace Gastromio.Core.Application.Commands.EnableSupportForRestaurant
 {
@@ -8,7 +8,7 @@ namespace Gastromio.Core.Application.Commands.EnableSupportForRestaurant
         {
             this.RestaurantId = restaurantId;
         }
-        
+
         public RestaurantId RestaurantId { get; }
     }
 }

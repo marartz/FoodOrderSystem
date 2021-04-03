@@ -1,4 +1,4 @@
-﻿using Gastromio.Core.Domain.Model.Cuisine;
+﻿using Gastromio.Core.Domain.Model.Cuisines;
 
 namespace Gastromio.Core.Application.Commands.ChangeCuisine
 {

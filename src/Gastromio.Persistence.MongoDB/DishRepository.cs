@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
-using Gastromio.Core.Domain.Model.Dish;
-using Gastromio.Core.Domain.Model.DishCategory;
-using Gastromio.Core.Domain.Model.Restaurant;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Common;
+using Gastromio.Core.Domain.Model.DishCategories;
+using Gastromio.Core.Domain.Model.Dishes;
+using Gastromio.Core.Domain.Model.Restaurants;
+using Gastromio.Core.Domain.Model.Users;
 using MongoDB.Driver;
 
 namespace Gastromio.Persistence.MongoDB
@@ -90,7 +92,7 @@ namespace Gastromio.Persistence.MongoDB
         {
             return database.GetCollection<DishModel>(Constants.DishCollectionName);
         }
-        
+
         private static Dish FromDocument(DishModel model)
         {
             return new Dish(
@@ -109,9 +111,9 @@ namespace Gastromio.Persistence.MongoDB
                             (decimal)variantDocument.Price
                         )).ToList()
                     : new List<DishVariant>(),
-                model.CreatedOn,
+                model.CreatedOn.ToDateTimeOffset(TimeSpan.Zero),
                 new UserId(model.CreatedBy),
-                model.UpdatedOn,
+                model.UpdatedOn.ToDateTimeOffset(TimeSpan.Zero),
                 new UserId(model.UpdatedBy)
             );
         }
@@ -134,9 +136,9 @@ namespace Gastromio.Persistence.MongoDB
                         Name = variant.Name,
                         Price = (double)variant.Price
                     }).ToList(),
-                CreatedOn = obj.CreatedOn,
+                CreatedOn = obj.CreatedOn.UtcDateTime,
                 CreatedBy = obj.CreatedBy.Value,
-                UpdatedOn = obj.UpdatedOn,
+                UpdatedOn = obj.UpdatedOn.UtcDateTime,
                 UpdatedBy = obj.UpdatedBy.Value
             };
         }

@@ -1,0 +1,81 @@
+#table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+#table table {
+    align-items: center;
+    background-color: transparent;
+    border-collapse: separate;
+    border-spacing: 0px 16px;
+    color: #363636;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#table table thead th {
+    background-color: transparent;
+    border: 0px;
+    font-family: "Apercu", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    padding: 0px 8px;
+    position: relative;
+    text-transform: none;
+}
+
+#table table th {
+    font-size: 13px;
+    font-weight: 600;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+#table table tbody th {
+    background-color: #ADCCCB;
+    border: 0px;
+    padding: 8px;
+    position: relative;
+}
+
+#table table tbody td {
+    border: 0px;
+    position: relative;
+}
+
+#table table tbody tr td {
+    background-color: #ADCCCB;
+	border-radius: 23px;
+	padding: 10px 20px
+}
+
+#table table tbody tr th .email {
+    color: #363636;
+    font-family: "Apercu", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0px;
+}
+
+#table table tbody tr td .role {
+    color: #718096;
+    font-family: "Apercu", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0px;
+}
+
+#table table .actions {
+    padding: 8px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+input.failure {
+    background-color: indianred;
+}

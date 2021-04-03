@@ -5,12 +5,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.Cuisine;
-using Gastromio.Core.Domain.Model.Dish;
-using Gastromio.Core.Domain.Model.DishCategory;
-using Gastromio.Core.Domain.Model.PaymentMethod;
-using Gastromio.Core.Domain.Model.Restaurant;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Cuisines;
+using Gastromio.Core.Domain.Model.DishCategories;
+using Gastromio.Core.Domain.Model.Dishes;
+using Gastromio.Core.Domain.Model.PaymentMethods;
+using Gastromio.Core.Domain.Model.Restaurants;
+using Gastromio.Core.Domain.Model.Users;
 using Microsoft.Extensions.Logging;
 
 namespace Gastromio.Core.Application.Commands.AddTestData
@@ -97,7 +97,7 @@ namespace Gastromio.Core.Application.Commands.AddTestData
         private async Task<Result<bool>> CreateUsersAsync(User currentUser, int count, CancellationToken cancellationToken)
         {
             logger.LogInformation("creating test users");
-            
+
             for (var i = 0; i < count; i++)
             {
                 if (cancellationToken.IsCancellationRequested)
@@ -141,7 +141,7 @@ namespace Gastromio.Core.Application.Commands.AddTestData
         private async Task<Result<bool>> CreateCuisinesAsync(User currentUser, CancellationToken cancellationToken)
         {
             logger.LogInformation("creating test cuisines");
-            
+
             var tempResult = cuisineFactory.Create("Chinesisch", currentUser.Id);
             if (tempResult.IsFailure)
                 return tempResult.Cast<bool>();
@@ -246,7 +246,7 @@ namespace Gastromio.Core.Application.Commands.AddTestData
             var restAdminName = $"restadmin{(index % restAdminDict.Count + 1):D3}";
 
             logger.LogInformation("    creating test restaurant {0}", restaurantName);
-            
+
             var restaurantResult = restaurantFactory.CreateWithName(restaurantName, currentUser.Id);
             if (restaurantResult.IsFailure)
                 return restaurantResult.Cast<bool>();
@@ -282,7 +282,7 @@ namespace Gastromio.Core.Application.Commands.AddTestData
             boolResult = restaurant.ChangePickupInfo(new PickupInfo(
                 true,
                 15 + index / 100,
-                5 + (decimal) index / 100, 
+                5 + (decimal) index / 100,
                 100 + (decimal) index / 100
             ), currentUser.Id);
             if (boolResult.IsFailure)
@@ -303,11 +303,11 @@ namespace Gastromio.Core.Application.Commands.AddTestData
 
             if (index % 4 == 0)
             {
-                boolResult = restaurant.ChangeReservationInfo(new ReservationInfo(true), currentUser.Id);
+                boolResult = restaurant.ChangeReservationInfo(new ReservationInfo(true, null), currentUser.Id);
                 if (boolResult.IsFailure)
                     return boolResult;
             }
-            
+
             restaurant.AddCuisine(cuisines[(index + 0) % cuisines.Count].Id, currentUser.Id);
             restaurant.AddCuisine(cuisines[(index + 1) % cuisines.Count].Id, currentUser.Id);
 
@@ -352,17 +352,17 @@ namespace Gastromio.Core.Application.Commands.AddTestData
                     catIndex,
                     currentUser.Id
                 );
-                
+
                 if (dishCategoryResult.IsFailure)
                     return dishCategoryResult.Cast<bool>();
-                
+
                 var dishCategory = ((SuccessResult<DishCategory>) dishCategoryResult).Value;
                 await dishCategoryRepository.StoreAsync(dishCategory, cancellationToken);
 
                 for (var dishIndex = 0; dishIndex < dishCount; dishIndex++)
                 {
                     var dishName = $"Gericht{(dishIndex + 1):D2}";
-                    
+
                     var variant = new DishVariant(Guid.NewGuid(), dishName, 5 + (decimal) dishIndex / 10);
 
                     var dishResult = dishFactory.Create(
@@ -371,7 +371,7 @@ namespace Gastromio.Core.Application.Commands.AddTestData
                         dishName,
                         $"Beschreibung des Gerichts{(dishIndex + 1):D2}",
                         $"Produktinformation des Gerichts{(dishIndex + 1):D2}",
-                        dishIndex, 
+                        dishIndex,
                         new[] {variant},
                         currentUser.Id
                     );
@@ -380,7 +380,7 @@ namespace Gastromio.Core.Application.Commands.AddTestData
                     var dish = ((SuccessResult<Dish>) dishResult).Value;
                     await dishRepository.StoreAsync(dish, cancellationToken);
                 }
-                
+
                 logger.LogInformation("        dish category {0} created", dishCategoryName);
             }
 

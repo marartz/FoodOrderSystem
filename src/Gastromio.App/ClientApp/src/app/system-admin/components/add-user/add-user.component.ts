@@ -1,16 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
+import {Observable} from "rxjs";
 
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 
-import {HttpErrorHandlingService} from '../../../shared/services/http-error-handling.service';
-
 import {ConfirmPasswordValidator} from '../../../auth/validators/password.validator';
 
-import {UserAdminService} from '../../services/user-admin.service';
+import {SystemAdminFacade} from "../../system-admin.facade";
 
 @Component({
   selector: 'app-add-user',
@@ -25,14 +24,13 @@ export class AddUserComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
 
   addUserForm: FormGroup;
-  message: string;
+  message$: Observable<string>;
   submitted = false;
 
   constructor(
     public activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
-    private userAdminService: UserAdminService,
-    private httpErrorHandlingService: HttpErrorHandlingService
+    private facade: SystemAdminFacade
   ) {
     this.addUserForm = this.formBuilder.group({
       role: ['', Validators.required],
@@ -43,6 +41,16 @@ export class AddUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.facade.getIsUpdating$()
+      .subscribe(isUpdating => {
+        if (isUpdating) {
+          this.blockUI.start('Verarbeite Daten...');
+        } else {
+          this.blockUI.stop();
+        }
+      });
+
+    this.message$ = this.facade.getUpdateError$();
   }
 
   get f() {
@@ -55,16 +63,9 @@ export class AddUserComponent implements OnInit {
       return;
     }
 
-    this.blockUI.start('Verarbeite Daten...');
-    this.userAdminService.addUserAsync(data.role, data.email, data.password)
+    this.facade.addUser$(data.role, data.email, data.password)
       .subscribe(() => {
-        this.blockUI.stop();
-        this.message = undefined;
-        this.addUserForm.reset();
         this.activeModal.close('Close click');
-      }, (response: HttpErrorResponse) => {
-        this.blockUI.stop();
-        this.message = this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors();
       });
   }
 }

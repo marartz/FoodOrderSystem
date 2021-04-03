@@ -1,5 +1,5 @@
 using System;
-using Gastromio.Core.Domain.Model.Dish;
+using Gastromio.Core.Domain.Model.Dishes;
 
 namespace Gastromio.Core.Application.DTOs
 {
@@ -19,7 +19,7 @@ namespace Gastromio.Core.Application.DTOs
             Count = count;
             Remarks = remarks;
         }
-        
+
         public Guid ItemId { get; }
         public DishId DishId { get; }
         public Guid VariantId { get; }

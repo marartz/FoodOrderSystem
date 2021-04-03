@@ -1,0 +1,83 @@
+/* -------------------------------- 
+
+File#: _1_hero
+Title: Hero
+Descr: A full-width callout section
+Copyr: gastromio.de/imprint
+
+-------------------------------- */
+
+/* #hero */
+#hero {
+    background-color: #363636;
+    background-image: url("../../../assets/images/rough/grey.png");
+    background-repeat: repeat;
+    height: 240px;
+    max-height: 240px;
+    position: relative;
+    width: 100%;
+    z-index: 8;
+}
+
+#hero.overlay::before {
+	background: linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25));
+    content: "";
+	height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+/* #hero > #text */
+#hero #text {
+    bottom: 16px;
+    position: absolute;
+}
+
+#hero #text .name,
+#hero #text .restaurant-name {
+    color: #FFF;
+    font-family: "Apercu", sans-serif;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 0px;
+    margin-top: auto;
+}
+
+#hero #text .slogan {
+    color: #FFF;
+    font-family: "Apercu", sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 0px;
+    margin-top: auto;
+}
+
+@media only screen and (min-width: 768px) {
+    #hero #text .name,
+	#hero #text .restaurant-name {
+        font-size: 50px;
+    }
+}
+
+#hero #text .restaurant-name::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='31' height='31' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' fill='%23fff' fill-rule='evenodd'%3E%3Cpath d='M15.167 6.367c.8 0 1.467.667 1.467 1.467s-.667 1.467-1.467 1.467S13.7 8.634 13.7 7.834s.667-1.467 1.467-1.467zm0 5.067c.4 0 .8.267.8.8v9.467h1.467c.4 0 .8.267.8.667s-.267.8-.8.8h-4.4c-.4 0-.667-.267-.667-.8 0-.4.267-.667.667-.667h1.467v-8.8h-.8c-.4 0-.667-.267-.667-.667s.267-.8.667-.8h1.467zm0-9.467c-7.333 0-13.2 5.867-13.2 13.2s5.867 13.2 13.2 13.2 13.2-5.867 13.2-13.2-5.867-13.2-13.2-13.2zm0-1.467a14.625 14.625 0 0 1 14.667 14.667c0 8.134-6.533 14.667-14.667 14.667S.5 23.301.5 15.167 7.033.5 15.167.5z' stroke='none' fill-rule='nonzero'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    content: " ";
+    cursor: pointer;
+    height: 22px;
+    width: 22px;
+    position: absolute;
+    margin-left: 4px;
+}
+
+#hero #text .restaurant-address,
+#hero #text .restaurant-hours,
+#hero #text .restaurant-info {
+    color: #FFF;
+    font-family: "Apercu", sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    margin-bottom: 0px;
+    margin-top: auto;
+}

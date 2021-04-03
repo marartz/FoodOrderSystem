@@ -1,5 +1,5 @@
 ﻿using System;
-using Gastromio.Core.Domain.Model.PaymentMethod;
+using Gastromio.Core.Domain.Model.PaymentMethods;
 
 namespace Gastromio.Core.Application.DTOs
 {
@@ -26,7 +26,7 @@ namespace Gastromio.Core.Application.DTOs
         public string Name { get; }
 
         public string Description { get; }
-        
+
         public string ImageName { get; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Gastromio.Core.Domain.Model.Cuisine;
+using Gastromio.Core.Domain.Model.Cuisines;
 
 namespace Gastromio.Core.Application.Ports.Persistence
 {

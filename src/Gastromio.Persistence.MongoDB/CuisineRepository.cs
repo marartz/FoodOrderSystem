@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
-using Gastromio.Core.Domain.Model.Cuisine;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Common;
+using Gastromio.Core.Domain.Model.Cuisines;
+using Gastromio.Core.Domain.Model.Users;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -18,7 +20,7 @@ namespace Gastromio.Persistence.MongoDB
         {
             this.database = database;
         }
-        
+
         public async Task<IEnumerable<Cuisine>> FindAllAsync(CancellationToken cancellationToken = default)
         {
             var collection = GetCollection();
@@ -34,7 +36,7 @@ namespace Gastromio.Persistence.MongoDB
         public async Task<Cuisine> FindByNameAsync(string name, CancellationToken cancellationToken = default)
         {
             var collection = GetCollection();
-            
+
             var cursor = await collection.FindAsync(Builders<CuisineModel>.Filter.Eq(en => en.Name, name),
                 cancellationToken: cancellationToken);
             var document = await cursor.FirstOrDefaultAsync(cancellationToken);
@@ -70,15 +72,15 @@ namespace Gastromio.Persistence.MongoDB
         {
             return database.GetCollection<CuisineModel>(Constants.CuisineCollectionName);
         }
-        
+
         private static Cuisine FromDocument(CuisineModel row)
         {
             return new Cuisine(
                 new CuisineId(row.Id),
                 row.Name,
-                row.CreatedOn,
+                row.CreatedOn.ToDateTimeOffset(TimeSpan.Zero),
                 new UserId(row.CreatedBy),
-                row.UpdatedOn,
+                row.UpdatedOn.ToDateTimeOffset(TimeSpan.Zero),
                 new UserId(row.UpdatedBy)
             );
         }
@@ -89,9 +91,9 @@ namespace Gastromio.Persistence.MongoDB
             {
                 Id = obj.Id.Value,
                 Name = obj.Name,
-                CreatedOn = obj.CreatedOn,
+                CreatedOn = obj.CreatedOn.UtcDateTime,
                 CreatedBy = obj.CreatedBy.Value,
-                UpdatedOn = obj.UpdatedOn,
+                UpdatedOn = obj.UpdatedOn.UtcDateTime,
                 UpdatedBy = obj.UpdatedBy.Value
             };
         }

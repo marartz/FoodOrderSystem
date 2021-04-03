@@ -5,8 +5,8 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './privacy-policy.component.html',
   styleUrls: [
     './privacy-policy.component.css',
-    '../../../../assets/css/frontend_v2.min.css',
-    '../../../../assets/css/legal_v2.min.css'
+    '../../../../assets/css/frontend_v3.min.css',
+	'../../../../assets/css/legal.min.css'
   ]
 })
 export class PrivacyPolicyComponent implements OnInit {

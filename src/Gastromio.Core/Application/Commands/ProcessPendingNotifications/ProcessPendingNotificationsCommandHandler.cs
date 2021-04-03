@@ -8,8 +8,8 @@ using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Application.Ports.Template;
 using Gastromio.Core.Common;
 using Gastromio.Core.Domain.Model;
-using Gastromio.Core.Domain.Model.Order;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Orders;
+using Gastromio.Core.Domain.Model.Users;
 using Microsoft.Extensions.Logging;
 
 namespace Gastromio.Core.Application.Commands.ProcessPendingNotifications
@@ -83,7 +83,7 @@ namespace Gastromio.Core.Application.Commands.ProcessPendingNotifications
             if (order.CustomerNotificationInfo != null && order.CustomerNotificationInfo.Attempt > 0)
             {
                 var delay = CalculateDelay(order.CustomerNotificationInfo);
-                var delta = DateTime.UtcNow - order.CustomerNotificationInfo.Timestamp;
+                var delta = DateTimeOffset.UtcNow - order.CustomerNotificationInfo.Timestamp;
                 if (delta < delay)
                 {
                     logger.LogDebug("Delay sending customer email of order {0} by further {1} seconds", order.Id.Value,
@@ -131,7 +131,7 @@ namespace Gastromio.Core.Application.Commands.ProcessPendingNotifications
             if (order.RestaurantEmailNotificationInfo != null && order.RestaurantEmailNotificationInfo.Attempt > 0)
             {
                 var delay = CalculateDelay(order.RestaurantEmailNotificationInfo);
-                var delta = DateTime.UtcNow - order.RestaurantEmailNotificationInfo.Timestamp;
+                var delta = DateTimeOffset.UtcNow - order.RestaurantEmailNotificationInfo.Timestamp;
                 if (delta < delay)
                 {
                     logger.LogDebug("Delay sending restaurant email of order {0} by further {1} seconds",
@@ -251,7 +251,7 @@ namespace Gastromio.Core.Application.Commands.ProcessPendingNotifications
             if (order.RestaurantMobileNotificationInfo != null && order.RestaurantMobileNotificationInfo.Attempt > 0)
             {
                 var delay = CalculateDelay(order.RestaurantMobileNotificationInfo);
-                var delta = DateTime.UtcNow - order.RestaurantMobileNotificationInfo.Timestamp;
+                var delta = DateTimeOffset.UtcNow - order.RestaurantMobileNotificationInfo.Timestamp;
                 if (delta < delay)
                 {
                     logger.LogDebug("Delay sending restaurant mobile of order {0} by further {1} seconds",
@@ -259,7 +259,7 @@ namespace Gastromio.Core.Application.Commands.ProcessPendingNotifications
                     return;
                 }
             }
-            
+
             var mobileMessage = templateService.GetRestaurantMobileMessage(order);
             if (mobileMessage == null)
             {
@@ -270,7 +270,7 @@ namespace Gastromio.Core.Application.Commands.ProcessPendingNotifications
             var to = configurationProvider.IsTestSystem
                 ? configurationProvider.MobileRecipientForTest
                 : order.CartInfo.RestaurantMobile;
-            
+
             var notificationRequest = new MobileNotificationRequest(
                 "Gastromio",
                 to,

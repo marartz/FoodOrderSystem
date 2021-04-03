@@ -6,7 +6,7 @@ import {RestaurantModel} from '../../../shared/models/restaurant.model';
 @Component({
   selector: 'app-order-restaurant-imprint',
   templateUrl: './order-restaurant-imprint.component.html',
-  styleUrls: ['./order-restaurant-imprint.component.css', '../../../../assets/css/frontend_v2.min.css', '../../../../assets/css/backend_v2.min.css']
+  styleUrls: ['./order-restaurant-imprint.component.css', '../../../../assets/css/frontend_v3.min.css', '../../../../assets/css/modals.component.min.css']
 })
 export class OrderRestaurantImprintComponent implements OnInit {
   @Input() restaurant: RestaurantModel;

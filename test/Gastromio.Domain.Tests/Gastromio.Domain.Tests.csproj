@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Divergic.Logging.Xunit" Version="3.5.0" />
         <PackageReference Include="FluentAssertions" Version="5.10.3" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
         <PackageReference Include="Moq" Version="4.15.2" />
@@ -17,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\Gastromio.Core\Gastromio.Core.csproj" />
+      <ProjectReference Include="..\Gastromio.Domain.TestKit\Gastromio.Domain.TestKit.csproj" />
     </ItemGroup>
 
 </Project>

@@ -59,6 +59,32 @@ export class OrderHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/restaurants']);
   }
 
+  hasMultipleOrderTypes(restaurant: RestaurantModel): boolean {
+    let count = 0;
+    if (restaurant.deliveryInfo?.enabled)
+      count++;
+    if (restaurant.pickupInfo?.enabled)
+      count++;
+    if (restaurant.reservationInfo?.enabled)
+      count++;
+    return count > 1;
+  }
+
+  onRestaurantWithSoleOrderTypeSelected(restaurant: RestaurantModel): string {
+    if (this.hasMultipleOrderTypes(restaurant))
+      return;
+
+    let orderType: string;
+    if (restaurant.deliveryInfo?.enabled)
+      orderType = "delivery";
+    if (restaurant.pickupInfo?.enabled)
+      orderType = "pickup";
+    if (restaurant.reservationInfo?.enabled)
+      orderType = "reservation";
+
+    this.onRestaurantSelected(restaurant, orderType);
+  }
+
   onRestaurantSelected(restaurant: RestaurantModel, orderType: string): void {
     this.router.navigate(['/restaurants', restaurant.alias], { queryParams: { orderType: orderType } });
   }

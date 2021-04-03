@@ -1,0 +1,11 @@
+<div #left id="left" class="hide" (click)="clickedLeft()"><i class='fas fa-angle-left'></i></div>
+<div #right id="right" class="hide" (click)="clickedRight()"><i class='fas fa-angle-right'></i></div>
+<nav #nav class="links">
+    <ul>
+        <li *ngFor="let link of links" class="drawer-item" data-aos="gm-move-down" data-aos-anchor="#backend"
+            data-aos-delay="500" data-aos-duration="800" data-aos-once="true"
+            [class.active]="current === link.id" (click)="selectLink(link.id)">
+            <a>{{link.name}}</a>
+        </li>
+    </ul>
+</nav>

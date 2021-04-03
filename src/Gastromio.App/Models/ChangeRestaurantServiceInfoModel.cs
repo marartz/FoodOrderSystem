@@ -12,6 +12,7 @@
         public decimal? DeliveryMaximumOrderValue { get; set; }
         public decimal? DeliveryCosts { get; set; }
         public bool ReservationEnabled { get; set; }
+        public string ReservationSystemUrl { get; set; }
         public string HygienicHandling { get; set; }
     }
 }

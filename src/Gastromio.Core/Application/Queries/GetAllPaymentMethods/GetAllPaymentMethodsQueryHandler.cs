@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.DTOs;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.PaymentMethod;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.PaymentMethods;
+using Gastromio.Core.Domain.Model.Users;
 
 
 namespace Gastromio.Core.Application.Queries.GetAllPaymentMethods

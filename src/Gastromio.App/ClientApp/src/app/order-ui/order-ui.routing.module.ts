@@ -6,6 +6,7 @@ import {OrderHomeComponent} from './components/order-home/order-home.component';
 import {OrderRestaurantsComponent} from './components/order-restaurants/order-restaurants.component';
 import {OrderRestaurantComponent} from './components/order-restaurant/order-restaurant.component';
 import {OrderSummaryComponent} from './components/order-summary/order-summary.component';
+import {ReservationComponent} from "./components/reservation/reservation.component";
 
 const routes: Routes = [
   {path: '', component: OrderHomeComponent},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'restaurants/:restaurantId', component: OrderRestaurantComponent},
   {path: 'checkout', component: CheckoutComponent},
   {path: 'order-summary', component: OrderSummaryComponent},
+  {path: 'restaurants/:restaurantId/reservation', component: ReservationComponent},
 ];
 
 @NgModule({

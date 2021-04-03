@@ -13,7 +13,7 @@ using Gastromio.Core.Application.DTOs;
 using Gastromio.Core.Application.Queries;
 using Gastromio.Core.Application.Queries.SearchForUsers;
 using Gastromio.Core.Application.Services;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

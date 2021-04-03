@@ -1,14 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
+import {Observable} from "rxjs";
 
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 
-import {HttpErrorHandlingService} from '../../../shared/services/http-error-handling.service';
-
-import {CuisineAdminService} from '../../services/cuisine-admin.service';
+import {SystemAdminFacade} from "../../system-admin.facade";
 
 @Component({
   selector: 'app-add-cuisine',
@@ -23,14 +22,13 @@ export class AddCuisineComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
 
   addCuisineForm: FormGroup;
-  message: string;
+  message$: Observable<string>;
   submitted = false;
 
   constructor(
     public activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
-    private cuisineAdminService: CuisineAdminService,
-    private httpErrorHandlingService: HttpErrorHandlingService
+    private facade: SystemAdminFacade
   ) {
     this.addCuisineForm = this.formBuilder.group({
       name: ['', Validators.required]
@@ -38,6 +36,16 @@ export class AddCuisineComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.facade.getIsUpdating$()
+      .subscribe(isUpdating => {
+        if (isUpdating) {
+          this.blockUI.start('Verarbeite Daten...');
+        } else {
+          this.blockUI.stop();
+        }
+      });
+
+    this.message$ = this.facade.getUpdateError$();
   }
 
   get f() {
@@ -50,16 +58,9 @@ export class AddCuisineComponent implements OnInit {
       return;
     }
 
-    this.blockUI.start('Verarbeite Daten...');
-    this.cuisineAdminService.addCuisineAsync(data.name)
+    this.facade.addCuisine$(data.name)
       .subscribe(() => {
-        this.blockUI.stop();
-        this.message = undefined;
-        this.addCuisineForm.reset();
         this.activeModal.close('Close click');
-      }, (response: HttpErrorResponse) => {
-        this.blockUI.stop();
-        this.message = this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors();
       });
   }
 }

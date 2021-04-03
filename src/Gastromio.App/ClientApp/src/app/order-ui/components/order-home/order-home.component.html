@@ -4,9 +4,32 @@
         <div class="wrapper">
             <div class="inner">
                 <div class="hero-container">
-                    <h1>Essen lokal bestellen</h1>
-                    <h2>in Bocholt und Umgebung</h2>
-                    <div class="search-inner">
+                    <h1
+						data-aos="gm-move-down"
+						data-aos-anchor="#order-home"
+						data-aos-delay="300"
+						data-aos-duration="800"
+						data-aos-once="true"
+						>
+						Essen lokal bestellen
+					</h1>
+                    <h2
+						data-aos="gm-move-down"
+						data-aos-anchor="#order-home"
+						data-aos-delay="600"
+						data-aos-duration="800"
+						data-aos-once="true"
+						>
+						in Bocholt und Umgebung
+					</h2>
+                    <div
+						 class="search-inner"
+						 data-aos="fade"
+						 data-aos-anchor="#order-home"
+						 data-aos-delay="1200"
+						 data-aos-duration="1000"
+						 data-aos-once="true"
+						 >
                         <div class="input-wrapper">
                             <input id="icon" type="text" autocapitalize="none" autocomplete="off" autofocus="" inputmode="latin" maxlength="200" spellcheck="false" placeholder="Restaurant suchen ..." (keyup)="onSearchType($event.target.value)">
                         </div>
@@ -15,13 +38,33 @@
                         </div>
                         <div id="results" class="visibleonsearch">
                             <div class="rest">
-                                <div *ngFor="let restaurant of restaurants$ | async">
-                                    <span class="restaurant-name">{{restaurant.name}}</span>
-                                    <div class="order-type">
+                                <div *ngFor="let restaurant of restaurants$ | async" data-aos="gm-move-down"
+										 data-aos-delay="300"
+										 data-aos-duration="800"
+										 data-aos-once="false">
+                                    <span (click)="onRestaurantWithSoleOrderTypeSelected(restaurant)"
+										  class="restaurant-name"
+                                          [class.clickable]="!hasMultipleOrderTypes(restaurant)"
+										  data-aos="gm-move-down"
+										 data-aos-delay="600"
+										 data-aos-duration="800"
+										 data-aos-once="false"
+										  >{{restaurant.name}}</span>
+                                    <div
+										 class="order-type"
+										 data-aos="gm-move-down"
+										 data-aos-delay="900"
+										 data-aos-duration="800"
+										 data-aos-once="false"
+										 >
+										<ng-container *ngIf="restaurant.deliveryInfo?.enabled"><button type="button" (click)="onRestaurantSelected(restaurant, 'delivery')">Lieferung</button></ng-container>
                                         <ng-container *ngIf="restaurant.pickupInfo?.enabled"><button type="button" (click)="onRestaurantSelected(restaurant, 'pickup')">Abholung</button></ng-container>
-                                        <ng-container *ngIf="restaurant.deliveryInfo?.enabled"><button type="button" (click)="onRestaurantSelected(restaurant, 'delivery')">Lieferung</button></ng-container>
+                                        <ng-container *ngIf="restaurant.reservationInfo?.enabled"><button type="button" (click)="onRestaurantSelected(restaurant, 'reservation')">Reservierung</button></ng-container>
                                     </div>
-                                    <div class="border"></div>
+                                    <div class="border" data-aos="gm-move-down"
+										 data-aos-delay="400"
+										 data-aos-duration="800"
+										 data-aos-once="false"></div>
                                 </div>
                             </div>
                         </div>
@@ -33,7 +76,7 @@
     </section>
 
     <section id="about">
-        <img class="circle" src="../../../../assets/images/circle.png" alt="">
+        <img class="circle" src="../../../../assets/images/circle.png" alt="" draggable="false">
         <div class="wrapper">
 			<header>
 				<h4>So funktioniert</h4>
@@ -79,9 +122,42 @@
         <div class="wrapper">
             <div class="content">
                 <div class="text">
-                    <h2>Hilf uns, anderen zu helfen</h2>
-                    <p>Teile unsere Initiative mit Deinen Freunden und Bekannten, <br>sei es in sozialen Medien, lokalen Zeitungen oder in <br>deinem persönlichen Netzwerk.</p>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.gastromio.de%2F&display=popup&app_id=929536154183982" target="_blank">Auf Facebook teilen</a>
+                    <h2
+						data-aos="gm-move-up"
+						data-aos-offset="120"
+						data-aos-duration="800"
+						data-aos-once="true"
+						>
+						Hilf uns, anderen zu helfen
+					</h2>
+                    <p
+					   data-aos="gm-move-up"
+					   data-aos-offset="120"
+					   data-aos-duration="800"
+					   data-aos-once="true"
+					   >
+						Teile unsere Initiative mit Deinen Freunden und Bekannten, <br>sei es in sozialen Medien, lokalen Zeitungen oder in <br>deinem persönlichen Netzwerk.
+					</p>
+                    <noscript>
+						<a
+						   href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.gastromio.de%2F&display=popup&app_id=929536154183982"
+						   target="_blank"
+						   rel="nofollow noreferrer"
+						   data-aos="gm-move-up"
+						   data-aos-offset="120"
+						   data-aos-duration="800"
+						   data-aos-once="true"
+						   >
+							Auf Facebook teilen
+						</a>
+					</noscript>
+					<div
+						 class="addthis_inline_share_toolbox"
+						 data-aos="gm-move-up"
+						 data-aos-duration="800"
+						 data-aos-once="true"
+						 >
+					</div>
                 </div>
             </div>
         </div>

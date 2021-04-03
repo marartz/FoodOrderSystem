@@ -51,7 +51,7 @@ Wenn die Datenbank zurückgesetzt und Testdaten automatisiert angelegt werden so
 
 ## Lizenzierung
 
-Copyright (c) 2020 Marco Artz. All Rights reserved.
+Copyright (c) 2021 Marco Artz. All Rights reserved.
 
 Licensed under the **MIT License** (the "License").
 You may obtain a copy of the License at https://opensource.org/licenses/MIT.

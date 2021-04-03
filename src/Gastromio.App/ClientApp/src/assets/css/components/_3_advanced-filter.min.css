@@ -1,0 +1,406 @@
+/* --------------------------------
+
+File#: _3_advanced-filter
+Title: Advanced Filter
+Descr: A filter panel
+Copyr: gastromio.de/imprint
+
+-------------------------------- */
+
+/* #filter */
+#filter {
+	display: none;
+    float: left;
+	font-size: 15px;
+    height: auto;
+    padding: 0px;
+    position: relative;
+}
+
+@media only screen and (min-width: 1030px) {
+    #filter {
+        display: block;
+        float: left;
+        margin-bottom: 60px;
+        width: 25%;
+    }
+}
+
+#filter .title,
+#filter-details .title {
+    color: #363636;
+    font-family: "Apercu", sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: -0.33px;
+    margin-bottom: 8px;
+}
+
+/* #filter > #ordertype-filter */
+#filter #ordertype-filter .filter,
+#filter-details #ordertype-filter .filter {
+    background-color: #ADCCCB;
+    border-radius: 23px;
+    cursor: pointer;
+	display: flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: -webkit-box;
+	display: -webkit-flex;
+    height: 42px;
+    margin-bottom: 4px;
+    width: 222px;
+}
+
+#filter #ordertype-filter .filter .switch,
+#filter-details #ordertype-filter .filter .switch {
+    align-items: center;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    color: #323232;
+    cursor: pointer;
+    display: flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: -webkit-flex;
+    flex: 1 1 auto;
+    -moz-box-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    -webkit-box-flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
+    font-size: 16px;
+    font-family: "Apercu", sans-serif;
+    font-weight: 500;
+	justify-content: flex-start;
+	-ms-flex-pack: start;
+    height: 42px;
+    line-height: 26px;
+    outline: none;
+    padding: 8px 8px 8px 8px;
+    position: relative;
+    text-align: center;
+    vertical-align: baseline;
+}
+
+#filter #ordertype-filter .filter .switch.active,
+#filter-details #ordertype-filter .filter .switch.active {
+    background-color: #DECF80;
+    border: 2px solid #ADCCCB;
+    border-radius: 23px;
+    line-height: 24px;
+    width: 50%;
+}
+
+#filter #ordertype-filter .filter .switch.active span,
+#filter-details #ordertype-filter .filter .switch.active span {
+    margin-left: 4px;
+}
+
+#filter #ordertype-filter .filter .switch.active::before,
+#filter-details #ordertype-filter .filter .switch.active::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='31' height='31' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' fill='%23fff' fill-rule='evenodd'%3E%3Cpath d='M19.7 11.034c.267-.267.667-.4 1.067-.133.267.267.4.667.133 1.067l-5.867 7.333c-.133.133-.267.267-.533.267-.133 0-.4-.133-.533-.267l-3.6-3.6c-.267-.267-.267-.8 0-1.067s.8-.267 1.067 0l3.067 3.067 5.2-6.667zm-4.533-9.067c-7.333 0-13.2 5.867-13.2 13.2s5.867 13.2 13.2 13.2 13.2-5.867 13.2-13.2-5.867-13.2-13.2-13.2zm0-1.467a14.625 14.625 0 0 1 14.667 14.667c0 8.134-6.533 14.667-14.667 14.667A14.625 14.625 0 0 1 .5 15.167C.5 7.033 7.033.5 15.167.5z' stroke='none' fill='%23363636' fill-rule='nonzero'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    content: " ";
+    height: 20px;
+    width: 20px;
+    position: relative;
+}
+
+#filter .filter-divider,
+#filter-details .filter-divider {
+    display: flex;
+    width: 222px;
+}
+
+#filter .filter-divider p,
+#filter-details .filter-divider p {
+    color: #363636;
+    font-family: "Apercu", sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: -.33px;
+    text-align: center;
+    margin-bottom: 4px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#filter button.reservation,
+#filter-details button.reservation {
+    background-color: #ADCCCB;
+    border-radius: 23px;
+    color: #363636;
+    cursor: pointer;
+    font-family: "Apercu", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    height: 42px;
+    margin-bottom: 22px;
+    outline: none;
+    width: 222px;
+}
+
+#filter button.reservation span,
+#filter-details button.reservation span {
+    background-color: #81B67C;
+    color: #fff;
+    font-family: "Apercu", sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px;
+    padding-right: 3px;
+    padding-left: 3px;
+    border-radius: 3px;
+    padding-left: 6px;
+    padding-right: 6px;
+    margin-left: 4px;
+}
+
+#filter button.reservation.active,
+#filter-details button.reservation.active {
+    background-color: #DECF80;
+}
+
+#filter button.reservation:hover {
+    transform: scale(1.024);
+    -moz-transform: scale(1.024);
+    -ms-transform: scale(1.024);
+    -webkit-transform: scale(1.024);
+	transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+/* #filter > #opening-hour-filter */
+#filter #opening-hour-filter button,
+#filter-details #opening-hour-filter button {
+    background-color: #ADCCCB;
+    border-radius: 23px;
+    color: #363636;
+    cursor: pointer;
+    font-family: "Apercu", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    height: 42px;
+    margin-bottom: 22px;
+    outline: none;
+    width: 222px;
+}
+
+#filter #opening-hour-filter button:hover {
+    transform: scale(1.024);
+    -moz-transform: scale(1.024);
+    -ms-transform: scale(1.024);
+    -webkit-transform: scale(1.024);
+	transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+#filter #opening-hour-filter button:active {
+    transform: scale(.98);
+    -moz-transform: scale(.98);
+    -ms-transform: scale(.98);
+    -webkit-transform: scale(.98);
+	transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+/* #filter > #categories */
+#filter #categories .category-container,
+#filter-details #categories .category-container {
+    overflow-x: unset;
+}
+
+#filter #categories .category,
+#filter-details #categories .category {
+    display: contents;
+    margin: 0px 0px 4px;
+}
+
+#filter #categories .category button,
+#filter-details #categories .category button {
+    background-color: #ADCCCB;
+    border-radius: 23px;
+    color: #363636;
+    font-family: "Apercu", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    margin-right: 4.7px;
+    padding: 3px 12px;
+}
+
+#filter #categories .category.active button,
+#filter-details #categories .category.active button {
+    background-color: #DECF80;
+}
+
+#filter #categories .category button:hover,
+#filter-details #categories .category button:hover {
+    background-color: #DECF80;
+	transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+
+/* #filter-mobile */
+#filter-mobile,
+#mobile-info {
+    display: none;
+}
+
+@media only screen and (max-width: 1030px) {
+    #filter-mobile {
+        display: inline-flex;
+        height: 42px;
+        position: relative;
+        width: 100%;
+        margin: 0px;
+		margin-bottom: 16px;
+        padding: 0px;
+    }
+	#filter-mobile .filtern {
+        height: 42px;
+        width: 50%;
+        background-color: #ADCCCB;
+        font-family: "Apercu", sans-serif;
+        color: #363636;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 26px;
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+    }
+    #filter-mobile .cart-open {
+        height: 42px;
+        width: 50%;
+        background-color: #DECF80;
+        font-family: "Apercu", sans-serif;
+        color: #363636;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 26px;
+        text-align: center;
+        margin: 0px;
+        padding: 0px;
+    }
+    #filter-mobile .search {
+        background-color: #FFF;
+        border: 0px solid transparent;
+        border-radius: 0px;
+        display: block;
+        height: 42px;
+        overflow: hidden;
+        width: 50%;
+    }
+    #filter-mobile .search .icon-wrapper {
+        background-color: transparent;
+        display: inline-block;
+        height: 14px;
+        position: relative;
+        width: 14px;
+    }
+    #filter-mobile .search .icon {
+        background-color: transparent;
+        background-image: url('../../../assets/images/svg/search.svg');
+        background-size: 100% 100%;
+        height: 24px;
+        left: 10px;
+        position: relative;
+        top: -4px;
+        width: 24px;
+    }
+    #filter-mobile .search input {
+        border: 0px;
+        font-family: "Apercu", sans serif;
+        font-size: 16px;
+        font-weight: 400;
+        height: 42px;
+        margin-left: 20px;
+        padding: 10px 10px;
+        width: inherit;
+    }
+    #filter-mobile .search input::placeholder {
+        color: #94918E;
+        font-weight: 300;
+        opacity: .85;
+    }
+
+    #filter-mobile .search input:focus {
+        outline: none;
+    }
+    #mobile-info {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+    #mobile-info .restaurant-count {
+        color: #363636;
+        font-family: "Apercu", sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.42px;
+        line-height: 32px;
+        margin-left: 20px;
+		margin-bottom: 8px;
+    }
+}
+
+#filter-details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2000;
+}
+
+#filter-details .content {
+    width: 100%;
+    background-color: #ADCCCB;
+    background-image: url('../../../assets/images/rough/blue.png');
+    background-repeat: repeat;
+    padding: 22px;
+}
+
+#filter-details .content .top {
+    margin-bottom: 40px;
+}
+
+#filter-details .content .top h4 {
+    color: #363636;
+    font-family: "Apercu", sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.42px;
+    line-height: 32px;
+    float: left;
+}
+
+#filter-details .content .top button {
+    float: right;
+}
+
+#filter-details .content .top button::after {
+    background-image: url('../../../assets/images/svg/plus.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    content: " ";
+    cursor: pointer;
+    height: 26px;
+    width: 26px;
+    position: absolute;
+    right: 16px;
+    transform: rotate(45deg);
+}

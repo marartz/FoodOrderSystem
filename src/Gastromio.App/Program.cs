@@ -6,7 +6,7 @@ using System.Linq;
 using Gastromio.Core.Application.Commands.AddTestData;
 using Gastromio.Core.Application.Commands.EnsureAdminUser;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 using Gastromio.Persistence.MongoDB;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -48,9 +48,9 @@ namespace Gastromio.App
                         null,
                         null,
                         null,
-                        DateTime.UtcNow,
+                        DateTimeOffset.UtcNow,
                         new UserId(Guid.Empty),
-                        DateTime.UtcNow,
+                        DateTimeOffset.UtcNow,
                         new UserId(Guid.Empty)
                     );
 
@@ -71,7 +71,7 @@ namespace Gastromio.App
                             Log.Logger.Error(string.Join("; ", failureResult.Errors));
                             throw new InvalidOperationException("Error during command EnsureAdminUserCommand");
                         }
-                        
+
                         if (!Int32.TryParse(configuration["Seed:Params:UserCount"], out var userCount))
                             userCount = 20;
 
@@ -108,7 +108,7 @@ namespace Gastromio.App
                             throw new InvalidOperationException("Error during command EnsureAdminUserCommand");
                         }
                     }
-                    
+
                     dbAdminService.CorrectRestaurantAliases();
                 }
 

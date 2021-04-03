@@ -12,7 +12,7 @@ import {RestaurantAdminFacade} from "../../restaurant-admin.facade";
   templateUrl: './payment-settings.component.html',
   styleUrls: [
     './payment-settings.component.css',
-    '../../../../assets/css/frontend_v2.min.css',
+    '../../../../assets/css/frontend_v3.min.css',
     '../../../../assets/css/backend_v2.min.css'
   ]
 })

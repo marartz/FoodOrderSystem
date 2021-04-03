@@ -4,12 +4,12 @@
         <div  id="confirmation">
             <div  class="text">
                 <span *ngIf="!order" >
-                    <span class="top">Eine neu abgesendete Bestellung liegt aktuell nicht vor!</span><br />
+                    <span class="top">Eine neu abgesendete {{getOrderTypeText()}} liegt aktuell nicht vor!</span><br />
                 </span>
                 <span *ngIf="order">
-                    <span class="top">Vielen Dank für Deine Bestellung!</span><br />
-                    <span class="middle">Deine Bestellung wurde an {{restaurant?.name}} übermittelt!<br />Eine Bestellübersicht wurde an deine hinterlegte E-Mail-Adresse gesendet.</span><br />
-                    <span class="bottom">{{restaurant?.name}} und das Gastromio-Team wünschen Euch einen Guten Appetit!</span>
+                    <span class="top">Vielen Dank für Deine {{getOrderTypeText()}}!</span><br />
+                    <span class="middle">Deine {{getOrderTypeText()}} wurde übermittelt!<br />Eine Zusammenfassung Deiner {{getOrderTypeText()}} wurde an Deine hinterlegte E-Mail-Adresse gesendet.</span><br />
+                    <span class="bottom">Das Gastromio-Team wünscht Euch einen Guten Appetit!</span>
                 </span>
                 <button [routerLink]="['/']" target="_blank">Zurück zur Startseite ...</button>
             </div>

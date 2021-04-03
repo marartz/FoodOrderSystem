@@ -1,4 +1,255 @@
-<div id="admin-restaurant">
+<section id="page-general-settings">
+
+	<div
+		 class="warning"
+		 data-aos="gm-move-up"
+		 data-aos-anchor="block-ui"
+		 data-aos-duration="400"
+		 id="flash-message"
+		 role="status"
+		 *ngIf="af.street.errors"
+		 >
+		<span>
+			<svg class="icon" width="32" height="32" viewBox="0 0 50 50"><path d="M 14.40625 13 L 13 14.40625 L 23.625 25 L 13 35.59375 L 14.40625 37 L 25.0625 26.40625 L 35.6875 37 L 37.09375 35.59375 L 26.46875 25 L 37.09375 14.40625 L 35.6875 13 L 25.0625 23.59375 Z"></path></svg>
+			<p *ngIf="af.street.errors.required">Straße Ihres Unternehmens wird benötigt</p>
+			<p *ngIf="af.street.errors.pattern">Kein gültiger Straßenname (z.B. Musterstraße 11)</p>
+		</span>
+	</div>
+
+
+	<header class="section-header">
+		<h3>Allgemeine Daten</h3>
+		<p>Allgemeine Informationen, wie Name und Logo, die Sie bei Gastromio verwenden möchten.</p>
+	</header>
+
+	<section id="settings">
+		<h3>Kontaktdaten</h3>
+
+        <label for="name">Restaurantname</label>
+        <input
+            class="text-input"
+            formControlName="name"
+            id="name"
+            [value]="restaurantName$ | async"
+            readonly="readonly"
+            placeholder="z.B. Pizzeria Mustermann"
+            type="text"
+        >
+
+        <form [formGroup]="changeAddressForm">
+            <label for="street">Straße</label>
+			<input
+				   autocapitalize="words"
+				   autocomplete="street-address"
+				   class="text-input"
+				   formControlName="street"
+				   id="street"
+				   mozactionhint="next"
+				   placeholder="z.B. Bahnhofstr. 1a"
+				   required=""
+				   type="text"
+				   [ngClass]="{ 'is-invalid': af.street.errors }"
+				   >
+			<div class="plz-stadt" style="margin-bottom: 40px;">
+				<div class="plz">
+					<label for="zipCode">PLZ</label>
+					<input
+						   autocapitalize="none"
+						   autocomplete="postal-code"
+						   class="text-input"
+						   formControlName="zipCode"
+						   id="zipCode"
+						   inputmode="numeric"
+						   minlength="5"
+						   maxlength="5"
+						   mozactionhint="next"
+						   placeholder="46395"
+						   required=""
+						   type="text"
+						   [ngClass]="{ 'is-invalid': af.zipCode.errors }"
+						   >
+				</div>
+				<div class="stadt">
+					<label for="city">Stadt</label>
+					<input
+						   autocapitalize="sentences"
+						   autocomplete="country"
+						   class="text-input"
+						   formControlName="city"
+						   id="city"
+						   maxlength="50"
+						   mozactionhint="send"
+						   placeholder="Bocholt"
+						   required=""
+						   type="text"
+						   [ngClass]="{ 'is-invalid': af.city.errors }"
+						   >
+				</div>
+			</div>
+		</form>
+
+		<form [formGroup]="changeContactInfoForm">
+			<label for="responsiblePerson">Verantwortliche Person</label>
+			<input
+				   autocapitalize="words"
+				   autocomplete="name"
+				   class="text-input"
+				   formControlName="responsiblePerson"
+				   id="responsiblePerson"
+				   inputmode="latin-name"
+				   mozactionhint="next"
+				   placeholder="Max Mustermann"
+				   required=""
+				   type="text"
+				   [ngClass]="{ 'is-invalid': cif.responsiblePerson.errors }"
+				   >
+
+			<label for="webSite">Webseite (optional)</label>
+			<input
+				   autocapitalize="none"
+				   autocomplete="url"
+				   class="text-input"
+				   formControlName="webSite"
+				   id="webSite"
+				   inputmode="url"
+				   mozactionhint="send"
+				   placeholder="https://www.restaurant-bocholt.de"
+				   style="margin-bottom: 40px;"
+				   type="url"
+				   [ngClass]="{ 'is-invalid': cif.webSite.errors }"
+				   >
+
+			<label for="emailAddress">E-Mail Adresse</label>
+			<input
+				   autocapitalize="none"
+				   autocomplete="email"
+				   class="text-input"
+				   formControlName="emailAddress"
+				   id="emailAddress"
+				   inputmode="email"
+				   mozactionhint="next"
+				   placeholder="bernd@beispiel.de"
+				   required=""
+				   type="email"
+				   [ngClass]="{ 'is-invalid': cif.emailAddress.errors }"
+				   >
+
+			<label for="phone">Telefonnummer</label>
+			<input
+				   autocapitalize="none"
+				   autocomplete="tel"
+				   class="text-input"
+				   formControlName="phone"
+				   id="phone"
+				   inputmode="tel"
+				   mozactionhint="next"
+				   placeholder="z.B. 0170 12345678"
+				   required=""
+				   type="tel"
+				   [ngClass]="{ 'is-invalid': cif.phone.errors }"
+				   >
+
+			<label for="fax">Fax (optional)</label>
+			<input
+				   autocapitalize="none"
+				   autocomplete="tel"
+				   class="text-input"
+				   formControlName="fax"
+				   id="fax"
+				   inputmode="tel"
+				   mozactionhint="send"
+				   placeholder="z.B. 02871 1234567"
+				   type="tel"
+				   [ngClass]="{ 'is-invalid': cif.fax.errors }"
+				   >
+
+            <label for="mobile">Mobilnummer (optional)</label>
+            <input
+                autocapitalize="none"
+                autocomplete="tel"
+                class="text-input"
+                formControlName="mobile"
+                id="mobile"
+                inputmode="tel"
+                mozactionhint="send"
+                placeholder="z.B. 0170 12345678"
+                type="tel"
+                [ngClass]="{ 'is-invalid': cif.mobile.errors }"
+            >
+
+            <label for="orderNotificationByMobile">Automatischer SMS-Versand bei Bestelleingang</label>
+            <input
+                class="text-input"
+                formControlName="orderNotificationByMobile"
+                id="orderNotificationByMobile"
+                mozactionhint="send"
+                type="checkbox"
+                [ngClass]="{ 'is-invalid': cif.orderNotificationByMobile.errors }"
+            >
+		</form>
+
+	</section>
+	<section id="settings">
+		<h3>Bilddaten</h3>
+
+		<label for="logo-file">Logo</label>
+		<div class="logo-input">
+			<!--div class="delete" *ngIf="logoUrl$ | async" (click)="onRemoveLogo()"></div-->
+			<img *ngIf="logoUrl$ | async" [src]="logoUrl$ | async">
+			<input
+				   accept="image/*"
+				   autocomplete="off"
+				   capture=""
+				   class="upload-file"
+				   id="logo-file"
+				   mozactionhint="send"
+				   type="file"
+				   #logo
+				   (change)="onChangeLogo($event)"
+				   >
+			<label class="file-label" for="logo-file">
+				<span>
+					<svg viewBox="0 0 64 64">
+						<path fill="currentColor" d="M51,27c-.374,0-.742.025-1.109.056a18,18,0,0,0-35.782,0C13.742,27.025,13.374,27,13,27a13,13,0,0,0,0,26H51a13,13,0,0,0,0-26Z"></path>
+						<path d="M43.764,41.354l-11-13a1.033,1.033,0,0,0-1.526,0l-11,13A1,1,0,0,0,21,43h7V59h8V43h7a1,1,0,0,0,.764-1.646Z" fill="#363636"></path>
+					</svg>
+					<h4>Bild auswählen</h4>
+					<h5>JPG, PNG (max. 400 KB)<br>Empfohlene Auflösung:<br>340 x 340 px</h5>
+				</span>
+			</label>
+		</div>
+
+		<label>Banner</label>
+		<div class="banner-input">
+			<!--div class="delete" *ngIf="bannerUrl$ | async" (click)="onRemoveBanner()"></div-->
+			<img *ngIf="bannerUrl$ | async" [src]="bannerUrl$ | async">
+			<input
+				   accept="image/*"
+				   autocomplete="off"
+				   capture=""
+				   class="upload-file"
+				   id="banner-file"
+				   mozactionhint="send"
+				   type="file"
+				   #banner
+				   (change)="onChangeBanner($event)"
+				   >
+			<label class="file-label" for="banner-file">
+				<span>
+					<svg viewBox="0 0 64 64">
+						<path fill="currentColor" d="M51,27c-.374,0-.742.025-1.109.056a18,18,0,0,0-35.782,0C13.742,27.025,13.374,27,13,27a13,13,0,0,0,0,26H51a13,13,0,0,0,0-26Z"></path>
+						<path d="M43.764,41.354l-11-13a1.033,1.033,0,0,0-1.526,0l-11,13A1,1,0,0,0,21,43h7V59h8V43h7a1,1,0,0,0,.764-1.646Z" fill="#363636"></path>
+					</svg>
+					<h4>Bild auswählen</h4>
+					<h5>JPG, PNG (max. 800 KB)<br>Empfohlene Auflösung:<br>2048 x 480 px</h5>
+				</span>
+			</label>
+		</div>
+	</section>
+
+</section>
+
+<!--div id="admin-restaurant">
     <div class="form-header">
         <div class="col"><h5>Adressinformationen</h5></div>
     </div>
@@ -163,4 +414,4 @@
             </div>
         </div>
     </form>
-</div>
+</div-->

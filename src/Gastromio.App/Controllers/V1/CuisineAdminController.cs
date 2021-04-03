@@ -16,8 +16,8 @@ using Gastromio.Core.Application.DTOs;
 using Gastromio.Core.Application.Queries;
 using Gastromio.Core.Application.Queries.GetAllCuisines;
 using Gastromio.Core.Application.Services;
-using Gastromio.Core.Domain.Model.Cuisine;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Cuisines;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.App.Controllers.V1
 {

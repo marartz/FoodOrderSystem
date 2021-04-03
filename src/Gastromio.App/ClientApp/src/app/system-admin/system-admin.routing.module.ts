@@ -3,18 +3,14 @@ import {Routes, RouterModule} from '@angular/router';
 
 import {SystemAdminAuthGuardService} from '../auth/services/system-admin-auth-guard.service';
 
-import {AdminCuisinesComponent} from './components/admin-cuisines/admin-cuisines.component';
-import {AdminDishImportComponent} from './components/admin-dish-import/admin-dish-import.component';
-import {AdminRestaurantImportComponent} from './components/admin-restaurant-import/admin-restaurant-import.component';
-import {AdminRestaurantsComponent} from './components/admin-restaurants/admin-restaurants.component';
-import {AdminUsersComponent} from './components/admin-users/admin-users.component';
+import {SystemAdminComponent} from "./components/system-admin/system-admin.component";
 
 const routes: Routes = [
-  {path: 'admin/users', component: AdminUsersComponent, canActivate: [SystemAdminAuthGuardService]},
-  {path: 'admin/cuisines', component: AdminCuisinesComponent, canActivate: [SystemAdminAuthGuardService]},
-  {path: 'admin/restaurants', component: AdminRestaurantsComponent, canActivate: [SystemAdminAuthGuardService]},
-  {path: 'admin/restaurantimport', component: AdminRestaurantImportComponent, canActivate: [SystemAdminAuthGuardService]},
-  {path: 'admin/dishimport', component: AdminDishImportComponent, canActivate: [SystemAdminAuthGuardService]},
+  {path: 'admin/users', component: SystemAdminComponent, data: {tab:'users'}, canActivate: [SystemAdminAuthGuardService]},
+  {path: 'admin/cuisines', component: SystemAdminComponent, data: {tab:'cuisines'}, canActivate: [SystemAdminAuthGuardService]},
+  {path: 'admin/restaurants', component: SystemAdminComponent, data: {tab:'restaurants'}, canActivate: [SystemAdminAuthGuardService]},
+  {path: 'admin/restaurant-import', component: SystemAdminComponent, data: {tab:'restaurant-import'}, canActivate: [SystemAdminAuthGuardService]},
+  {path: 'admin/dish-import', component: SystemAdminComponent, data: {tab:'dish-import'}, canActivate: [SystemAdminAuthGuardService]},
 ];
 
 @NgModule({

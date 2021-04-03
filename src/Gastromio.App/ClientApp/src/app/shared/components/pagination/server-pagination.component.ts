@@ -27,7 +27,7 @@ import { Component, Input, Output, EventEmitter} from '@angular/core';
 export class ServerPaginationComponent {
   @Output() private fetchPage = new EventEmitter<FetchPageInfo>(true);
   @Input() private _pageSize = 10; // fetch default: 'take = 10'
-  @Input() private _maxPages = 10;
+  @Input() private _maxPages = 5;
 
   private readonly emptyPager: PagingInfo = {
     totalItems: 0,

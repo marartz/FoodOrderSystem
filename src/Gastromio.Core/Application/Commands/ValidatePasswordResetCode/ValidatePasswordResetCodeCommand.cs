@@ -1,5 +1,5 @@
 using System;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Commands.ValidatePasswordResetCode
 {

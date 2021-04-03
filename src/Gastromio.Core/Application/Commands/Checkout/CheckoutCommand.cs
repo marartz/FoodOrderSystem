@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Gastromio.Core.Application.DTOs;
-using Gastromio.Core.Domain.Model.Order;
-using Gastromio.Core.Domain.Model.PaymentMethod;
+using Gastromio.Core.Domain.Model.Orders;
+using Gastromio.Core.Domain.Model.PaymentMethods;
 
 namespace Gastromio.Core.Application.Commands.Checkout
 {
@@ -22,7 +22,7 @@ namespace Gastromio.Core.Application.Commands.Checkout
             IList<CartDishInfoDTO> cartDishes,
             string comments,
             PaymentMethodId paymentMethodId,
-            DateTime? serviceTime
+            DateTimeOffset? serviceTime
         )
         {
             GivenName = givenName;
@@ -40,7 +40,7 @@ namespace Gastromio.Core.Application.Commands.Checkout
             PaymentMethodId = paymentMethodId;
             ServiceTime = serviceTime;
         }
-        
+
         public string GivenName { get; }
         public string LastName { get; }
         public string Street { get; }
@@ -54,6 +54,6 @@ namespace Gastromio.Core.Application.Commands.Checkout
         public IList<CartDishInfoDTO> CartDishes { get; }
         public string Comments { get; }
         public PaymentMethodId PaymentMethodId { get; }
-        public DateTime? ServiceTime { get; }
+        public DateTimeOffset? ServiceTime { get; }
     }
 }

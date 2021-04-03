@@ -31,6 +31,8 @@ import {ChangeUserPasswordComponent} from './components/change-user-password/cha
 import {RemoveCuisineComponent} from './components/remove-cuisine/remove-cuisine.component';
 import {RemoveRestaurantComponent} from './components/remove-restaurant/remove-restaurant.component';
 import {RemoveUserComponent} from './components/remove-user/remove-user.component';
+import {SystemAdminComponent} from "./components/system-admin/system-admin.component";
+import {SystemAdminFacade} from "./system-admin.facade";
 
 @NgModule({
   imports: [
@@ -59,12 +61,14 @@ import {RemoveUserComponent} from './components/remove-user/remove-user.componen
     ChangeUserPasswordComponent,
     RemoveCuisineComponent,
     RemoveRestaurantComponent,
-    RemoveUserComponent
+    RemoveUserComponent,
+    SystemAdminComponent
   ],
   providers: [
     CuisineAdminService,
     RestaurantSysAdminService,
-    UserAdminService
+    UserAdminService,
+    SystemAdminFacade
   ]
 })
 export class SystemAdminModule {

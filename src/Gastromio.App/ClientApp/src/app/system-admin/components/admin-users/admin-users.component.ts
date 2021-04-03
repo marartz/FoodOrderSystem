@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 
-import {Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,7 +8,7 @@ import {UserModel} from '../../../shared/models/user.model';
 
 import {FetchPageInfo, ServerPaginationComponent} from '../../../shared/components/pagination/server-pagination.component';
 
-import {UserAdminService} from '../../services/user-admin.service';
+import {SystemAdminFacade} from "../../system-admin.facade";
 
 import {AddUserComponent} from '../add-user/add-user.component';
 import {ChangeUserDetailsComponent} from '../change-user-details/change-user-details.component';
@@ -21,30 +20,31 @@ import {RemoveUserComponent} from '../remove-user/remove-user.component';
   templateUrl: './admin-users.component.html',
   styleUrls: [
     './admin-users.component.css',
-    '../../../../assets/css/frontend_v2.min.css',
+    '../../../../assets/css/frontend_v3.min.css',
     '../../../../assets/css/backend_v2.min.css'
   ]
 })
 export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
+
   @ViewChild(ServerPaginationComponent) pagingComponent: ServerPaginationComponent;
   pageOfUsers: UserModel[];
 
-  private searchPhrase: string;
-  private searchPhraseUpdated: Subject<string> = new Subject<string>();
+  public searchPhrase$: Observable<string>;
 
   constructor(
     private modalService: NgbModal,
-    private userAdminService: UserAdminService
+    private facade: SystemAdminFacade
   ) {
-    this.searchPhraseUpdated.asObservable().pipe(debounceTime(200), distinctUntilChanged())
-      .subscribe((value: string) => {
-        this.searchPhrase = value;
-        this.pagingComponent.triggerFetchPage(1);
-      });
   }
 
   ngOnInit() {
-    this.searchPhrase = '';
+    this.searchPhrase$ = this.facade.getUserSearchPhrase$();
+    this.searchPhrase$
+      .subscribe(
+        () => {
+          this.pagingComponent.triggerFetchPage(1);
+        }
+      );
   }
 
   ngAfterViewInit() {
@@ -53,15 +53,14 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.searchPhraseUpdated?.unsubscribe();
   }
 
   onUpdateSearch(value: string) {
-    this.searchPhraseUpdated.next(value);
+    this.facade.setUserSearchPhrase(value);
   }
 
   onFetchPage(info: FetchPageInfo) {
-    this.userAdminService.searchForUsersAsync(this.searchPhrase, info.skip, info.take)
+    this.facade.searchForUsers$(info.skip, info.take)
       .subscribe((result) => {
         this.pageOfUsers = result.items;
         this.pagingComponent.updatePaging(result.total, result.items.length);
@@ -112,4 +111,5 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
         return 'Kunde';
     }
   }
+
 }

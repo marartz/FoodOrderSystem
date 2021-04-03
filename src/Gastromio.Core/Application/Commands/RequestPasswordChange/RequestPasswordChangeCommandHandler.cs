@@ -6,7 +6,7 @@ using Gastromio.Core.Application.Ports.Notification;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Application.Ports.Template;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Commands.RequestPasswordChange
 {

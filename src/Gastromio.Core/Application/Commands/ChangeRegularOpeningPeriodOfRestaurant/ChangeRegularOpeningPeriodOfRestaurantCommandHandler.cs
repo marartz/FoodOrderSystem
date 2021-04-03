@@ -3,8 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.Restaurant;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Restaurants;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Commands.ChangeRegularOpeningPeriodOfRestaurant
 {
@@ -40,7 +40,7 @@ namespace Gastromio.Core.Application.Commands.ChangeRegularOpeningPeriodOfRestau
                 return result;
 
             var openingPeriod = new OpeningPeriod(command.NewStart, command.NewEnd);
-            
+
             result = restaurant.AddRegularOpeningPeriod(command.DayOfWeek, openingPeriod, currentUser.Id);
             if (result.IsFailure)
                 return result;

@@ -15,7 +15,7 @@ using Gastromio.Core.Application.Commands.ValidatePasswordResetCode;
 using Gastromio.Core.Application.DTOs;
 using Gastromio.Core.Application.Services;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;

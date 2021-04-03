@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Gastromio.Core.Application.DTOs;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Commands.Login
 {
@@ -21,7 +21,7 @@ namespace Gastromio.Core.Application.Commands.Login
         {
             if (command == null)
                 throw new ArgumentNullException(nameof(command));
-            
+
             if (string.IsNullOrWhiteSpace(command.Email))
                 return FailureResult<UserDTO>.Create(FailureResultCode.LoginEmailRequired);
 

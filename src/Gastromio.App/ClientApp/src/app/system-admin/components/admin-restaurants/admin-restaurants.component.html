@@ -1,107 +1,131 @@
-<div id="app">
-    <div id="backend">
+<section
+    data-aos="fade"
+    data-aos-anchor="#page-restaurants"
+    data-aos-delay="400"
+    data-aos-duration="1000"
+    data-aos-once="false"
+    id="page-restaurants"
+>
 
-        <section id="hero">
-            <div class="wrapper">
-                <div class="inner">
-                    <div class="inner-wrapper">
-                        <div id="title">
-                            <div class="col">
-                                <span>Administration</span>
-                                <h1>Restaurantverwaltung</h1>
-                            </div>
-                        </div>
-                        <div id="links">
-                            <div class="col">
-                                <ul class="nav-tabs">
-                                    <li class="tab"><a [routerLink]="['/admin/users']">Benutzer verwalten</a></li>
-                                    <li class="tab"><a [routerLink]="['/admin/cuisines']">Cuisines verwalten</a></li>
-                                    <li class="tab"><a [routerLink]="['/admin/restaurants']" class="active">Restaurants verwalten</a></li>
-                                    <li class="tab"><a [routerLink]="['/admin/restaurantimport']">Restaurantimport</a></li>
-                                    <li class="tab"><a [routerLink]="['/admin/dishimport']">Speisenimport</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <header class="section-header">
+        <h3>Restaurants verwalten</h3>
+        <p>Verwalte Restaurants oder aktualisiere den Status.</p>
+    </header>
 
-        <section id="content">
-            <div class="wrapper">
-                <div class="inner">
-                    <div class="inner-wrapper">
+	<section id="single-list">
+		<ul>
+			<li class="header-no-eff">
+				<div class="left">
+					<input type="search" placeholder="Suchen ..." style="padding: 5px;" aria-label="Search" [value]="searchPhrase$ | async"
+                           (keyup)="onUpdateSearch($event.target.value)"
+                           (search)="onUpdateSearch($event?.target?.value)">
+				</div>
+				<div class="right">
+					<button
+							class="action"
+							type="button"
+							(click)="openAddRestaurantForm()"
+							>
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+							<line x1="12" y1="5" x2="12" y2="19"></line>
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+						</svg>
+					</button>
+				</div>
+			</li>
+			<li *ngFor="let restaurant of pageOfRestaurants">
+				<div class="left">
+					<span class="name hasDetails">{{restaurant.name}} <span *ngIf="!restaurant.isActive">(inaktiv)</span></span>
+					<span class="details">{{restaurant.address.street}}, {{restaurant.address.city}}</span>
+				</div>
+				<div class="right">
+					<button [routerLink]="['/restaurants', restaurant.alias]" class="action" *ngIf="restaurant.isActive"target="_blank">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" width="16" height="16">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                </svg>
+                            </button>
+                            <button (click)="openChangeRestaurantGeneralSettingsForm(restaurant)" class="action">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                     stroke="currentColor" stroke-width="1" stroke-linecap="round"
+                                     stroke-linejoin="round" width="16" height="16" viewBox="0 0 32 32">
+                                    <path
+                                        d="M28.133 8.267l-1.067 1.067-4.4-4.4 1.067-1.067c1.2-1.2 3.2-1.2 4.4 0 1.333 1.2 1.333 3.2 0 4.4zM4.267 24.267l3.6 3.6-4.667 1.067 1.067-4.667zM9.333 27.067l-4.4-4.4 16.533-16.667 4.4 4.4-16.533 16.667zM29.333 2.667c-1.867-1.733-4.8-1.733-6.667 0l-19.467 19.467c-0.133 0.133-0.133 0.267-0.267 0.4l-1.6 7.2c0 0.267 0 0.533 0.133 0.667s0.4 0.267 0.667 0.267c0 0 0.133 0 0.133 0l7.2-1.6c0.133 0 0.267-0.133 0.4-0.267l19.467-19.467c1.733-1.867 1.733-4.8 0-6.667z"></path>
+                                </svg>
+                            </button>
+                            <button (click)="openChangeRestaurantAccessSettingsForm(restaurant)" class="action">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" class="feather feather-users" width="16" height="16">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </button>
+                            <button [routerLink]="[restaurant.alias]" class="action">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" width="16" height="16">
+                                    <circle cx="16" cy="16" fill="none" id="XMLID_224_" r="4"/>
+                                    <path
+                                        d="  M27.758,10.366l-1-1.732c-0.552-0.957-1.775-1.284-2.732-0.732L23.5,8.206C21.5,9.36,19,7.917,19,5.608V5c0-1.105-0.895-2-2-2h-2  c-1.105,0-2,0.895-2,2v0.608c0,2.309-2.5,3.753-4.5,2.598L7.974,7.902C7.017,7.35,5.794,7.677,5.242,8.634l-1,1.732  c-0.552,0.957-0.225,2.18,0.732,2.732L5.5,13.402c2,1.155,2,4.041,0,5.196l-0.526,0.304c-0.957,0.552-1.284,1.775-0.732,2.732  l1,1.732c0.552,0.957,1.775,1.284,2.732,0.732L8.5,23.794c2-1.155,4.5,0.289,4.5,2.598V27c0,1.105,0.895,2,2,2h2  c1.105,0,2-0.895,2-2v-0.608c0-2.309,2.5-3.753,4.5-2.598l0.526,0.304c0.957,0.552,2.18,0.225,2.732-0.732l1-1.732  c0.552-0.957,0.225-2.18-0.732-2.732L26.5,18.598c-2-1.155-2-4.041,0-5.196l0.526-0.304C27.983,12.546,28.311,11.323,27.758,10.366z"
+                                        fill="none"/>
+                                </svg>
+                            </button>
+                            <button (click)="onDisableSupport(restaurant)" class="action" *ngIf="restaurant.needsSupport">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="color: green;"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" width="16" height="16">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </button>
+                            <button (click)="onEnableSupport(restaurant)" class="action" *ngIf="!restaurant.needsSupport">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="color: red;"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" width="16" height="16">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                </svg>
+                            </button>
+                            <button (click)="onDeactivate(restaurant)" class="action" *ngIf="restaurant.isActive">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16"
+                                     height="16" viewBox="0 0 32 32" style="color: green;">
+                                    <path
+                                        d="M20.533 11.867c0.267-0.267 0.667-0.4 1.067-0.133 0.267 0.267 0.4 0.667 0.133 1.067l-5.867 7.333c-0.133 0.133-0.267 0.267-0.533 0.267 0 0 0 0 0 0-0.133 0-0.4-0.133-0.533-0.267l-3.6-3.6c-0.267-0.267-0.267-0.8 0-1.067s0.8-0.267 1.067 0l3.067 3.067 5.2-6.667zM16 2.8c-7.333 0-13.2 5.867-13.2 13.2s5.867 13.2 13.2 13.2c7.333 0 13.2-5.867 13.2-13.2s-5.867-13.2-13.2-13.2zM16 1.333c8.133 0 14.667 6.533 14.667 14.667s-6.533 14.667-14.667 14.667c-8.133 0-14.667-6.533-14.667-14.667s6.533-14.667 14.667-14.667z"></path>
+                                </svg>
+                            </button>
+                            <button (click)="onActivate(restaurant)" class="action" *ngIf="!restaurant.isActive">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16"
+                                     height="16" viewBox="0 0 32 32" style="color: red;">
+                                    <path
+                                        d="M16 29.2c-7.333 0-13.2-5.867-13.2-13.2s5.867-13.2 13.2-13.2 13.2 5.867 13.2 13.2c0 7.333-5.867 13.2-13.2 13.2zM16 1.333c-8.133 0-14.667 6.533-14.667 14.667s6.533 14.667 14.667 14.667c8.133 0 14.667-6.533 14.667-14.667s-6.533-14.667-14.667-14.667z"></path>
+                                </svg>
+                            </button>
+                            <button (click)="openRemoveRestaurantForm(restaurant)" class="action">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                     stroke-linejoin="round" width="16" height="16">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path
+                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                </svg>
+                            </button>
+				</div>
+			</li>
+		</ul>
+	</section>
 
-                        <div id="admin-users">
-                            <div class="col-lg-12">
-                                <div class="mb-5">
-                                    <div id="title">
-                                        <div class="col">
-                                            <h3>Restaurants verwalten</h3>
-                                            <p>Verwalte Restaurants oder aktualisiere den Status.</p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="search">
-                                                <input type="search" placeholder="Suche" aria-label="Search" (keyup)="onUpdateSearch($event.target.value)" (search)="onUpdateSearch($event?.target?.value)">
-                                                <button (click)="openAddRestaurantForm()" type="button" class="add"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="table">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col" style="min-width: 240px;">Name</th>
-                                                    <th scope="col">Adresse</th>
-                                                    <th scope="col"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let restaurant of pageOfRestaurants">
-                                                    <th scope="row"><p class="email">{{restaurant.name}} <span *ngIf="!restaurant.isActive">(inaktiv)</span></p></th>
-                                                    <td><p class="role">{{restaurant.address.street}}<br />{{restaurant.address.zipCode}} {{restaurant.address.city}}</p></td>
-                                                    <td class="actions">
-                                                        <a [routerLink]="['/restaurants', restaurant.alias]" class="action-item" *ngIf="restaurant.isActive" placement="top" ngbTooltip="Vorschau" target="_blank">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                                                        </a>
-                                                        <a (click)="openChangeRestaurantGeneralSettingsForm(restaurant)" class="action-item" placement="top" ngbTooltip="Stammdaten ändern">
-                                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M28.133 8.267l-1.067 1.067-4.4-4.4 1.067-1.067c1.2-1.2 3.2-1.2 4.4 0 1.333 1.2 1.333 3.2 0 4.4zM4.267 24.267l3.6 3.6-4.667 1.067 1.067-4.667zM9.333 27.067l-4.4-4.4 16.533-16.667 4.4 4.4-16.533 16.667zM29.333 2.667c-1.867-1.733-4.8-1.733-6.667 0l-19.467 19.467c-0.133 0.133-0.133 0.267-0.267 0.4l-1.6 7.2c0 0.267 0 0.533 0.133 0.667s0.4 0.267 0.667 0.267c0 0 0.133 0 0.133 0l7.2-1.6c0.133 0 0.267-0.133 0.4-0.267l19.467-19.467c1.733-1.867 1.733-4.8 0-6.667z"></path></svg>
-                                                        </a>
-                                                        <a (click)="openChangeRestaurantAccessSettingsForm(restaurant)" class="action-item" placement="top" ngbTooltip="Zugriff verwalten">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                                        </a>
-                                                        <a [routerLink]="[restaurant.alias]" class="action-item" placement="top" ngbTooltip="Restaurant verwalten">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" fill="none" id="XMLID_224_" r="4"/><path d="  M27.758,10.366l-1-1.732c-0.552-0.957-1.775-1.284-2.732-0.732L23.5,8.206C21.5,9.36,19,7.917,19,5.608V5c0-1.105-0.895-2-2-2h-2  c-1.105,0-2,0.895-2,2v0.608c0,2.309-2.5,3.753-4.5,2.598L7.974,7.902C7.017,7.35,5.794,7.677,5.242,8.634l-1,1.732  c-0.552,0.957-0.225,2.18,0.732,2.732L5.5,13.402c2,1.155,2,4.041,0,5.196l-0.526,0.304c-0.957,0.552-1.284,1.775-0.732,2.732  l1,1.732c0.552,0.957,1.775,1.284,2.732,0.732L8.5,23.794c2-1.155,4.5,0.289,4.5,2.598V27c0,1.105,0.895,2,2,2h2  c1.105,0,2-0.895,2-2v-0.608c0-2.309,2.5-3.753,4.5-2.598l0.526,0.304c0.957,0.552,2.18,0.225,2.732-0.732l1-1.732  c0.552-0.957,0.225-2.18-0.732-2.732L26.5,18.598c-2-1.155-2-4.041,0-5.196l0.526-0.304C27.983,12.546,28.311,11.323,27.758,10.366z" fill="none"/></svg>
-                                                        </a>
-                                                        <a (click)="onDisableSupport(restaurant)" class="action-item green" *ngIf="restaurant.needsSupport" placement="top" ngbTooltip="Unterstützung aktiv">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                                                        </a>
-                                                        <a (click)="onEnableSupport(restaurant)" class="action-item red" *ngIf="!restaurant.needsSupport" placement="top" ngbTooltip="Unterstützung inaktiv">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                                                        </a>
-                                                        <a (click)="onDeactivate(restaurant)" class="action-item green" *ngIf="restaurant.isActive" placement="top" ngbTooltip="Restaurant aktiv">
-                                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M20.533 11.867c0.267-0.267 0.667-0.4 1.067-0.133 0.267 0.267 0.4 0.667 0.133 1.067l-5.867 7.333c-0.133 0.133-0.267 0.267-0.533 0.267 0 0 0 0 0 0-0.133 0-0.4-0.133-0.533-0.267l-3.6-3.6c-0.267-0.267-0.267-0.8 0-1.067s0.8-0.267 1.067 0l3.067 3.067 5.2-6.667zM16 2.8c-7.333 0-13.2 5.867-13.2 13.2s5.867 13.2 13.2 13.2c7.333 0 13.2-5.867 13.2-13.2s-5.867-13.2-13.2-13.2zM16 1.333c8.133 0 14.667 6.533 14.667 14.667s-6.533 14.667-14.667 14.667c-8.133 0-14.667-6.533-14.667-14.667s6.533-14.667 14.667-14.667z"></path></svg>
-                                                        </a>
-                                                        <a (click)="onActivate(restaurant)" class="action-item red" *ngIf="!restaurant.isActive" placement="top" ngbTooltip="Restaurant inaktiv">
-                                                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M16 29.2c-7.333 0-13.2-5.867-13.2-13.2s5.867-13.2 13.2-13.2 13.2 5.867 13.2 13.2c0 7.333-5.867 13.2-13.2 13.2zM16 1.333c-8.133 0-14.667 6.533-14.667 14.667s6.533 14.667 14.667 14.667c8.133 0 14.667-6.533 14.667-14.667s-6.533-14.667-14.667-14.667z"></path></svg>
-                                                        </a>
-                                                        <a (click)="openRemoveRestaurantForm(restaurant)" class="action-item red" placement="top" ngbTooltip="Löschen">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <app-server-pagination (fetchPage)="onFetchPage($event)"></app-server-pagination>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<app-server-pagination (fetchPage)="onFetchPage($event)"></app-server-pagination>
 
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </div>
-</div>
+</section>

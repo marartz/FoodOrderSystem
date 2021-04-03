@@ -1,28 +1,39 @@
-<a id="restaurant" [routerLink]="['/restaurants', restaurant.alias]" [class.opened]="isRestaurantOpen(restaurant)" [class.closed]="!isRestaurantOpen(restaurant)" [queryParams]="{orderType: orderType, serviceTime: selectedOpeningHourFilter?.toISOString()}">
-<div id="logo">
-    <div class="logo-wrapper">
-        <img *ngIf="!hasLogo(restaurant)" src="../../assets/images/logo/no-logo.jpg" alt="{{restaurant.name}}" class="placeholder">
-        <img *ngIf="hasLogo(restaurant)" [src]="getLogoUrl(restaurant)" alt="{{restaurant.name}}">
-    </div>
-</div>
-<div id="infos">
-    <h2 class="restaurant-name">{{restaurant.name}}</h2>
-    <p class="restaurant-address">
-        <ng-container *ngIf="!isRestaurantOpen(restaurant)">
-            <span style="font-weight: 500;">{{getRestaurantClosedText(restaurant)}}</span>
-        </ng-container>
-        <ng-container *ngIf="isRestaurantOpen(restaurant)">
-            <ng-container *ngIf="orderType === 'pickup'"><span>{{restaurant.address.street}}, {{restaurant.address.city}}</span></ng-container>
-            <ng-container *ngIf="orderType === 'delivery'"><span>Lieferzeit {{restaurant.deliveryInfo.averageTime}} Minuten | {{restaurant.deliveryInfo.getCostsText()}}</span></ng-container>
-        </ng-container>
-        <ng-container *ngIf="restaurant.supportedOrderMode === 'phone'"><span> <br />Nur telefonische Bestellung</span></ng-container>
-        <ng-container *ngIf="restaurant.supportedOrderMode === 'shift'"><span> <br />Telefonische Bestellung und Online-Vorbestellung</span></ng-container>
-        <ng-container *ngIf="restaurant.supportedOrderMode === 'anytime'"><span> <br />Telefonische Bestellung und Online-Bestellung</span></ng-container>
-    </p>
-    <div class="cuisines">
-        <div class="cuisine-container">
-            <div class="cuisine-pill" *ngFor="let cuisine of restaurant.cuisines"><span>{{cuisine.name}}</span></div>
-        </div>
-    </div>
-</div>
+<a
+   id="restaurant"
+   [routerLink]="['/restaurants', restaurant.alias]"
+   [class.opened]="isRestaurantOpen(restaurant)"
+   [class.closed]="!isRestaurantOpen(restaurant)"
+   [queryParams]="{orderType: orderType, serviceTime: selectedOpeningHourFilter?.toISOString()}"
+   >
+    <div id="logo">
+		<div class="logo-wrapper">
+			<img *ngIf="!hasLogo(restaurant)" src="../../assets/images/logo/no-logo.jpg" alt="{{restaurant.name}}" class="placeholder">
+			<img *ngIf="hasLogo(restaurant)" [src]="getLogoUrl(restaurant)" alt="{{restaurant.name}}">
+		</div>
+	</div>
+	<div id="infos">
+        <h2 class="restaurant-name">
+            {{restaurant.name}}
+        </h2>
+		<p class="restaurant-address">
+			<ng-container *ngIf="!isRestaurantOpen(restaurant)">
+				<span style="font-weight: 500;">{{getRestaurantClosedText(restaurant)}}</span>
+			</ng-container>
+			<ng-container *ngIf="isRestaurantOpen(restaurant)">
+				<ng-container *ngIf="orderType === 'pickup'"><span>{{restaurant.address.street}}, {{restaurant.address.city}}</span></ng-container>
+				<ng-container *ngIf="orderType === 'reservation'"><span>{{restaurant.address.street}}, {{restaurant.address.city}}</span></ng-container>
+				<ng-container *ngIf="orderType === 'delivery'"><span>Lieferzeit {{restaurant.deliveryInfo.averageTime}} Minuten | {{restaurant.deliveryInfo.getCostsText()}}</span></ng-container>
+			</ng-container>
+			<ng-container *ngIf="restaurant.supportedOrderMode === 'phone'"><span> <br />Telefonisch</span></ng-container>
+			<ng-container *ngIf="restaurant.supportedOrderMode === 'shift'"><span> <br />Telefonisch & Online-Vorbestellung</span></ng-container>
+			<ng-container *ngIf="restaurant.supportedOrderMode === 'anytime'"><span> <br />Telefonisch & Online-Vorbestellung & Online-Bestellung</span></ng-container>
+		</p>
+		<div class="cuisines">
+			<div class="cuisine-container">
+				<div class="cuisine-pill" *ngFor="let cuisine of restaurant.cuisines">
+					<span>{{cuisine.name}}</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </a>

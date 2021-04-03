@@ -1,5 +1,5 @@
 <block-ui>
-    <div id="login">
+    <div id="forgot-password">
 
         <div class="flash-message js-flash-message" role="status" id="flashMessage2" data-duration="5000" *ngIf="submitted && f.Email.errors">
             <span style="align-items: center; display: inline-flex;">
@@ -54,11 +54,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <button class="login-register" type="submit">Anmelden</button>
+                            <button class="forgot-password-register" type="submit">Anmelden</button>
                             <div class="disclaimer">
                                 Mit Klick auf "Anmelden" stimmst Du den <a [routerLink]="['/privacy-policy']" target="_blank">Datenschutzbestimmungen</a> von Gastromio zu. Diese Website ist durch Cloudflare geschützt und es gelten die <a href="https://www.cloudflare.com/de-de/privacypolicy/" target="_blank">Cloudflare-Datenschutzbestimmungen</a> und <a href="https://www.cloudflare.com/de-de/terms/" target="_blank">Nutzungsbedingungen</a>.
                             </div>
-                            <div class="forgot-password">
+                            <div class="disclaimer">
                                 Wenn Du Dein Passwort vergessen hast, kannst Du <a [routerLink]="['/forgotpassword']">hier Dein Passwort zurücksetzen</a>.
                             </div>
                         </form>

@@ -4,8 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.DishCategory;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.DishCategories;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Commands.AddDishCategoryToRestaurant
 {
@@ -74,11 +74,11 @@ namespace Gastromio.Core.Application.Commands.AddDishCategoryToRestaurant
                 pos + 1,
                 currentUser.Id
             );
-            
+
             if (createResult.IsFailure)
                 return createResult.Cast<Guid>();
             var dishCategory = createResult.Value;
-            
+
             await dishCategoryRepository.StoreAsync(dishCategory, cancellationToken);
 
             return SuccessResult<Guid>.Create(dishCategory.Id.Value);

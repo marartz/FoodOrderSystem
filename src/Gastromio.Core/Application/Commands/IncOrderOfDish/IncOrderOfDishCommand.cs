@@ -1,4 +1,4 @@
-﻿using Gastromio.Core.Domain.Model.Dish;
+﻿using Gastromio.Core.Domain.Model.Dishes;
 
 namespace Gastromio.Core.Application.Commands.IncOrderOfDish
 {

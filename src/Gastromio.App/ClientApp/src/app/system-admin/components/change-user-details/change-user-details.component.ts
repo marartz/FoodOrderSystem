@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+
+import {Observable} from "rxjs";
 
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,9 +9,7 @@ import {BlockUI, NgBlockUI} from 'ng-block-ui';
 
 import {UserModel} from '../../../shared/models/user.model';
 
-import {HttpErrorHandlingService} from '../../../shared/services/http-error-handling.service';
-
-import {UserAdminService} from '../../services/user-admin.service';
+import {SystemAdminFacade} from "../../system-admin.facade";
 
 @Component({
   selector: 'app-change-user-details',
@@ -22,21 +21,32 @@ import {UserAdminService} from '../../services/user-admin.service';
   ]
 })
 export class ChangeUserDetailsComponent implements OnInit {
+
   @Input() public user: UserModel;
   @BlockUI() blockUI: NgBlockUI;
 
   changeUserDetailsForm: FormGroup;
-  message: string;
+  message$: Observable<string>;
 
   constructor(
     public activeModal: NgbActiveModal,
     private formBuilder: FormBuilder,
-    private userAdminService: UserAdminService,
-    private httpErrorHandlingService: HttpErrorHandlingService,
+    private facade: SystemAdminFacade
   ) {
   }
 
   ngOnInit() {
+    this.facade.getIsUpdating$()
+      .subscribe(isUpdating => {
+        if (isUpdating) {
+          this.blockUI.start('Verarbeite Daten...');
+        } else {
+          this.blockUI.stop();
+        }
+      });
+
+    this.message$ = this.facade.getUpdateError$();
+
     this.changeUserDetailsForm = this.formBuilder.group({
       role: [this.user.role, Validators.required],
       email: [this.user.email, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]]
@@ -52,16 +62,10 @@ export class ChangeUserDetailsComponent implements OnInit {
       return;
     }
 
-    this.blockUI.start('Verarbeite Daten...');
-    this.userAdminService.changeUserDetailsAsync(this.user.id, data.role, data.email)
+    this.facade.changeUserDetails$(this.user.id, data.role, data.email)
       .subscribe(() => {
-        this.blockUI.stop();
-        this.message = undefined;
-        this.changeUserDetailsForm.reset();
         this.activeModal.close('Close click');
-      }, (response: HttpErrorResponse) => {
-        this.blockUI.stop();
-        this.message = this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors();
       });
   }
+
 }

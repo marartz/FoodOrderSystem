@@ -1,31 +1,46 @@
-<div id="modal">
-    <div class="wrapper">
-        <div class="content">
-            <h1 class="title">Impressum</h1>
-            <p class="description">
-                {{restaurant.contactInfo.responsiblePerson}} ist verantwortlich für {{restaurant.name}}
-                <br />{{restaurant.address.street}}
-                <br />{{restaurant.address.zipCode}} {{restaurant.address.city}}
-                <br />Deutschland
-                <br /><br />
-                Telefon: {{restaurant.contactInfo.phone}}
-                <ng-container><br />Telefax: {{restaurant.contactInfo.fax}}</ng-container>
-                <ng-container><br />Webseite: <a class="link" href="{{restaurant.contactInfo.webSite}}" target="_blank">{{restaurant.contactInfo.webSite}}</a></ng-container>
-                <br /><br />
-                Öffnungszeiten: {{restaurant.regularOpeningHoursText}}
-                <ng-container *ngIf="restaurant.deviatingOpeningHoursText && restaurant.deviatingOpeningHoursText.length > 0">
-                    <br />
-                    Sonderzeiten: {{restaurant.deviatingOpeningHoursText}}
-                </ng-container>
-                <br />
-                <br />Diverse Marken sind im Besitz der jeweiligen Eigentümer.
-                <br />
-                <br />Wichtige Informationen zum Thema Datenschutz finden Sie in unserer <a class="link" [routerLink]="['/privacy-policy']" target="_blank">Datenschutzerklärung</a>. Das Impressum und Ansprechpartner von Gastromio finden Sie <a class="link" [routerLink]="['/imprint']" target="_blank">hier</a>.
-                <br />
-                <br />Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="link" href="https://ec.europa.eu/consumers/odr" target="_blank">https://ec.europa.eu/consumers/odr</a>.
-                <br />
-            </p>
-            <a href="javascript:" class="back-to-menu" aria-label="Close" (click)="activeModal.dismiss('Cross click')" style="font-family: 'Apercu', sans-serif; font-weight: 500;">Zurück zum Menü →</a>
+<div class="modal-overlay">
+    <div class="modal_v3 bg-rough-blue">
+        <div id="close"><button type="button" aria-label="Schließen" (click)="activeModal.dismiss('Cross click')"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="presentation" focusable="false" style="display: block; fill: none; height: 16px; width: 16px; stroke: currentcolor; stroke-width: 3; overflow: visible;"><path d="m6 6 20 20"></path><path d="m26 6-20 20"></path></svg></button></div>
+        <header id="header">
+            <div class="left"></div>
+            <div class="middle"><h1 class="title" tabindex="-1">Impressum für {{restaurant.name}}</h1></div>
+            <div class="right"></div>
+        </header>
+        <div id="body" tabindex="0">
+            <div class="wrapper bg-rough-blue">
+				
+                <p>
+					<br />{{restaurant.contactInfo.responsiblePerson}} ist verantwortlich für {{restaurant.name}}
+					<br />
+					<br /><b>Adresse</b>
+					<br />{{restaurant.address.street}}
+					<br />{{restaurant.address.zipCode}} {{restaurant.address.city}}
+					<br />
+					<br /><b>Kontakt</b>
+					<br />Telefon: <a href="tel:{{restaurant.contactInfo.phone}}">{{restaurant.contactInfo.phone}}</a>
+					<ng-container *ngIf="restaurant.contactInfo.fax.length > 0">
+					<br />Telefax: {{restaurant.contactInfo.fax}}
+					</ng-container>
+					<ng-container *ngIf="restaurant.contactInfo.webSite.length > 0">
+					<br />Webseite: <a href="{{restaurant.contactInfo.webSite}}" target="_blank" rel="nofollow noreferrer">{{restaurant.contactInfo.webSite}}</a> 
+					</ng-container>
+					<br />
+					<br /><b>Öffnungszeiten</b>
+					<br />{{restaurant.regularOpeningHoursText}}
+					<ng-container *ngIf="restaurant.deviatingOpeningHoursText && restaurant.deviatingOpeningHoursText.length > 0">
+					<br />
+                    <br /><b>Sonderzeiten</b>
+					<br />{{restaurant.deviatingOpeningHoursText}}
+                	</ng-container>
+					<br />
+					<br />Wichtige Informationen zum Thema Datenschutz finden Sie in unserer <a class="link" [routerLink]="['/privacy-policy']" target="_blank" style="text-decoration: underline">Datenschutzerklärung</a>. Das Impressum und Ansprechpartner von Gastromio finden Sie <a class="link" [routerLink]="['/imprint']" target="_blank" style="text-decoration: underline">hier</a>.
+					<br />
+					<br />Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a class="link" href="https://ec.europa.eu/consumers/odr" target="_blank" rel="nofollow noreferrer" style="text-decoration: underline">https://ec.europa.eu/consumers/odr</a>.
+					<br />
+					<br />
+				</p>
+            </div>
+            <div id="submit"><button class="bg-grey" type="button" (click)="activeModal.dismiss('Cross click')">Zurück zum Menü</button></div>
         </div>
     </div>
 </div>

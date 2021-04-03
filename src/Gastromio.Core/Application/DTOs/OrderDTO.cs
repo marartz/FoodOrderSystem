@@ -1,6 +1,6 @@
 ﻿using System;
-using Gastromio.Core.Domain.Model.Order;
-using Gastromio.Core.Domain.Model.PaymentMethod;
+using Gastromio.Core.Domain.Model.Orders;
+using Gastromio.Core.Domain.Model.PaymentMethods;
 
 namespace Gastromio.Core.Application.DTOs
 {
@@ -8,7 +8,7 @@ namespace Gastromio.Core.Application.DTOs
     {
         public OrderDTO(Guid id, CustomerInfo customerInfo, CartInfo cartInfo, string comments,
             Guid paymentMethodId, PaymentMethodDTO paymentMethod, double valueOfOrder, double costs, double totalPrice,
-            DateTime createdOn, DateTime? updatedOn, Guid? updatedBy)
+            DateTimeOffset createdOn, DateTimeOffset? updatedOn, Guid? updatedBy)
         {
             Id = id;
             CustomerInfo = customerInfo;
@@ -41,27 +41,27 @@ namespace Gastromio.Core.Application.DTOs
         }
 
         public Guid Id { get; }
-        
+
         public CustomerInfo CustomerInfo { get; }
-        
+
         public CartInfo CartInfo { get; }
-        
+
         public string Comments { get; }
-        
+
         public Guid PaymentMethodId { get; }
-        
+
         public PaymentMethodDTO PaymentMethod { get; }
-        
+
         public double ValueOfOrder { get; }
-        
+
         public double Costs { get; }
-        
+
         public double TotalPrice { get; }
-        
-        public DateTime CreatedOn { get; }
-        
-        public DateTime? UpdatedOn { get; }
-        
+
+        public DateTimeOffset CreatedOn { get; }
+
+        public DateTimeOffset? UpdatedOn { get; }
+
         public Guid? UpdatedBy { get; }
     }
 }

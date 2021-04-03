@@ -1,0 +1,36 @@
+#preview-button {
+    border-radius: 20px;
+    margin-top: 5px;
+    padding: 8px 16px 8px 16px;
+    height: 20px;
+    color: #363636;
+    font-size: 12px;
+    background-color: transparent;
+    border: 1px solid #363636;
+    transition: all .3s ease
+}
+
+#preview-button:hover {
+    color: #fff;
+    background-color: #363636;
+    border: 1px solid #363636;
+    transform: scale(1.024);
+    -moz-transform: scale(1.024);
+    -ms-transform: scale(1.024);
+    -webkit-transform: scale(1.024);
+	transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}
+
+#preview-button:active {
+    transform: scale(0.98);
+    -moz-transform: scale(0.98);
+    -ms-transform: scale(0.98);
+    -webkit-transform: scale(0.98);
+	transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -webkit-transition: all .3s ease;
+}

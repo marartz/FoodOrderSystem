@@ -10,6 +10,7 @@
             <div id="body" tabindex="0">
                 <div id="feedback">
                     <div class="delete-text">Bist du sicher, dass du das Restaurant "{{restaurant.name}}" inklusive aller Einstellungen und Gerichte löschen möchtest? <span>(Diese Aktion kann danach nicht mehr rückgängig gemacht werden)</span></div>
+                    <div class="help-text" *ngIf="(message$ | async) !== undefined">{{(message$ | async)}}</div>
                 </div>
                 <div id="submit"><button class="delete" type="submit" (click)="onSubmit()">Löschen</button></div>
             </div>

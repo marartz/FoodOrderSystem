@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.Restaurant;
-using Gastromio.Core.Domain.Model.User;
-using Address = Gastromio.Core.Domain.Model.Restaurant.Address;
+using Gastromio.Core.Domain.Model.Restaurants;
+using Gastromio.Core.Domain.Model.Users;
+using Address = Gastromio.Core.Domain.Model.Restaurants.Address;
 
 namespace Gastromio.Core.Application.DTOs
 {
@@ -78,7 +78,7 @@ namespace Gastromio.Core.Application.DTOs
         public Guid Id { get; }
 
         public string Name { get; }
-        
+
         public string ImportId { get; }
 
         public string Alias { get; }
@@ -94,7 +94,7 @@ namespace Gastromio.Core.Application.DTOs
         public IReadOnlyCollection<DeviatingOpeningDayDTO> DeviatingOpeningDays { get; }
 
         public string RegularOpeningHoursText { get; }
-        
+
         public string DeviatingOpeningHoursText { get; }
 
         public string OpeningHoursTodayText { get; }
@@ -153,7 +153,7 @@ namespace Gastromio.Core.Application.DTOs
         {
             if (restaurant.RegularOpeningDays == null)
                 return string.Empty;
-            
+
             var sb = new StringBuilder();
             var first = true;
 
@@ -199,11 +199,11 @@ namespace Gastromio.Core.Application.DTOs
         {
             if (restaurant.DeviatingOpeningDays == null)
                 return string.Empty;
-            
+
             var sb = new StringBuilder();
             var first = true;
 
-            var now = DateTime.Now;
+            var now = DateTimeOffset.Now;
             var today = new Date(now.Year, now.Month, now.Day);
             var keyValuePairs = restaurant.DeviatingOpeningDays.Where(en => en.Key >= today)
                 .OrderBy(en => en.Key);
@@ -242,8 +242,8 @@ namespace Gastromio.Core.Application.DTOs
 
         private static string GenerateOpeningHoursTodayText(Restaurant restaurant)
         {
-            var now = DateTime.Now;
-            var dayOfWeek = ((int) now.DayOfWeek - 1) % 7; // DayOfWeek starts with Sunday 
+            var now = DateTimeOffset.Now;
+            var dayOfWeek = ((int) now.DayOfWeek - 1) % 7; // DayOfWeek starts with Sunday
             if (dayOfWeek < 0)
             {
                 dayOfWeek += 7;
@@ -270,7 +270,7 @@ namespace Gastromio.Core.Application.DTOs
                 WriteOpeningPeriods(sb, deviatingOpeningDay.OpeningPeriods.OrderBy(en => en.Start));
                 return sb.ToString();
             }
-            
+
             if (restaurant.RegularOpeningDays != null && restaurant.RegularOpeningDays.TryGetValue(dayOfWeek, out var regularOpeningDay))
             {
                 if (regularOpeningDay.OpeningPeriods.Count == 0)

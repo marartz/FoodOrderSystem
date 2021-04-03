@@ -2,6 +2,7 @@ import {PaymentMethodModel} from './payment-method.model';
 import {UserModel} from './user.model';
 import {CuisineModel} from './cuisine.model';
 import {DateModel} from "./date.model";
+import * as moment from "moment";
 
 export class RestaurantModel {
 
@@ -25,6 +26,16 @@ export class RestaurantModel {
           return 1;
         return 0;
       });
+
+    try {
+      const createdOnMoment = moment.utc(this.createdOn);
+      this.createdOnDate = createdOnMoment.local().toDate();
+    } catch (e) {}
+
+    try {
+      const updatedOnMoment = moment.utc(this.updatedOn);
+      this.updatedOnDate = updatedOnMoment.local().toDate();
+    } catch (e) {}
   }
 
 
@@ -76,6 +87,18 @@ export class RestaurantModel {
 
   public externalMenus: ExternalMenu[];
 
+  public createdOn: string;
+
+  public createdOnDate: Date;
+
+  public createdBy: UserModel;
+
+  public updatedOn: string;
+
+  public updatedOnDate: Date;
+
+  public updatedBy: UserModel;
+
   public clone(): RestaurantModel {
     return new RestaurantModel({
       id: this.id,
@@ -101,7 +124,13 @@ export class RestaurantModel {
       isActive: this.isActive,
       needsSupport: this.needsSupport,
       supportedOrderMode: this.supportedOrderMode,
-      externalMenus: this.externalMenus?.map(menu => menu?.clone())
+      externalMenus: this.externalMenus?.map(menu => menu?.clone()),
+      createdOn: this.createdOn,
+      createdOnDate: this.createdOnDate,
+      createdBy: this.createdBy.clone(),
+      updatedOn: this.updatedOn,
+      updatedOnDate: this.updatedOnDate,
+      updatedBy: this.updatedBy.clone()
     });
   }
 
@@ -413,9 +442,12 @@ export class ReservationInfoModel {
 
   public enabled: boolean;
 
+  public reservationSystemUrl: string;
+
   public clone(): ReservationInfoModel {
     return new ReservationInfoModel({
-      enabled: this.enabled
+      enabled: this.enabled,
+      reservationSystemUrl: this.reservationSystemUrl
     });
   }
 
@@ -448,6 +480,8 @@ export class ServiceInfoModel {
 
   public reservationEnabled: boolean;
 
+  public reservationSystemUrl: string;
+
   public hygienicHandling: string;
 
   public clone(): ServiceInfoModel {
@@ -462,6 +496,7 @@ export class ServiceInfoModel {
       deliveryMaximumOrderValue: this.deliveryMaximumOrderValue,
       deliveryCosts: this.deliveryCosts,
       reservationEnabled: this.reservationEnabled,
+      reservationSystemUrl: this.reservationSystemUrl,
       hygienicHandling: this.hygienicHandling
     });
   }

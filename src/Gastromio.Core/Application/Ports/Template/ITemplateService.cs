@@ -1,5 +1,4 @@
-﻿using Gastromio.Core.Domain.Model.Order;
-using Gastromio.Core.Domain.Model.User;
+﻿using Gastromio.Core.Domain.Model.Orders;
 
 namespace Gastromio.Core.Application.Ports.Template
 {

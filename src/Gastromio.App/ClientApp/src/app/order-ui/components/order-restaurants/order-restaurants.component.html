@@ -1,68 +1,128 @@
 <div id="root">
     <div class="layout">
-        <div id="order-restaurant">
+        <main id="order-restaurant">
 
-            <section id="hero" style="background-image: url('../../../../assets/images/hero/pizza-2.jpg');">
-                <div class="wrapper">
-                    <div id="text">
-                        <h2 class="slogan">Regional, einfach und gut</h2>
-                        <h1 class="name">Gastromio</h1>
-                    </div>
-                </div>
-            </section>
+			<header id="hero" style="background-image: url('../../../../assets/images/hero/pizza-2.jpg');">
+				<div class="common-container">
+					<div id="text">
+						<h2
+							class="slogan"
+							data-aos="gm-move-up"
+							data-aos-anchor="#order"
+							data-aos-delay="100"
+							data-aos-duration="800"
+							data-aos-once="true"
+							>
+							Regional, einfach und gut
+						</h2>
+						<h1
+							class="name"
+							data-aos="gm-move-up"
+							data-aos-anchor="#order"
+							data-aos-delay="300"
+							data-aos-duration="800"
+							data-aos-once="true"
+							>
+							Gastromio
+						</h1>
+					</div>
+				</div>
+			</header>
 
             <block-ui [delayStart]="1500">
                 <section id="order">
 
-                    <div class="mobile-filter">
-                        <button type="button" class="filtern" (click)="onToggleMobileFilterDetails()">Filtern</button>
-                        <div class="search">
-                            <div class="icon-wrapper"><div class="icon"></div></div>
-                            <input type="text" autocomplete="off" inputmode="latin" maxlength="100" spellcheck="false" placeholder="Suche ..." [value]="selectedSearchPhrase$ | async" (keyup)="onSearchType($event.target.value)">
-                        </div>
-                    </div>
+					<!-- START: _3_advanced-filter -->
+					<section
+							 data-aos="gm-move-down"
+							 data-aos-anchor="#order"
+							 data-aos-delay="300"
+							 data-aos-duration="800"
+							 data-aos-once="true"
+							 id="filter-mobile"
+							 >
+						<button class="filtern" type="button" (click)="onToggleMobileFilterDetails()">Filtern</button>
+						<div class="search">
+							<div class="icon-wrapper"><div class="icon"></div></div>
+							<input type="text" autocomplete="off" inputmode="latin" maxlength="100" spellcheck="false" placeholder="Suche ..." [value]="selectedSearchPhrase$ | async" (keyup)="onSearchType($event.target.value)">
+						</div>
+					</section>
+
                     <ng-container *ngIf="showMobileFilterDetails">
-                        <div class="mobile-filter-details">
+                        <section id="filter-details">
                             <div class="content">
                                 <header class="top">
                                     <h4>Filter</h4>
                                     <button (click)="onHideMobileFilterDetails()"></button>
                                 </header>
 
-                                <div id="mobile-ordertype-filter">
-                                    <p class="title">Wie kommt das Essen zu dir?</p>
-                                    <div class="filter">
-                                        <ng-container *ngIf="(selectedOrderType$ | async) === 'pickup'">
-                                            <button type="button" class="switch active"><span>Abholung</span></button>
-                                            <button type="button" class="switch" (click)="onDeliverySelected()">Lieferung</button>
-                                        </ng-container>
-                                        <ng-container *ngIf="(selectedOrderType$ | async) === 'delivery'">
-                                            <button type="button" class="switch" (click)="onPickupSelected()">Abholung</button>
-                                            <button type="button" class="switch active"><span>Lieferung</span></button>
-                                        </ng-container>
-                                    </div>
-                                </div>
-                                <div id="mobile-opening-hour-filter">
+								<div id="ordertype-filter">
+									<p class="title">Wie kommt das Essen zu dir?</p>
+									<div class="filter">
+										<ng-container *ngIf="(selectedOrderType$ | async) === 'pickup'">
+											<button type="button" class="switch active"><span>Abholung</span></button>
+											<button type="button" class="switch" (click)="onDeliverySelected()">Lieferung</button>
+										</ng-container>
+										<ng-container *ngIf="(selectedOrderType$ | async) === 'delivery'">
+											<button type="button" class="switch" (click)="onPickupSelected()">Abholung</button>
+											<button type="button" class="switch active"><span>Lieferung</span></button>
+										</ng-container>
+										<ng-container *ngIf="(selectedOrderType$ | async) === 'reservation'">
+											<button type="button" class="switch" style="margin-left: 10px;" (click)="onPickupSelected()">Abholung</button>
+											<button type="button" class="switch" style="margin-left: 10px;" (click)="onDeliverySelected()">Lieferung</button>
+										</ng-container>
+									</div>
+									<div class="filter-divider">
+										<p>oder</p>
+									</div>
+									<button class="reservation"
+											type="button"
+											*ngIf="(selectedOrderType$ | async) === 'pickup'"
+											(click)="onReservationSelected()">
+										Tischreservierung <span>Neu</span>
+									</button>
+									<button class="reservation"
+											type="button"
+											*ngIf="(selectedOrderType$ | async) === 'delivery'"
+											(click)="onReservationSelected()">
+                                        Tischreservierung <span>Neu</span>
+									</button>
+									<ng-container *ngIf="(selectedOrderType$ | async) === 'reservation'">
+										<button class="reservation active"
+												type="button">
+                                            Tischreservierung <span>Neu</span>
+										</button>
+									</ng-container>
+								</div>
+                                <div id="opening-hour-filter">
                                     <p class="title">Für wann möchtest du bestellen?</p>
                                     <button *ngIf="!(selectedOrderTime$ | async)" type="button" (click)="openOpeningHourFilter()">Zeit wählen</button>
                                     <button *ngIf="(selectedOrderTime$ | async)" type="button" (click)="openOpeningHourFilter()">{{selectedOrderTimeText$ | async}}</button>
                                 </div>
-                                <div id="mobile-cuisine-filter">
+                                <div id="categories">
                                     <p class="title">Filter</p>
-                                    <div class="cuisine-container">
-                                        <div class="cuisine active" [class.active]="isCuisineSelected(undefined)">
-                                            <button type="button" (click)="selectCuisine(undefined)">Alle anzeigen</button>
+                                    <div class="category-container">
+                                        <div class="category active" [class.active]="isCuisineSelected(undefined)">
+                                            <button type="button" (click)="selectCuisine(undefined)">Alle</button>
                                         </div>
-                                        <div class="cuisine" *ngFor="let cuisine of cuisines" [class.active]="isCuisineSelected(cuisine)">
+                                        <div class="category" *ngFor="let cuisine of cuisines" [class.active]="isCuisineSelected(cuisine)">
                                             <button type="button" (click)="selectCuisine(cuisine)">{{cuisine.name}}</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     </ng-container>
-                    <div class="mobile-info">
-                        <div class="restaurant-count">
+
+                    <div id="mobile-info">
+                        <div
+							 class="restaurant-count"
+							 data-aos="gm-move-down"
+							 data-aos-anchor="#order"
+							 data-aos-delay="500"
+							 data-aos-duration="800"
+							 data-aos-once="true"
+							 >
                             {{openedRestaurantCount$ | async}} von {{totalRestaurantCount$ | async}} Restaurants
                         </div>
                     </div>
@@ -70,61 +130,190 @@
                     <div class="wrapper">
                         <div class="inner">
 
-                            <aside>
-                                <div class="filter-wrapper">
-                                    <div id="restaurant-count">
-                                        {{openedRestaurantCount$ | async}} von {{totalRestaurantCount$ | async}} Restaurants
-                                    </div>
-                                    <div id="ordertype-filter">
-                                        <p class="title">Wie kommt das Essen zu dir?</p>
-                                        <div class="filter">
-                                            <ng-container *ngIf="(selectedOrderType$ | async) === 'pickup'">
-                                                <button type="button" class="switch active"><span>Abholung</span></button>
-                                                <button type="button" class="switch" (click)="onDeliverySelected()">Lieferung</button>
-                                            </ng-container>
-                                            <ng-container *ngIf="(selectedOrderType$ | async) === 'delivery'">
-                                                <button type="button" class="switch" (click)="onPickupSelected()">Abholung</button>
-                                                <button type="button" class="switch active"><span>Lieferung</span></button>
-                                            </ng-container>
-                                        </div>
-                                    </div>
-                                    <div id="opening-hour-filter">
-                                        <p class="title">Für wann möchtest du bestellen?</p>
-                                        <button *ngIf="!(selectedOrderTime$ | async)" type="button" (click)="openOpeningHourFilter()">Zeit wählen</button>
-                                        <button *ngIf="(selectedOrderTime$ | async)" type="button" (click)="openOpeningHourFilter()">{{selectedOrderTimeText$ | async}}</button>
-                                    </div>
-                                    <div id="cuisine-filter">
-                                        <p class="title">Filter</p>
-                                        <div class="cuisine-container">
-                                            <div class="cuisine active" [class.active]="isCuisineSelected(undefined)">
-                                                <button type="button" (click)="selectCuisine(undefined)">Alle anzeigen</button>
-                                            </div>
-                                            <div class="cuisine" *ngFor="let cuisine of cuisines" [class.active]="isCuisineSelected(cuisine)">
-                                                <button type="button" (click)="selectCuisine(cuisine)">{{cuisine.name}}</button>
-                                            </div>
-                                        </div>
-                                    </div>
+							<!-- START: _2_action-bar -->
+							<aside
+								   data-aos="gm-move-down"
+								   data-aos-anchor="#order"
+								   data-aos-delay="300"
+								   data-aos-duration="800"
+								   data-aos-once="true"
+								   id="actions"
+								   >
+								<h2 class="title">{{openedRestaurantCount$ | async}} von {{totalRestaurantCount$ | async}} Restaurants</h2>
+								<div class="restaurant-actions">
+									<div class="restaurant-search" style="margin-right: 0px">
+										<div class="icon-wrapper"><div class="icon"></div></div>
+										<input
+											   autocomplete="off"
+											   inputmode="latin"
+											   maxlength="100"
+											   placeholder="Restaurant suchen ..."
+											   spellcheck="false"
+											   type="text"
+											   (keyup)="onSearchType($event.target.value)"
+											   >
+									</div>
+								</div>
+							</aside>
+							<!-- ENDE: _2_action-bar -->
 
-                                </div>
-                            </aside>
+							<!-- START: _3_advanced-filter -->
+							<aside id="filter">
+								<div class="filter-wrapper">
+									<section id="ordertype-filter">
+										<p class="title"
+										   data-aos="gm-move-down"
+										   data-aos-anchor="#order"
+										   data-aos-delay="500"
+										   data-aos-duration="800"
+										   data-aos-once="true">
+											Wie kommt das Essen zu dir?
+										</p>
+										<div class="filter"
+											 data-aos="gm-move-down"
+											 data-aos-anchor="#order"
+											 data-aos-delay="700"
+											 data-aos-duration="800"
+											 data-aos-once="true">
+											<ng-container *ngIf="(selectedOrderType$ | async) === 'pickup'">
+												<button type="button" class="switch active"><span>Abholung</span></button>
+												<button type="button" class="switch" (click)="onDeliverySelected()">Lieferung</button>
+											</ng-container>
+											<ng-container *ngIf="(selectedOrderType$ | async) === 'delivery'">
+												<button type="button" class="switch" (click)="onPickupSelected()">Abholung</button>
+												<button type="button" class="switch active"><span>Lieferung</span></button>
+											</ng-container>
+											<ng-container *ngIf="(selectedOrderType$ | async) === 'reservation'">
+												<button type="button" class="switch" style="margin-left: 10px;" (click)="onPickupSelected()">Abholung</button>
+												<button type="button" class="switch" style="margin-left: 10px;" (click)="onDeliverySelected()">Lieferung</button>
+											</ng-container>
+										</div>
+										<div
+											 class="filter-divider"
+											 data-aos="gm-move-down"
+											 data-aos-anchor="#order"
+											 data-aos-delay="750"
+											 data-aos-duration="800"
+											 data-aos-once="true"
+											 >
+											<p>oder</p>
+										</div>
+										<button class="reservation"
+												data-aos="gm-move-down"
+												data-aos-anchor="#order"
+												data-aos-delay="800"
+												data-aos-duration="800"
+												data-aos-once="true"
+												type="button"
+												*ngIf="(selectedOrderType$ | async) === 'pickup'"
+												(click)="onReservationSelected()">
+                                            Tischreservierung <span>Neu</span>
+										</button>
+										<button class="reservation"
+												type="button"
+												*ngIf="(selectedOrderType$ | async) === 'delivery'"
+												(click)="onReservationSelected()">
+                                            Tischreservierung <span>Neu</span>
+										</button>
+										<ng-container *ngIf="(selectedOrderType$ | async) === 'reservation'">
+											<button class="reservation active"
+													type="button">
+                                                Tischreservierung <span>Neu</span>
+											</button>
+										</ng-container>
+									</section>
+									<section id="opening-hour-filter">
+										<p
+										   class="title"
+										   data-aos="gm-move-down"
+										   data-aos-anchor="#order"
+										   data-aos-delay="900"
+										   data-aos-duration="800"
+										   data-aos-once="true"
+										   >
+											Für wann möchtest du bestellen?
+										</p>
+										<button
+												data-aos="gm-move-down"
+												data-aos-anchor="#order"
+												data-aos-delay="1100"
+												data-aos-duration="800"
+												data-aos-once="true"
+												type="button"
+												*ngIf="!(selectedOrderTime$ | async)"
+												(click)="openOpeningHourFilter()"
+												>
+											Zeit wählen
+										</button>
+										<button *ngIf="(selectedOrderTime$ | async)" type="button" (click)="openOpeningHourFilter()">{{(selectedOrderTimeText$ | async)}}</button>
+									</section>
+									<section id="categories">
+										<p
+										   class="title"
+										   data-aos="gm-move-down"
+										   data-aos-anchor="#order"
+										   data-aos-delay="1300"
+										   data-aos-duration="800"
+										   data-aos-once="true"
+										   >
+											Filter
+										</p>
+										<div class="category-container">
+											<div class="category active" [class.active]="isCuisineSelected(undefined)">
+												<button
+														data-aos="gm-move-down"
+														data-aos-anchor="#order"
+														data-aos-delay="1500"
+														data-aos-duration="800"
+														data-aos-once="true"
+														type="button"
+														(click)="selectCuisine(undefined)"
+														>
+													Alle
+												</button>
+											</div>
+											<div class="category" *ngFor="let cuisine of cuisines" [class.active]="isCuisineSelected(cuisine)">
+												<button
+														data-aos="gm-move-down"
+														data-aos-anchor="#order"
+														data-aos-delay="1600"
+														data-aos-duration="800"
+														data-aos-once="true"
+														type="button"
+														(click)="selectCuisine(cuisine)"
+														>
+													{{cuisine.name}}
+												</button>
+											</div>
+										</div>
+									</section>
+								</div>
+							</aside>
+							<!-- ENDE: _3_advanced-filter -->
 
                             <div id="restaurants">
-                                <div id="search">
-                                    <div class="icon-wrapper"><div class="icon"></div></div>
-                                    <input type="text" autocomplete="off" inputmode="latin" maxlength="100" spellcheck="false" placeholder="Restaurant suchen ..." [value]="selectedSearchPhrase$ | async" (keyup)="onSearchType($event.target.value)">
-                                </div>
 
                                 <app-order-restaurants-row *ngFor="let restaurant of openedRestaurants$ | async" [restaurant]="restaurant" [orderType]="(selectedOrderType$ | async)" [selectedOpeningHourFilter]="(selectedOrderTime$ | async)"></app-order-restaurants-row>
 
-                                <div class="preorder" *ngIf="(closedRestaurantCount$ | async) > 0">
-                                    <h3>
-                                        Für
-                                        <ng-container *ngIf="(selectedOrderType$ | async) === 'pickup'">Abholung</ng-container>
-                                        <ng-container *ngIf="(selectedOrderType$ | async) === 'delivery'">Lieferung</ng-container>
-                                        geschlossen
+                                <div class="preorder" *ngIf="(closedRestaurants$ | async) !== undefined && (closedRestaurants$ | async).length > 0">
+                                    <h3
+										data-aos="gm-move-down"
+										data-aos-anchor="#order"
+										data-aos-delay="300"
+										data-aos-duration="800"
+										data-aos-once="true"
+										>
+                                        <ng-container *ngIf="(selectedOrderType$ | async) === 'pickup'">Für Abholung geschlossen</ng-container>
+                                        <ng-container *ngIf="(selectedOrderType$ | async) === 'delivery'">Für Lieferung geschlossen</ng-container>
                                     </h3>
-                                    <p>
-                                        Die Folgenden Restaurants haben um diese Uhrzeit nicht geöffnet, <br>bei einigen von Ihnen kannst Du aber für eine spätere Öffnungszeit vorbestellen.
+                                    <p
+									   data-aos="gm-move-down"
+									   data-aos-anchor="#order"
+									   data-aos-delay="500"
+									   data-aos-duration="800"
+									   data-aos-once="true"
+									   >
+                                        Die folgenden Restaurants haben um diese Uhrzeit nicht geöffnet, <br>bei einigen von Ihnen kannst Du aber für eine spätere Öffnungszeit vorbestellen.
                                     </p>
                                 </div>
 
@@ -137,6 +326,6 @@
                 </section>
             </block-ui>
 
-        </div>
+        </main>
     </div>
 </div>

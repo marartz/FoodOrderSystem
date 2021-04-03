@@ -6,7 +6,7 @@ export class ImportLogLineModel {
     }
   }
 
-  public timestamp: Date;
+  public timestamp: string;
 
   public type: number;
 

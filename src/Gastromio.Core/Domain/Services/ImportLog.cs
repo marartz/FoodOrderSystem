@@ -8,15 +8,15 @@ namespace Gastromio.Core.Domain.Services
     {
         private readonly object lockObj = new object();
         private readonly List<ImportLogLine> lines = new List<ImportLogLine>();
-        
+
         public void AddLine(ImportLogLineType logLineType, int rowIndex, string message, params object[] args)
         {
             lock (lockObj)
             {
-                lines.Add(new ImportLogLine(DateTime.UtcNow, logLineType, rowIndex, string.Format(message, args)));
+                lines.Add(new ImportLogLine(DateTimeOffset.UtcNow, logLineType, rowIndex, string.Format(message, args)));
             }
         }
-        
+
         public IReadOnlyCollection<ImportLogLine> Lines
         {
             get

@@ -19,6 +19,7 @@ import {OrderRestaurantsComponent} from './components/order-restaurants/order-re
 import {OrderRestaurantsRowComponent} from './components/order-restaurants-row/order-restaurants-row.component';
 import {OrderRestaurantOpeningHoursComponent} from './components/order-restaurant-opening-hours/order-restaurant-opening-hours.component';
 import {OrderSummaryComponent} from './components/order-summary/order-summary.component';
+import {ReservationComponent} from "./components/reservation/reservation.component";
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import {OrderSummaryComponent} from './components/order-summary/order-summary.co
     OrderRestaurantOpeningHoursComponent,
     OrderRestaurantsComponent,
     OrderRestaurantsRowComponent,
-    OrderSummaryComponent
+    OrderSummaryComponent,
+    ReservationComponent
   ],
   providers: [
   ]

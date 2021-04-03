@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
+
+import {Observable} from "rxjs";
 
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -7,9 +8,7 @@ import {BlockUI, NgBlockUI} from 'ng-block-ui';
 
 import {RestaurantModel} from '../../../shared/models/restaurant.model';
 
-import {HttpErrorHandlingService} from '../../../shared/services/http-error-handling.service';
-
-import {RestaurantSysAdminService} from '../../services/restaurant-sys-admin.service';
+import {SystemAdminFacade} from "../../system-admin.facade";
 
 @Component({
   selector: 'app-remove-restaurant',
@@ -24,28 +23,31 @@ export class RemoveRestaurantComponent implements OnInit {
   @Input() public restaurant: RestaurantModel;
   @BlockUI() blockUI: NgBlockUI;
 
-  message: string;
+  message$: Observable<string>;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private restaurantAdminService: RestaurantSysAdminService,
-    private httpErrorHandlingService: HttpErrorHandlingService
+    private facade: SystemAdminFacade
   ) {
   }
 
   ngOnInit() {
+    this.facade.getIsUpdating$()
+      .subscribe(isUpdating => {
+        if (isUpdating) {
+          this.blockUI.start('Verarbeite Daten...');
+        } else {
+          this.blockUI.stop();
+        }
+      });
+
+    this.message$ = this.facade.getUpdateError$();
   }
 
   onSubmit() {
-    this.blockUI.start('Verarbeite Daten...');
-    this.restaurantAdminService.removeRestaurantAsync(this.restaurant.id)
+    this.facade.removeRestaurant$(this.restaurant.id)
       .subscribe(() => {
-        this.blockUI.stop();
-        this.message = undefined;
         this.activeModal.close('Close click');
-      }, (response: HttpErrorResponse) => {
-        this.blockUI.stop();
-        this.message = this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors();
       });
   }
 }

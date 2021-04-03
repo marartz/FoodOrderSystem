@@ -40,7 +40,7 @@
                             <span *ngIf="f.email.errors.required">Bitte gebe eine E-Mail-Adresse an.</span>
                             <span *ngIf="f.email.errors.pattern">Bitte gebe eine gültige E-Mail-Adresse an.</span>
                         </div>
-                        <div class="help-text" *ngIf="message !== undefined">{{message}}</div>
+                        <div class="help-text" *ngIf="(message$ | async) !== undefined">{{(message$ | async)}}</div>
                     </div>
                     <div id="submit"><button type="submit">Speichern</button></div>
                 </form>

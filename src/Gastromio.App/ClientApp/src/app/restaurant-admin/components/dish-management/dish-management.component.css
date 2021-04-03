@@ -39,6 +39,7 @@
     font-size: 13px;
     font-weight: 600;
     vertical-align: top;
+    white-space: nowrap;
 }
 
 #table table tbody tr {
@@ -105,4 +106,9 @@
 
 input.failure {
     background-color: indianred;
+}
+
+a.nav-link span.disabled-dish-category {
+    color: #888888;
+    font-style: italic;
 }

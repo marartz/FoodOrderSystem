@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.DTOs;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 using Gastromio.Core.Domain.Services;
 using NPOI.XSSF.UserModel;
 

@@ -22,6 +22,7 @@ import {HttpErrorHandlingService} from "../shared/services/http-error-handling.s
 
 import {RestaurantRestAdminService} from "./services/restaurant-rest-admin.service";
 import {DateModel} from "../shared/models/date.model";
+import {AuthService} from "../auth/services/auth.service";
 
 @Injectable()
 export class RestaurantAdminFacade {
@@ -46,6 +47,7 @@ export class RestaurantAdminFacade {
   static earliestOpeningTime: number = 4 * 60;
 
   constructor(
+    private authService: AuthService,
     private restaurantAdminService: RestaurantRestAdminService,
     private httpErrorHandlingService: HttpErrorHandlingService
   ) {
@@ -256,6 +258,7 @@ export class RestaurantAdminFacade {
 
         this.restaurant$.value.address = address;
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, response => {
@@ -271,6 +274,7 @@ export class RestaurantAdminFacade {
         this.isUpdating$.next(false);
         this.updateError$.next(undefined);
         this.restaurant$.value.contactInfo = contactInfo;
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, response => {
@@ -293,6 +297,7 @@ export class RestaurantAdminFacade {
           this.restaurant$.value.imageTypes.push('logo');
         }
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -310,6 +315,7 @@ export class RestaurantAdminFacade {
 
         this.restaurant$.value.imageTypes = this.restaurant$.value.imageTypes.filter(en => en !== 'logo');
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -332,6 +338,7 @@ export class RestaurantAdminFacade {
           this.restaurant$.value.imageTypes.push('banner');
         }
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -349,6 +356,7 @@ export class RestaurantAdminFacade {
 
         this.restaurant$.value.imageTypes = this.restaurant$.value.imageTypes.filter(en => en !== 'banner');
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -366,6 +374,7 @@ export class RestaurantAdminFacade {
 
         this.restaurant$.value.supportedOrderMode = supportedOrderMode;
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -397,11 +406,13 @@ export class RestaurantAdminFacade {
         });
 
         this.restaurant$.value.reservationInfo = new ReservationInfoModel({
-          enabled: serviceInfo.reservationEnabled
+          enabled: serviceInfo.reservationEnabled,
+          reservationSystemUrl: serviceInfo.reservationSystemUrl
         });
 
         this.restaurant$.value.hygienicHandling = serviceInfo.hygienicHandling;
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -447,6 +458,7 @@ export class RestaurantAdminFacade {
           });
         }
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -477,6 +489,7 @@ export class RestaurantAdminFacade {
             end: end
           }));
 
+          this.setUpdateInfoToRestaurant(this.restaurant$.value);
           this.restaurant$.next(this.restaurant$.value)
           this.isUpdated$.next(true);
         }),
@@ -501,6 +514,7 @@ export class RestaurantAdminFacade {
           openingPeriod.start = newStart;
           openingPeriod.end = newEnd;
 
+          this.setUpdateInfoToRestaurant(this.restaurant$.value);
           this.restaurant$.next(this.restaurant$.value)
           this.isUpdated$.next(true);
         }),
@@ -524,6 +538,7 @@ export class RestaurantAdminFacade {
             const index = regularOpeningDay.openingPeriods.findIndex(en => en.start === start);
             regularOpeningDay.openingPeriods.splice(index, 1);
 
+            this.setUpdateInfoToRestaurant(this.restaurant$.value);
             this.restaurant$.next(this.restaurant$.value)
             this.isUpdated$.next(true);
           }
@@ -555,6 +570,7 @@ export class RestaurantAdminFacade {
             deviatingOpeningDays.push(deviatingOpeningDay);
           }
 
+          this.setUpdateInfoToRestaurant(this.restaurant$.value);
           this.restaurant$.next(this.restaurant$.value)
           this.isUpdated$.next(true);
         }),
@@ -580,6 +596,7 @@ export class RestaurantAdminFacade {
             deviatingOpeningDay.status = status;
           }
 
+          this.setUpdateInfoToRestaurant(this.restaurant$.value);
           this.restaurant$.next(this.restaurant$.value)
           this.isUpdated$.next(true);
         }),
@@ -605,6 +622,7 @@ export class RestaurantAdminFacade {
             deviatingOpeningDays.splice(index, 1);
           }
 
+          this.setUpdateInfoToRestaurant(this.restaurant$.value);
           this.restaurant$.next(this.restaurant$.value)
           this.isUpdated$.next(true);
         }),
@@ -639,6 +657,7 @@ export class RestaurantAdminFacade {
             end: end
           }));
 
+          this.setUpdateInfoToRestaurant(this.restaurant$.value);
           this.restaurant$.next(this.restaurant$.value)
           this.isUpdated$.next(true);
         }),
@@ -664,6 +683,7 @@ export class RestaurantAdminFacade {
           openingPeriod.start = newStart;
           openingPeriod.end = newEnd;
 
+          this.setUpdateInfoToRestaurant(this.restaurant$.value);
           this.restaurant$.next(this.restaurant$.value)
           this.isUpdated$.next(true);
         }),
@@ -691,6 +711,7 @@ export class RestaurantAdminFacade {
               deviatingOpeningDay.status = "closed";
             }
 
+            this.setUpdateInfoToRestaurant(this.restaurant$.value);
             this.restaurant$.next(this.restaurant$.value)
             this.isUpdated$.next(true);
           }
@@ -727,6 +748,7 @@ export class RestaurantAdminFacade {
           externalMenu.url = url;
         }
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -751,6 +773,7 @@ export class RestaurantAdminFacade {
           this.restaurant$.value.externalMenus.splice(index, 1);
         }
 
+        this.setUpdateInfoToRestaurant(this.restaurant$.value);
         this.restaurant$.next(this.restaurant$.value)
         this.isUpdated$.next(true);
       }, (response: HttpErrorResponse) => {
@@ -879,6 +902,46 @@ export class RestaurantAdminFacade {
       });
   }
 
+  public enableDishCategory(dishCategoryId: string): void {
+    this.isUpdating$.next(true);
+    this.restaurantAdminService.enableDishCategoryAsync(this.restaurant$.value.id, dishCategoryId)
+      .subscribe(() => {
+        this.isUpdating$.next(false);
+        this.updateError$.next(undefined);
+
+        const dishCategories = this.dishCategories$.value;
+        const dishCategoryIndex = dishCategories.findIndex(en => en.id === dishCategoryId);
+        const dishCategory = dishCategories[dishCategoryIndex];
+        dishCategory.enabled = true;
+
+        this.dishCategories$.next(this.dishCategories$.value);
+        this.isUpdated$.next(true);
+      }, (response: HttpErrorResponse) => {
+        this.isUpdating$.next(false);
+        this.updateError$.next(this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors());
+      });
+  }
+
+  public disableDishCategory(dishCategoryId: string): void {
+    this.isUpdating$.next(true);
+    this.restaurantAdminService.disableDishCategoryAsync(this.restaurant$.value.id, dishCategoryId)
+      .subscribe(() => {
+        this.isUpdating$.next(false);
+        this.updateError$.next(undefined);
+
+        const dishCategories = this.dishCategories$.value;
+        const dishCategoryIndex = dishCategories.findIndex(en => en.id === dishCategoryId);
+        const dishCategory = dishCategories[dishCategoryIndex];
+        dishCategory.enabled = false;
+
+        this.dishCategories$.next(this.dishCategories$.value);
+        this.isUpdated$.next(true);
+      }, (response: HttpErrorResponse) => {
+        this.isUpdating$.next(false);
+        this.updateError$.next(this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors());
+      });
+  }
+
   public addOrChangedDish(dishCategoryId: string, dish: DishModel): Observable<string> {
     this.isUpdating$.next(true);
     return this.restaurantAdminService.addOrChangeDishOfRestaurantAsync(this.restaurant$.value.id, dishCategoryId, dish)
@@ -991,4 +1054,10 @@ export class RestaurantAdminFacade {
       });
   }
 
+  private setUpdateInfoToRestaurant(restaurant: RestaurantModel)
+  {
+    restaurant.updatedOnDate = new Date();
+    restaurant.updatedOn = restaurant.updatedOnDate.toISOString();
+    restaurant.updatedBy = this.authService.getUser();
+  }
 }

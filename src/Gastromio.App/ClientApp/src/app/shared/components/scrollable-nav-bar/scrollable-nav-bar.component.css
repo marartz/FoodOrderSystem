@@ -1,0 +1,82 @@
+#left {
+    position: absolute;
+    font-size: 22px;
+    left: 5px;
+}
+
+#left.show {
+    display: flex;
+}
+
+#left.hide {
+    display: none;
+}
+
+#right {
+    position: absolute;
+    font-size: 22px;
+    right: 5px;
+}
+
+#right.show {
+    display: flex;
+}
+
+#right.hide {
+    display: none;
+}
+
+.links {
+    display: flex;
+    overflow: auto;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.links ul {
+    display: inline-flex;
+    position: relative;
+    list-style: none;
+}
+
+.links ul .drawer-item {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    border-radius: 23px;
+    padding: 3px;
+}
+
+.links ul .drawer-item:hover {
+    background-color: #363636;
+    transition: all .5s ease;
+}
+
+.links ul .drawer-item:hover a {
+    color: #fff;
+}
+
+.drawer-item.disabled {
+    cursor: not-allowed !important;
+    filter: blur(1px)
+}
+
+.links ul .drawer-item.active {
+    background-color: #363636 !important;
+}
+
+.links ul .drawer-item a {
+    margin: 0px 6.25px;
+    outline: currentcolor none medium;
+    padding: 6.25px 12.5px;
+    cursor: pointer;
+    color: #363636;
+    line-height: 1.25;
+    letter-spacing: 0px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.links ul .drawer-item.active a {
+    color: #fff;
+}

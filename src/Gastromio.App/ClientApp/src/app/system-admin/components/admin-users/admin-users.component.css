@@ -1,0 +1,110 @@
+#table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+#table table {
+    align-items: center;
+    background-color: transparent;
+    border-collapse: separate;
+    border-spacing: 0px 16px;
+    color: #363636;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#table table > * {
+    animation: showTable 0.3s ease 1 700ms both;
+    -moz-animation: showTable 0.3s ease 1 700ms both;
+    -ms-animation: showTable 0.3s ease 1 700ms both;
+    -o-animation: showTable 0.3s ease 1 700ms both;
+    -webkit-animation: showTable 0.3s ease 1 700ms both;
+}
+
+#table table thead th {
+    background-color: transparent;
+    border: 0px;
+    font-family: "Apercu", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    padding: 0px 8px;
+    position: relative;
+    text-transform: none;
+}
+
+#table table th {
+    font-size: 13px;
+    font-weight: 600;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+#table table tbody tr {
+    box-shadow: 0px 0px 20px rgba(31, 45, 61, .05);
+}
+
+#table table tbody th {
+    background-color: #ADCCCB;
+    border: 0px;
+    padding: 8px;
+    position: relative;
+}
+
+#table table tbody td {
+    border: 0px;
+    position: relative;
+}
+
+#table table tbody tr th {
+}
+
+#table table tbody tr td {
+    background-color: #ADCCCB;
+}
+
+#table table tbody tr th .email {
+    color: #363636;
+    font-family: "Apercu", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0px;
+}
+
+#table table tbody tr td .role {
+    color: #718096;
+    font-family: "Apercu", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0px;
+}
+
+#table table tbody tr td:first-child {
+    border-radius: 12px 0px 0px 12px;
+}
+
+#table table tbody tr td:last-child {
+    border-radius: 0px 12px 12px 0px;
+}
+
+#table table tbody tr th:first-child {
+    border-radius: 12px 0px 0px 12px;
+}
+
+#table table tbody tr th:last-child {
+    border-radius: 0px 12px 12px 0px;
+}
+
+#table table .actions {
+    padding: 8px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+input.failure {
+    background-color: indianred;
+}

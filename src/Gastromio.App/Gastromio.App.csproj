@@ -43,6 +43,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Gastromio.Core\Gastromio.Core.csproj" />
     <ProjectReference Include="..\Gastromio.Notification.Mailjet\Gastromio.Notification.Mailjet.csproj" />
+    <ProjectReference Include="..\Gastromio.Notification.Sms77\Gastromio.Notification.Sms77.csproj" />
     <ProjectReference Include="..\Gastromio.Notification.Smtp\Gastromio.Notification.Smtp.csproj" />
     <ProjectReference Include="..\Gastromio.Persistence.MongoDB\Gastromio.Persistence.MongoDB.csproj" />
     <ProjectReference Include="..\Gastromio.Template.DotLiquid\Gastromio.Template.DotLiquid.csproj" />
@@ -68,7 +69,7 @@
     <ItemGroup>
       <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
       <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
         <RelativePath>%(DistFiles.Identity)</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>

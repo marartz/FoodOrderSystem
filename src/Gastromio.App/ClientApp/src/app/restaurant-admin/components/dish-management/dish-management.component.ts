@@ -23,7 +23,7 @@ import {debounceTime} from "rxjs/operators";
   templateUrl: './dish-management.component.html',
   styleUrls: [
     './dish-management.component.css',
-    '../../../../assets/css/frontend_v2.min.css',
+    '../../../../assets/css/frontend_v3.min.css',
     '../../../../assets/css/backend_v2.min.css'
   ]
 })
@@ -182,6 +182,14 @@ export class DishManagementComponent implements OnInit, OnDestroy {
     modalRef.result.then(() => {
     }, () => {
     });
+  }
+
+  public onEnableDishCategory(dishCategory: DishCategoryModel): void {
+    this.facade.enableDishCategory(dishCategory.id);
+  }
+
+  public onDisableDishCategory(dishCategory: DishCategoryModel): void {
+    this.facade.disableDishCategory(dishCategory.id);
   }
 
   public openRemoveDishCategoryForm(dishCategory: DishCategoryModel): void {

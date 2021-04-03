@@ -5,8 +5,8 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './imprint.component.html',
   styleUrls: [
     './imprint.component.css',
-    '../../../../assets/css/frontend_v2.min.css',
-    '../../../../assets/css/legal_v2.min.css'
+    '../../../../assets/css/frontend_v3.min.css',
+    '../../../../assets/css/legal.min.css'
   ]
 })
 

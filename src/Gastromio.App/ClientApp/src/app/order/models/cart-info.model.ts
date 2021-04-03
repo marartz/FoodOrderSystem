@@ -9,7 +9,7 @@ export class CartInfoModel {
     this.orderedDishes = this.orderedDishes?.map(dish => new OrderedDishInfoModel(dish));
   }
 
-  public orderType: string;
+  public orderType: number;
 
   public restaurantId: string;
 

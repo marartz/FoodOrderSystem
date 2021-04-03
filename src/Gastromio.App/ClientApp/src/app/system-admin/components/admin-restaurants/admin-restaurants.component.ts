@@ -1,7 +1,6 @@
 import {Component, OnInit, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 
-import {Subject} from 'rxjs';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import {Observable} from "rxjs";
 
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,9 +8,7 @@ import {RestaurantModel} from '../../../shared/models/restaurant.model';
 
 import {ServerPaginationComponent, FetchPageInfo} from '../../../shared/components/pagination/server-pagination.component';
 
-import {HttpErrorHandlingService} from '../../../shared/services/http-error-handling.service';
-
-import {RestaurantSysAdminService} from '../../services/restaurant-sys-admin.service';
+import {SystemAdminFacade} from "../../system-admin.facade";
 
 import {AddRestaurantComponent} from '../add-restaurant/add-restaurant.component';
 import {ChangeRestaurantAccessSettingsComponent} from "../change-restaurant-access-settings/change-restaurant-access-settings.component";
@@ -23,31 +20,31 @@ import {RemoveRestaurantComponent} from '../remove-restaurant/remove-restaurant.
   templateUrl: './admin-restaurants.component.html',
   styleUrls: [
     './admin-restaurants.component.css',
-    '../../../../assets/css/frontend_v2.min.css',
+    '../../../../assets/css/frontend_v3.min.css',
     '../../../../assets/css/backend_v2.min.css'
   ]
 })
 export class AdminRestaurantsComponent implements OnInit, AfterViewInit, OnDestroy {
+
   @ViewChild(ServerPaginationComponent) pagingComponent: ServerPaginationComponent;
   pageOfRestaurants: RestaurantModel[];
 
-  private searchPhrase: string;
-  private searchPhraseUpdated: Subject<string> = new Subject<string>();
+  public searchPhrase$: Observable<string>;
 
   constructor(
     private modalService: NgbModal,
-    private restaurantSysAdminService: RestaurantSysAdminService,
-    private httpErrorHandlingService: HttpErrorHandlingService
+    private facade: SystemAdminFacade
   ) {
-    this.searchPhraseUpdated.asObservable().pipe(debounceTime(200), distinctUntilChanged())
-      .subscribe((value: string) => {
-        this.searchPhrase = value;
-        this.pagingComponent.triggerFetchPage(1);
-      });
   }
 
   ngOnInit() {
-    this.searchPhrase = '';
+    this.searchPhrase$ = this.facade.getRestaurantSearchPhrase$();
+    this.searchPhrase$
+      .subscribe(
+        () => {
+          this.pagingComponent.triggerFetchPage(1);
+        }
+      );
   }
 
   ngAfterViewInit() {
@@ -56,15 +53,14 @@ export class AdminRestaurantsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnDestroy() {
-    this.searchPhraseUpdated?.unsubscribe();
   }
 
   onUpdateSearch(value: string) {
-    this.searchPhraseUpdated.next(value);
+    this.facade.setRestaurantSearchPhrase(value);
   }
 
   onFetchPage(info: FetchPageInfo) {
-    this.restaurantSysAdminService.searchForRestaurantsAsync(this.searchPhrase, info.skip, info.take)
+    this.facade.searchForRestaurants$(info.skip, info.take)
       .subscribe((result) => {
         this.pageOfRestaurants = result.items;
         this.pagingComponent.updatePaging(result.total, result.items.length);
@@ -108,38 +104,30 @@ export class AdminRestaurantsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onActivate(restaurant: RestaurantModel): void {
-    this.restaurantSysAdminService.activateRestaurantAsync(restaurant.id)
+    this.facade.activateRestaurant$(restaurant.id)
       .subscribe(() => {
         restaurant.isActive = true;
-      }, response => {
-        alert(this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors());
       });
   }
 
   onDeactivate(restaurant: RestaurantModel): void {
-    this.restaurantSysAdminService.deactivateRestaurantAsync(restaurant.id)
+    this.facade.deactivateRestaurant$(restaurant.id)
       .subscribe(() => {
         restaurant.isActive = false;
-      }, response => {
-        alert(this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors());
       });
   }
 
   onEnableSupport(restaurant: RestaurantModel): void {
-    this.restaurantSysAdminService.enableSupportForRestaurantAsync(restaurant.id)
+    this.facade.enableSupportForRestaurant$(restaurant.id)
       .subscribe(() => {
         restaurant.needsSupport = true;
-      }, response => {
-        alert(this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors());
       });
   }
 
   onDisableSupport(restaurant: RestaurantModel): void {
-    this.restaurantSysAdminService.disableSupportForRestaurantAsync(restaurant.id)
+    this.facade.disableSupportForRestaurant$(restaurant.id)
       .subscribe(() => {
         restaurant.needsSupport = false;
-      }, response => {
-        alert(this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors());
       });
   }
 

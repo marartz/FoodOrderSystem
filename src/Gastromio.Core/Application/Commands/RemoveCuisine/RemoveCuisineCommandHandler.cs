@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.Users;
 
 namespace Gastromio.Core.Application.Commands.RemoveCuisine
 {
@@ -35,7 +35,7 @@ namespace Gastromio.Core.Application.Commands.RemoveCuisine
                 restaurant.RemoveCuisine(command.CuisineId, currentUser.Id);
                 await restaurantRepository.StoreAsync(restaurant, cancellationToken);
             }
-            
+
             await cuisineRepository.RemoveAsync(command.CuisineId, cancellationToken);
 
             return SuccessResult<bool>.Create(true);

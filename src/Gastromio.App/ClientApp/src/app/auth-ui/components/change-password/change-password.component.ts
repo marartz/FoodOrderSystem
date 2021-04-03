@@ -13,7 +13,7 @@ import {ConfirmPasswordValidator} from '../../../auth/validators/password.valida
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
-  styleUrls: ['./change-password.component.css', '../../../../assets/css/frontend_v2.min.css', '../../../../assets/css/backend_v2.min.css']
+  styleUrls: ['./change-password.component.css', '../../../../assets/css/frontend_v3.min.css', '../../../../assets/css/backend_v2.min.css']
 })
 export class ChangePasswordComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;

@@ -1,65 +1,88 @@
+<block-ui delayStart="500">
 
-<div id="app">
-    <div id="backend">
+    <main id="backend">
 
-        <section id="hero">
-            <div class="wrapper">
-                <div class="inner">
-                    <div class="inner-wrapper">
-                        <div id="title">
-                            <div class="col">
-                                <span>Verwaltung</span>
-                                <h1>Meine Restaurants</h1>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <header id="header" style="min-height: 200px; padding-bottom: 20px;">
+            <div class="common-container">
+                <h1
+                    data-aos="gm-move-down"
+                    data-aos-anchor="#backend"
+                    data-aos-delay="100"
+                    data-aos-duration="800"
+                    data-aos-once="true"
+                >
+                    Admin Bereich
+                </h1>
+                <h3
+                    data-aos="gm-move-down"
+                    data-aos-anchor="#backend"
+                    data-aos-delay="400"
+                    data-aos-duration="800"
+                    data-aos-once="true"
+                >
+                    Hier können Sie Ihre Restaurants verwalten.
+                </h3>
             </div>
-        </section>
+        </header>
 
-        <section id="content">
-            <div class="wrapper">
-                <div class="inner">
-                    <div class="inner-wrapper">
+        <div class="common-container">
+            <section id="body">
 
-                        <div id="admin-users">
-                            <div class="col-lg-12">
-                                <div class="mb-5">
-                                    <div id="title">
-                                        <div class="col">
-                                            <h3>Restaurants verwalten</h3>
-                                            <p>Verwalte deine Restaurants oder aktualisiere den Status.</p>
-                                        </div>
+                <section
+                    data-aos="fade"
+                    data-aos-delay="800"
+                    data-aos-duration="1200"
+                    data-aos-once="false"
+                    id="page"
+                >
+
+                    <section
+                        data-aos="fade"
+                        data-aos-anchor="#page-restaurants"
+                        data-aos-delay="400"
+                        data-aos-duration="1000"
+                        data-aos-once="false"
+                        id="page-restaurants"
+                    >
+
+                        <section id="single-list">
+                            <ul>
+                                <li *ngFor="let restaurant of restaurants">
+                                    <div class="left">
+                                        <span class="name hasDetails">{{restaurant.name}} <span *ngIf="!restaurant.isActive">(inaktiv)</span></span>
+                                        <span class="details">{{restaurant.address.street}}, {{restaurant.address.city}}</span>
                                     </div>
-                                    <div id="table">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col" style="min-width: 240px;">Name</th>
-                                                    <th scope="col">Adresse</th>
-                                                    <th scope="col"></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let restaurant of restaurants">
-                                                    <th scope="row"><p class="email">{{restaurant.name}} <span *ngIf="!restaurant.isActive">(inaktiv)</span></p></th>
-                                                    <td><p class="role">{{restaurant.address.street}}<br />{{restaurant.address.zipCode}} {{restaurant.address.city}}</p></td>
-                                                    <td class="actions">
-                                                        <a [routerLink]="['/restaurants', restaurant.alias]" class="action-item" placement="top" ngbTooltip="Vorschau" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></a>
-                                                        <a [routerLink]="['/admin/restaurants', restaurant.alias]" class="action-item" placement="top" ngbTooltip="Bearbeiten"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <div class="right">
+                                        <button [routerLink]="['/restaurants', restaurant.alias]" class="action" *ngIf="restaurant.isActive"target="_blank">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                 stroke-linejoin="round" width="16" height="16">
+                                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                                <polyline points="15 3 21 3 21 9"></polyline>
+                                                <line x1="10" y1="14" x2="21" y2="3"></line>
+                                            </svg>
+                                        </button>
+                                        <button [routerLink]="['..', 'restaurants', restaurant.alias]" class="action">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none"
+                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                 stroke-linejoin="round" width="16" height="16">
+                                                <circle cx="16" cy="16" fill="none" id="XMLID_224_" r="4"/>
+                                                <path
+                                                    d="  M27.758,10.366l-1-1.732c-0.552-0.957-1.775-1.284-2.732-0.732L23.5,8.206C21.5,9.36,19,7.917,19,5.608V5c0-1.105-0.895-2-2-2h-2  c-1.105,0-2,0.895-2,2v0.608c0,2.309-2.5,3.753-4.5,2.598L7.974,7.902C7.017,7.35,5.794,7.677,5.242,8.634l-1,1.732  c-0.552,0.957-0.225,2.18,0.732,2.732L5.5,13.402c2,1.155,2,4.041,0,5.196l-0.526,0.304c-0.957,0.552-1.284,1.775-0.732,2.732  l1,1.732c0.552,0.957,1.775,1.284,2.732,0.732L8.5,23.794c2-1.155,4.5,0.289,4.5,2.598V27c0,1.105,0.895,2,2,2h2  c1.105,0,2-0.895,2-2v-0.608c0-2.309,2.5-3.753,4.5-2.598l0.526,0.304c0.957,0.552,2.18,0.225,2.732-0.732l1-1.732  c0.552-0.957,0.225-2.18-0.732-2.732L26.5,18.598c-2-1.155-2-4.041,0-5.196l0.526-0.304C27.983,12.546,28.311,11.323,27.758,10.366z"
+                                                    fill="none"/>
+                                            </svg>
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
+                                </li>
+                            </ul>
+                        </section>
 
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </section>
 
-    </div>
-</div>
+                </section>
+
+            </section>
+        </div>
+
+    </main>
+</block-ui>

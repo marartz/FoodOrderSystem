@@ -32,7 +32,9 @@ import {OrderRestaurantImprintComponent} from '../order-restaurant-imprint/order
   styleUrls: [
     './order-restaurant.component.css',
     '../../../../assets/css/frontend_v3.min.css',
-    '../../../../assets/css/frontend_v2.min.css'
+    '../../../../assets/css/components/_1_hero.min.css',
+	'../../../../assets/css/components/_2_action-bar.min.css',
+	'../../../../assets/css/components/_3_advanced-filter.min.css'
   ]
 })
 export class OrderRestaurantComponent implements OnInit, OnDestroy {
@@ -40,7 +42,7 @@ export class OrderRestaurantComponent implements OnInit, OnDestroy {
 
   url: string;
 
-  orderType: string;
+      orderType: string;
 
   generalError: string;
 
@@ -53,6 +55,8 @@ export class OrderRestaurantComponent implements OnInit, OnDestroy {
 
   searchPhrase: string;
   filteredDishCategories: DishCategoryModel[];
+
+  allowCart: boolean;
 
   proceedError: string;
 
@@ -103,6 +107,8 @@ export class OrderRestaurantComponent implements OnInit, OnDestroy {
           }
         }
 
+        this.allowCart = orderType !== OrderType.Reservation;
+
         const serviceTimeText = params.serviceTime;
         if (serviceTimeText) {
           try {
@@ -127,8 +133,6 @@ export class OrderRestaurantComponent implements OnInit, OnDestroy {
 
           if (!cart || cart.getOrderType() !== orderType || cart.getServiceTime() != serviceTime) {
             this.orderFacade.startOrder(orderType, serviceTime);
-          } else {
-            this.orderFacade.showCart();
           }
 
           this.filterDishCategories();
@@ -161,6 +165,11 @@ export class OrderRestaurantComponent implements OnInit, OnDestroy {
       return undefined;
     }
     return 'url(\'/api/v1/restaurants/' + this.restaurant.id + '/images/banner' + '\')';
+  }
+
+  showReservationValidFrom(): boolean {
+    const now = new Date();
+    return now < this.orderFacade.getStartDateOfReservation();
   }
 
   scrollToDishCategory(dishCategoryId: string): void {
@@ -256,6 +265,9 @@ export class OrderRestaurantComponent implements OnInit, OnDestroy {
   }
 
   public onAddDishToCart(dish: DishModel): void {
+    if (!this.allowCart)
+      return;
+
     if (dish === undefined || dish.variants === undefined || dish.variants.length === 0) {
       return;
     }
@@ -307,6 +319,15 @@ export class OrderRestaurantComponent implements OnInit, OnDestroy {
     }
     this.proceedError = undefined;
     this.router.navigateByUrl('/checkout');
+  }
+
+  public isReservationEnabled(): boolean {
+    return this.restaurant.reservationInfo?.enabled;
+  }
+
+  public hasExternalReservationSystem(): boolean {
+    return this.restaurant.reservationInfo.reservationSystemUrl &&
+      this.restaurant.reservationInfo.reservationSystemUrl.length > 0;
   }
 
   toggleCartVisibility(): void {

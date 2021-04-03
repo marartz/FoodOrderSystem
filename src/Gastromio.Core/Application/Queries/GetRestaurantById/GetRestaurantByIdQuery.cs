@@ -1,5 +1,4 @@
 ﻿using Gastromio.Core.Application.DTOs;
-using Gastromio.Core.Domain.Model.Restaurant;
 
 namespace Gastromio.Core.Application.Queries.GetRestaurantById
 {

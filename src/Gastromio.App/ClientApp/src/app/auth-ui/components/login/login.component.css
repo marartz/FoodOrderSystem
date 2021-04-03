@@ -1,5 +1,5 @@
-/* #login */
-#login {
+/* #forgot-password */
+#forgot-password {
     background-color: #363636;
     background-image: url('../../../../assets/images/rough/grey.png');
     background-repeat: repeat;
@@ -14,7 +14,7 @@
     z-index: 999;
 }
 
-#login .wrapper {
+#forgot-password .wrapper {
     background-color: #363636;
     display: flex;
     height: 100vh;
@@ -22,8 +22,8 @@
     width: 100vw;
 }
 
-/* #login > #back */
-#login #back {
+/* #forgot-password > #back */
+#forgot-password #back {
     background-color: #363636;
     border-bottom: 1px solid rgb(230, 230, 231);
     left: 0px;
@@ -34,7 +34,7 @@
     z-index: 2;
 }
 
-#login #back a {
+#forgot-password #back a {
     align-items: center;
     -moz-box-align: center;
     border-radius: 40px;
@@ -50,7 +50,7 @@
     -webkit-transition: all .3s ease;
 }
 
-#login #back a:hover {
+#forgot-password #back a:hover {
     transform: scale(1.03);
     -moz-transform: scale(1.03);
     -ms-transform: scale(1.03);
@@ -58,7 +58,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #back {
+    #forgot-password #back {
         background-color: unset;
         border: unset;
         left: 20px;
@@ -66,7 +66,7 @@
         top: 20px;
         width: auto;
     }
-    #login #back a {
+    #forgot-password #back a {
         background-color: #363636;
         box-shadow: rgba(255, 255, 255, 0.1) 0px 0px 15px 0px;
         height: 52px;
@@ -76,8 +76,8 @@
     }
 }
 
-/* #login > #left */
-#login #left {
+/* #forgot-password > #left */
+#forgot-password #left {
     align-items: flex-start;
     display: none;
     flex-direction: column;
@@ -88,7 +88,7 @@
     width: 100%;
 }
 
-#login #left .background-image {
+#forgot-password #left .background-image {
     background-image: url("https://images.unsplash.com/photo-1482049016688-2d3e1b311543?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop");
     background-size: cover;
     background-position: 50% 50%;
@@ -101,14 +101,14 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #left {
+    #forgot-password #left {
         display: inline-flex;
         width: 50%;
     }
 }
 
-/* #login > #right */
-#login #right {
+/* #forgot-password > #right */
+#forgot-password #right {
     position: relative;
     height: 100vh;
     display: inline-flex;
@@ -124,14 +124,14 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right {
+    #forgot-password #right {
         width: 50%;
         transform: translate(0px);
         transition: transform 800ms ease-in-out 0s;
     }
 }
 
-#login #right .form-wrapper {
+#forgot-password #right .form-wrapper {
     animation-name: fadeDownContent;
     animation-duration: 1000ms;
     animation-fill-mode: both;
@@ -152,7 +152,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right .form-wrapper {
+    #forgot-password #right .form-wrapper {
         -moz-box-pack: center;
         justify-content: center;
         padding: 0px 100px;
@@ -162,32 +162,32 @@
     }
 }
 
-#login #right .form-wrapper .form {
+#forgot-password #right .form-wrapper .form {
     overflow-y: auto;
     width: 100%;
     height: 100%;
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right .form-wrapper .form {
+    #forgot-password #right .form-wrapper .form {
         height: auto;
         max-height: 100%;
     }
 }
 
-#login #right .form-wrapper .form form {
+#forgot-password #right .form-wrapper .form form {
     width: 100%;
     max-width: 612px;
     margin-bottom: 140px;
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right .form-wrapper .form form {
+    #forgot-password #right .form-wrapper .form form {
         margin-bottom: 0px;
     }
 }
 
-#login #right .form-wrapper .form form h1 {
+#forgot-password #right .form-wrapper .form form h1 {
     margin: 0px;
     font-size: 22px;
     font-weight: 500;
@@ -198,7 +198,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right .form-wrapper .form form h1 {
+    #forgot-password #right .form-wrapper .form form h1 {
         font-size: 28px;
         font-weight: 500;
         line-height: 40px;
@@ -206,7 +206,7 @@
     }
 }
 
-#login #right .form-wrapper .form form .subtext {
+#forgot-password #right .form-wrapper .form form .subtext {
     font-size: 12px;
     font-weight: 400;
     letter-spacing: -0.12px;
@@ -217,7 +217,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right .form-wrapper .form form .subtext {
+    #forgot-password #right .form-wrapper .form form .subtext {
         font-size: 14px;
         font-weight: 400;
         line-height: 20px;
@@ -225,7 +225,7 @@
     }
 }
 
-#login #right form .input-wrapper {
+#forgot-password #right form .input-wrapper {
     padding: 16px 0px 16px;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -233,7 +233,7 @@
     gap: 16px 4%;
 }
 
-#login #right form .input-wrapper .input-100 {
+#forgot-password #right form .input-wrapper .input-100 {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: -0.14px;
@@ -245,7 +245,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right form .input-wrapper .input-100 {
+    #forgot-password #right form .input-wrapper .input-100 {
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
@@ -253,7 +253,7 @@
     }
 }
 
-#login #right form .input-wrapper .input-100 .input-root {
+#forgot-password #right form .input-wrapper .input-100 .input-root {
     width: 100%;
     z-index: 0;
     overflow: hidden;
@@ -267,7 +267,7 @@
     vertical-align: top;
 }
 
-#login #right form .input-wrapper .input-100 .input-root label {
+#forgot-password #right form .input-wrapper .input-100 .input-root label {
     transform: translate(18px, 10px) scale(0.75);
     color: #979ca6 !important;
     font-size: 16px;
@@ -284,7 +284,7 @@
     padding: 0;
 }
 
-#login #right form .input-wrapper .input-100 .input-root .inner-input {
+#forgot-password #right form .input-wrapper .input-100 .input-root .inner-input {
     width: 100%;
     border: 1px solid #FFF;
     height: 48px;
@@ -307,13 +307,13 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right form .input-wrapper .input-100 .input-root .inner-input {
+    #forgot-password #right form .input-wrapper .input-100 .input-root .inner-input {
         height: 56px;
         font-size: 16px;
     }
 }
 
-#login #right form .input-wrapper .input-100 .input-root .inner-input input {
+#forgot-password #right form .input-wrapper .input-100 .input-root .inner-input input {
     padding: 27px 18px 10px;
     font: inherit;
     color: currentColor;
@@ -331,7 +331,7 @@
     -webkit-tap-highlight-color: transparent;
 }
 
-#login #right form button.login-register {
+#forgot-password #right form button.forgot-password-register {
     box-sizing: border-box;
     display: inline-flex;
     -moz-box-align: center;
@@ -358,8 +358,13 @@
     font-family: "Apercu", sans-serif;
 }
 
+#forgot-password #right form button.forgot-password-register:disabled {
+    background-color: #E6E6E7;
+    cursor: default;
+}
+
 @media only screen and (min-width: 768px) {
-    #login #right form button.login-register {
+    #forgot-password #right form button.forgot-password-register {
         font-size: 16px;
         font-weight: 400;
         line-height: 20px;
@@ -367,7 +372,34 @@
     }
 }
 
-#login #right form .disclaimer {
+#forgot-password #right form .reset-info {
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: -0.12px;
+    line-height: 14px;
+    color: #FFF;
+    opacity: 0.75;
+    margin-bottom: 20px;
+    padding-top: 10px;
+    font-family: "Apercu", sans-serif;
+}
+
+@media only screen and (min-width: 768px) {
+    #forgot-password #right form .reset-info {
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 20px;
+        letter-spacing: -0.12px;
+    }
+}
+
+#forgot-password #right form .reset-info a {
+    color: #DECF80;
+    text-decoration: none;
+}
+
+
+#forgot-password #right form .disclaimer {
     font-size: 12px;
     font-weight: 300;
     letter-spacing: -0.12px;
@@ -379,7 +411,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-    #login #right form .disclaimer {
+    #forgot-password #right form .disclaimer {
         font-size: 14px;
         font-weight: 300;
         line-height: 20px;
@@ -387,37 +419,10 @@
     }
 }
 
-#login #right form .disclaimer a {
+#forgot-password #right form .disclaimer a {
     color: #DECF80;
     text-decoration: none;
 }
-
-#login #right form .forgot-password {
-    font-size: 12px;
-    font-weight: 300;
-    letter-spacing: -0.12px;
-    line-height: 14px;
-    color: #FFF;
-    margin-bottom: 40px;
-    padding-top: 10px;
-    font-family: "Apercu", sans-serif;
-}
-
-@media only screen and (min-width: 768px) {
-    #login #right form .forgot-password {
-        font-size: 14px;
-        font-weight: 300;
-        line-height: 20px;
-        letter-spacing: -0.12px;
-    }
-}
-
-#login #right form .forgot-password a {
-    color: #DECF80;
-    text-decoration: none;
-}
-
-
 
 
 
@@ -443,9 +448,9 @@
     color: #363636;
     font-size: 16px;
     opacity: 0;
-  }
+}
 
-  .icon {
+.icon {
     display: inline-block;
     color: inherit;
     fill: currentColor;
@@ -482,7 +487,6 @@
         opacity: 1
     }
 }
-
 
 @keyframes fadeDownContent {
     0% {

@@ -1,193 +1,231 @@
-<div id="admin-restaurant">
+<section
+		 data-aos="fade"
+		 data-aos-anchor="#page-opening-hours-settings"
+		 data-aos-delay="400"
+		 data-aos-duration="1000"
+		 data-aos-once="false"
+		 id="page-opening-hours-settings"
+		 >
 
-    <div class="form-header">
-        <div class="col"><h5>Regelmäßige Öffnungszeiten</h5></div>
-    </div>
+	<header class="section-header">
+		<h3>Öffnungszeiten</h3>
+		<p>Wann hat ihr Restaurant geöffnet?</p>
+	</header>
 
-    <div class="row">
-        <div class="col-md-12" id="table">
-            <table>
-                <thead>
-                <tr>
-                    <th scope="col" style="min-width: 120px;">Wochentag</th>
-                    <ng-container *ngFor="let column of (regularOpeningHoursViewModel$ | async).columns">
-                        <th scope="col">Beginn</th>
-                        <th scope="col">Ende</th>
-                        <th scope="col"></th>
-                    </ng-container>
-                    <th scope="col"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let regularOpeningDay of (regularOpeningHoursViewModel$ | async).weekDays">
-                    <th scope="row">
-                        <p class="email">{{regularOpeningDay.dayOfWeekText}}</p>
-                    </th>
-                    <ng-container *ngFor="let openingPeriod$ of regularOpeningDay.openingPeriods">
-                        <th scope="row">
-                            <div *ngIf="openingPeriod$.value !== undefined" class="form-input">
-                                <div class="input-group">
-                                    <input type="time" mozactionhint="next" autocapitalize="none" autocomplete="off"
-                                           inputmode="numeric" class="form-control"
-                                           [class.failure]="openingPeriod$.value.failure"
-                                           [value]="openingPeriod$.value.start"
-                                           (change)="changeStartOfRegular(openingPeriod$, $event.target.value)">
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="row">
-                            <div *ngIf="openingPeriod$.value !== undefined" class="form-input">
-                                <div class="input-group">
-                                    <input type="time" mozactionhint="next" autocapitalize="none" autocomplete="off"
-                                           inputmode="numeric" class="form-control"
-                                           [class.failure]="openingPeriod$.value.failure"
-                                           [value]="openingPeriod$.value.end"
-                                           (change)="changeEndOfRegular(openingPeriod$, $event.target.value)">
-                                </div>
-                            </div>
-                        </th>
-                        <td class="actions">
-                            <button *ngIf="openingPeriod$.value !== undefined"
-                               (click)="removeFromRegular(regularOpeningDay.dayOfWeek, openingPeriod$.value.column)"
-                               class="action-item red" placement="top" ngbTooltip="Löschen">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round" width="16" height="16">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path
-                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </ng-container>
-                    <td class="actions">
-                        <button (click)="addToRegular(regularOpeningDay.dayOfWeek)" class="action-item green" placement="top"
-                           ngbTooltip="Hinzufügen">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                 width="16" height="16">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<section id="settings">
+		<div class="row">
+			<div class="col-md-12" id="table">
+				<table>
+					<thead>
+						<tr>
+							<th scope="col" style="min-width: 120px;">Wochentag</th>
+							<ng-container *ngFor="let column of (regularOpeningHoursViewModel$ | async).columns">
+								<th scope="col">Beginn</th>
+								<th scope="col">Ende</th>
+								<th scope="col"></th>
+							</ng-container>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr *ngFor="let regularOpeningDay of (regularOpeningHoursViewModel$ | async).weekDays">
+						<th scope="row">
+							<p class="email">{{regularOpeningDay.dayOfWeekText}}</p>
+						</th>
+						<ng-container *ngFor="let openingPeriod$ of regularOpeningDay.openingPeriods">
+							<th scope="row">
+								<div *ngIf="openingPeriod$.value !== undefined" class="form-input">
+									<div class="input-group">
+										<input
+											   autocapitalize="none"
+											   autocomplete="off"
+											   class="form-control"
+											   inputmode="numeric"
+											   mozactionhint="next"
+											   style="border-radius: 23px;"
+											   type="time"
+											   [class.failure]="openingPeriod$.value.failure"
+											   [value]="openingPeriod$.value.start"
+											   (change)="changeStartOfRegular(openingPeriod$, $event.target.value)"
+											   >
+									</div>
+								</div>
+							</th>
+							<th scope="row">
+								<div *ngIf="openingPeriod$.value !== undefined" class="form-input">
+									<div class="input-group">
+										<input autocapitalize="none"
+											   autocomplete="off"
+											   class="form-control"
+											   inputmode="numeric"
+											   mozactionhint="next"
+											   style="border-radius: 23px;"
+											   type="time"
+											   [class.failure]="openingPeriod$.value.failure"
+											   [value]="openingPeriod$.value.end"
+											   (change)="changeEndOfRegular(openingPeriod$, $event.target.value)"
+											   >
+									</div>
+								</div>
+							</th>
+							<td class="actions">
+								<button *ngIf="openingPeriod$.value !== undefined"
+								   (click)="removeFromRegular(regularOpeningDay.dayOfWeek, openingPeriod$.value.column)"
+								   class="action-item red" placement="left" ngbTooltip="Löschen">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+										 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+										 stroke-linejoin="round" width="16" height="16" style="max-width: fit-content;">
+										<polyline points="3 6 5 6 21 6"></polyline>
+										<path
+											d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+										<line x1="10" y1="11" x2="10" y2="17"></line>
+										<line x1="14" y1="11" x2="14" y2="17"></line>
+									</svg>
+								</button>
+							</td>
+						</ng-container>
+						<td class="actions">
+							<button (click)="addToRegular(regularOpeningDay.dayOfWeek)" class="action-item green" placement="left"
+							   ngbTooltip="Hinzufügen">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+									 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+									 width="16" height="16" style="max-width: fit-content;">
+									<line x1="12" y1="5" x2="12" y2="19"></line>
+									<line x1="5" y1="12" x2="19" y2="12"></line>
+								</svg>
+							</button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
 
-    <div class="form-header">
-        <div class="col"><h5>Abweichende Öffnungszeiten</h5></div>
-    </div>
+	<header class="section-header">
+		<h3>Besondere Öffnungszeiten</h3>
+		<p>Wie sind die Öffnungszeiten ihres Restaurants bspw. an Feiertagen?</p>
+	</header>
 
-    <div class="row">
-        <div class="col-md-12" id="table">
-            <table>
-                <thead>
-                <tr>
-                    <th scope="col" style="min-width: 120px;">Tag</th>
-                    <th scope="col"></th>
-                    <ng-container *ngFor="let column of (deviatingOpeningHoursViewModel$ | async).columns">
-                        <th scope="col">Beginn</th>
-                        <th scope="col">Ende</th>
-                        <th scope="col"></th>
-                    </ng-container>
-                    <th scope="col" class="actions" style="text-align: right;">
-                        <button (click)="openAddDeviatingDateDialog()" class="action-item green" placement="top">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                 width="16" height="16">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                        </button>
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let deviatingOpeningDay of (deviatingOpeningHoursViewModel$ | async).dates">
-                    <th scope="row">
-                        <p class="email">{{deviatingOpeningDay.dateText}}</p>
-                    </th>
-                    <th>
-                        <ng-container *ngIf="hasDeviatingDateOpeningPeriods(deviatingOpeningDay)"><p class="email">Geöffnet</p></ng-container>
-                        <ng-container *ngIf="!hasDeviatingDateOpeningPeriods(deviatingOpeningDay)">
-                            <select [ngModel]="deviatingOpeningDay.status" (change)="changeStatusOfDeviatingDate(deviatingOpeningDay.date, $event.target.value)">
-                                <option value="closed">Geschlossen</option>
-                                <option value="fully-booked">Ausgebucht</option>
-                            </select>
-                        </ng-container>
-                    </th>
-                    <ng-container *ngFor="let openingPeriod$ of deviatingOpeningDay.openingPeriods">
-                        <th scope="row">
-                            <div *ngIf="openingPeriod$.value !== undefined" class="form-input">
-                                <div class="input-group">
-                                    <input type="time" mozactionhint="next" autocapitalize="none" autocomplete="off"
-                                           inputmode="numeric" class="form-control"
-                                           [class.failure]="openingPeriod$.value.failure"
-                                           [value]="openingPeriod$.value.start"
-                                           (change)="changeStartOfDeviating(openingPeriod$, $event.target.value)">
-                                </div>
-                            </div>
-                        </th>
-                        <th scope="row">
-                            <div *ngIf="openingPeriod$.value !== undefined" class="form-input">
-                                <div class="input-group">
-                                    <input type="time" mozactionhint="next" autocapitalize="none" autocomplete="off"
-                                           inputmode="numeric" class="form-control"
-                                           [class.failure]="openingPeriod$.value.failure"
-                                           [value]="openingPeriod$.value.end"
-                                           (change)="changeEndOfDeviating(openingPeriod$, $event.target.value)">
-                                </div>
-                            </div>
-                        </th>
-                        <td class="actions">
-                            <button *ngIf="openingPeriod$.value !== undefined"
-                               (click)="removeFromDeviating(deviatingOpeningDay.date, openingPeriod$.value.column)"
-                               class="action-item red" placement="top" ngbTooltip="Löschen">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                     stroke-linejoin="round" width="16" height="16">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path
-                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                </svg>
-                            </button>
-                        </td>
-                    </ng-container>
-                    <td class="actions">
-                        <button (click)="addToDeviating(deviatingOpeningDay.date)" class="action-item green"
-                           placement="top" ngbTooltip="Hinzufügen">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 width="16" height="16">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                        </button>
-                        <button (click)="removeDeviatingDate(deviatingOpeningDay.date)"
-                           class="action-item red" placement="top" ngbTooltip="Löschen">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                 stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" width="16" height="16">
-                                <polyline points="3 6 5 6 21 6"></polyline>
-                                <path
-                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                <line x1="10" y1="11" x2="10" y2="17"></line>
-                                <line x1="14" y1="11" x2="14" y2="17"></line>
-                            </svg>
-                        </button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<section id="settings">
+		<div class="row">
+			<div class="col-md-12" id="table">
+				<table>
+					<thead>
+						<tr>
+							<th scope="col" style="min-width: 120px;">Tag</th>
+							<th scope="col"></th>
+							<ng-container *ngFor="let column of (deviatingOpeningHoursViewModel$ | async).columns">
+								<th scope="col">Beginn</th>
+								<th scope="col">Ende</th>
+								<th scope="col"></th>
+							</ng-container>
+							<th scope="col" class="actions" style="text-align: right;">
+								<button (click)="openAddDeviatingDateDialog()" class="action-item green" placement="top">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+										 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+										 width="16" height="16" style="max-width: fit-content;">
+										<line x1="12" y1="5" x2="12" y2="19"></line>
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+									</svg>
+								</button>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr *ngFor="let deviatingOpeningDay of (deviatingOpeningHoursViewModel$ | async).dates">
+						<th scope="row">
+							<p class="email">{{deviatingOpeningDay.dateText}}</p>
+						</th>
+						<th>
+							<ng-container *ngIf="hasDeviatingDateOpeningPeriods(deviatingOpeningDay)"><p class="email">Geöffnet</p></ng-container>
+							<ng-container *ngIf="!hasDeviatingDateOpeningPeriods(deviatingOpeningDay)">
+								<select [ngModel]="deviatingOpeningDay.status" (change)="changeStatusOfDeviatingDate(deviatingOpeningDay.date, $event.target.value)">
+									<option value="closed">Geschlossen</option>
+									<option value="fully-booked">Ausgebucht</option>
+								</select>
+							</ng-container>
+						</th>
+						<ng-container *ngFor="let openingPeriod$ of deviatingOpeningDay.openingPeriods">
+							<th scope="row">
+								<div *ngIf="openingPeriod$.value !== undefined" class="form-input">
+									<div class="input-group">
+										<input autocapitalize="none"
+											   autocomplete="off"
+											   class="form-control"
+											   inputmode="numeric"
+											   mozactionhint="next"
+											   style="border-radius: 23px;"
+											   type="time"
+											   [class.failure]="openingPeriod$.value.failure"
+											   [value]="openingPeriod$.value.start"
+											   (change)="changeStartOfDeviating(openingPeriod$, $event.target.value)"
+											   >
+									</div>
+								</div>
+							</th>
+							<th scope="row">
+								<div *ngIf="openingPeriod$.value !== undefined" class="form-input">
+									<div class="input-group">
+										<input autocapitalize="none"
+											   autocomplete="off"
+											   class="form-control"
+											   inputmode="numeric"
+											   mozactionhint="next"
+											   style="border-radius: 23px;"
+											   type="time"
+											   [class.failure]="openingPeriod$.value.failure"
+											   [value]="openingPeriod$.value.end"
+											   (change)="changeEndOfDeviating(openingPeriod$, $event.target.value)"
+											   >
+									</div>
+								</div>
+							</th>
+							<td class="actions">
+								<button *ngIf="openingPeriod$.value !== undefined"
+								   (click)="removeFromDeviating(deviatingOpeningDay.date, openingPeriod$.value.column)"
+								   class="action-item red" placement="left" ngbTooltip="Löschen">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+										 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+										 stroke-linejoin="round" width="16" height="16" style="max-width: fit-content;">
+										<polyline points="3 6 5 6 21 6"></polyline>
+										<path
+											d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+										<line x1="10" y1="11" x2="10" y2="17"></line>
+										<line x1="14" y1="11" x2="14" y2="17"></line>
+									</svg>
+								</button>
+							</td>
+						</ng-container>
+						<td class="actions">
+							<button (click)="addToDeviating(deviatingOpeningDay.date)" class="action-item green"
+							   placement="left" ngbTooltip="Hinzufügen">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+									 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									 stroke-linejoin="round"
+									 width="16" height="16" style="max-width: fit-content;">
+									<line x1="12" y1="5" x2="12" y2="19"></line>
+									<line x1="5" y1="12" x2="19" y2="12"></line>
+								</svg>
+							</button>
+							<button (click)="removeDeviatingDate(deviatingOpeningDay.date)"
+							   class="action-item red" placement="left" ngbTooltip="Löschen">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+									 stroke="currentColor" stroke-width="2" stroke-linecap="round"
+									 stroke-linejoin="round" width="16" height="16" style="max-width: fit-content;">
+									<polyline points="3 6 5 6 21 6"></polyline>
+									<path
+										d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+									<line x1="10" y1="11" x2="10" y2="17"></line>
+									<line x1="14" y1="11" x2="14" y2="17"></line>
+								</svg>
+							</button>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
 
-</div>
+</section>

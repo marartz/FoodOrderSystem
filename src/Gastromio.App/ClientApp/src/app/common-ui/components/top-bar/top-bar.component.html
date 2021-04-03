@@ -1,46 +1,39 @@
-<header id="top-bar">
-    <div class="wrapper">
-        <div id="logo">
-            <a [routerLink]="['/']">
-                <img src="../../assets/images/logo/logo.svg" alt="Gastromio Logo">
-                Gastromio<span>.de</span>
-            </a>
-        </div>
-        <div id="menu" ngbDropdown>
-            <a class="link" *ngIf="getUserEmail() === undefined" [routerLink]="['/login']">Anmelden</a>
+<header
+		data-aos="gm-move-down"
+		data-aos-duration="500"
+		data-aos-once="true"
+		id="top-bar"
+		>
+    <div class="common-container">
+		<nav class="sitenav">
+			<a class="logo" [routerLink]="['/']"></a>
+			<ul class="links">
+				<!-- START: Benutzer abgemeldet -->
+				<ng-container *ngIf="getUserEmail() === undefined">
+					<a class="login" [routerLink]="['/login']">Anmelden</a>
+				</ng-container>
+				<!-- ENDE: Benutzer abgemeldet -->
 
-            <ng-container *ngIf="getUserEmail() !== undefined">
-                <a class="link" id="userDropDown" ngbDropdownToggle>
-                    <ng-container *ngIf="isSystemAdmin()">Administration&nbsp;</ng-container>
-                    <ng-container *ngIf="isRestaurantAdmin()">Meine Restaurants&nbsp;</ng-container>
-                </a>
-                <div class="dropdown-menu" id="userDropDown" ngbDropdownMenu aria-labelledby="userDropDown">
+				<!-- START: Benutzer angemeldet -->
+				<ng-container *ngIf="getUserEmail() !== undefined">
+					<ng-container *ngIf="isSystemAdmin()">
+						<a class="login logged_in" [routerLink]="['/admin/users']">
+                            <svg style="display: inline-block;" width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" fill="none" id="XMLID_224_" r="4"/><path d="  M27.758,10.366l-1-1.732c-0.552-0.957-1.775-1.284-2.732-0.732L23.5,8.206C21.5,9.36,19,7.917,19,5.608V5c0-1.105-0.895-2-2-2h-2  c-1.105,0-2,0.895-2,2v0.608c0,2.309-2.5,3.753-4.5,2.598L7.974,7.902C7.017,7.35,5.794,7.677,5.242,8.634l-1,1.732  c-0.552,0.957-0.225,2.18,0.732,2.732L5.5,13.402c2,1.155,2,4.041,0,5.196l-0.526,0.304c-0.957,0.552-1.284,1.775-0.732,2.732  l1,1.732c0.552,0.957,1.775,1.284,2.732,0.732L8.5,23.794c2-1.155,4.5,0.289,4.5,2.598V27c0,1.105,0.895,2,2,2h2  c1.105,0,2-0.895,2-2v-0.608c0-2.309,2.5-3.753,4.5-2.598l0.526,0.304c0.957,0.552,2.18,0.225,2.732-0.732l1-1.732  c0.552-0.957,0.225-2.18-0.732-2.732L26.5,18.598c-2-1.155-2-4.041,0-5.196l0.526-0.304C27.983,12.546,28.311,11.323,27.758,10.366z" fill="none"/></svg>
+                        </a>
+					</ng-container>
+					<ng-container *ngIf="isRestaurantAdmin()">
+						<a class="login logged_in" [routerLink]="['/admin/myrestaurants']">
+                            <svg style="display: inline-block;" width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="16" cy="16" fill="none" id="XMLID_224_" r="4"/><path d="  M27.758,10.366l-1-1.732c-0.552-0.957-1.775-1.284-2.732-0.732L23.5,8.206C21.5,9.36,19,7.917,19,5.608V5c0-1.105-0.895-2-2-2h-2  c-1.105,0-2,0.895-2,2v0.608c0,2.309-2.5,3.753-4.5,2.598L7.974,7.902C7.017,7.35,5.794,7.677,5.242,8.634l-1,1.732  c-0.552,0.957-0.225,2.18,0.732,2.732L5.5,13.402c2,1.155,2,4.041,0,5.196l-0.526,0.304c-0.957,0.552-1.284,1.775-0.732,2.732  l1,1.732c0.552,0.957,1.775,1.284,2.732,0.732L8.5,23.794c2-1.155,4.5,0.289,4.5,2.598V27c0,1.105,0.895,2,2,2h2  c1.105,0,2-0.895,2-2v-0.608c0-2.309,2.5-3.753,4.5-2.598l0.526,0.304c0.957,0.552,2.18,0.225,2.732-0.732l1-1.732  c0.552-0.957,0.225-2.18-0.732-2.732L26.5,18.598c-2-1.155-2-4.041,0-5.196l0.526-0.304C27.983,12.546,28.311,11.323,27.758,10.366z" fill="none"/></svg>
+                        </a>
+					</ng-container>
+                    <a class="change-password" [routerLink]="['/changepassword']" tabindex="0">Passwort ändern</a>
+                    <a class="login logged_in" (click)="logout()" style="margin-left: 15px; white-space: nowrap;">
+                        <svg style="display: inline-block;" width="30" height="30" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line class="cls-1" x1="15.92" x2="28.92" y1="16" y2="16"/><path d="M23.93,25v3h-16V4h16V7h2V3a1,1,0,0,0-1-1h-18a1,1,0,0,0-1,1V29a1,1,0,0,0,1,1h18a1,1,0,0,0,1-1V25Z"/><line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="20"/><line class="cls-1" x1="28.92" x2="24.92" y1="16" y2="12"/><line class="cls-1" x1="24.92" x2="24.92" y1="8.09" y2="6.09"/><line class="cls-1" x1="24.92" x2="24.92" y1="26" y2="24"/></svg>
+                    </a>
+				</ng-container>
+				<!-- ENDE: Benutzer angemeldet -->
 
-                    <li class="menu--heading">
-                        <ng-container *ngIf="isSystemAdmin()">Systemverwaltung</ng-container>
-                        <ng-container *ngIf="isRestaurantAdmin()">Restaurantverwaltung</ng-container>
-                    </li>
-
-                    <ng-container *ngIf="isSystemAdmin()">
-                        <li role="menuitem"><a class="menu--content" [routerLink]="['/admin/users']" tabindex="0">Benutzer verwalten</a></li>
-                        <li role="menuitem"><a class="menu--content" [routerLink]="['/admin/cuisines']" tabindex="0">Cuisines verwalten</a></li>
-                        <li role="menuitem"><a class="menu--content" [routerLink]="['/admin/restaurants']" tabindex="0">Restaurants verwalten</a></li>
-                        <li role="menuitem"><a class="menu--content" [routerLink]="['/admin/restaurantimport']" tabindex="0">Restaurantimport</a></li>
-                        <li role="menuitem"><a class="menu--content" [routerLink]="['/admin/dishimport']" tabindex="0">Speisenimport</a></li>
-                    </ng-container>
-
-                    <ng-container *ngIf="isRestaurantAdmin()">
-                        <li role="menuitem"><a class="menu--content" [routerLink]="['/admin/myrestaurants']" tabindex="0">Meine Restaurants</a></li>
-                    </ng-container>
-
-                    <li role="menuitem"><a class="menu--content" [routerLink]="['/changepassword']" tabindex="0">Passwort ändern</a></li>
-                    <li role="menuitem"><a class="menu--content" (click)="logout()" tabindex="0">Abmelden</a></li>
-
-                </div>
-            </ng-container>
-
-            <a class="link" *ngIf="isOnOrderPage()" (click)="toggleCartVisibility()">Warenkorb</a>
-            <a class="link" *ngIf="!isOnOrderPage() && getCurRestaurantId() !== undefined" [routerLink]="['/restaurants', getCurRestaurantId()]">Warenkorb</a>
-        </div>
-    </div>
+			</ul>
+		</nav>
+	</div>
 </header>

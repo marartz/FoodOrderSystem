@@ -27,6 +27,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastromio.Notification.Smtp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastromio.Notification.Mailjet.Tests", "test\Gastromio.Notification.Mailjet.Tests\Gastromio.Notification.Mailjet.Tests.csproj", "{B8276A19-CA64-4809-A5A9-DAB173EFF016}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastromio.Domain.TestKit", "test\Gastromio.Domain.TestKit\Gastromio.Domain.TestKit.csproj", "{88E26607-76EA-4F88-824B-4FD20EBE3AE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastromio.Notification.Sms77", "src\Gastromio.Notification.Sms77\Gastromio.Notification.Sms77.csproj", "{3D59FDFD-FEF3-40A7-B280-8CCFB3E9233E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gastromio.Notification.Sms77.Tests", "test\Gastromio.Notification.Sms77.Tests\Gastromio.Notification.Sms77.Tests.csproj", "{DBB1E76B-EAFB-49B6-B211-8560EB0EF905}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +79,18 @@ Global
 		{B8276A19-CA64-4809-A5A9-DAB173EFF016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8276A19-CA64-4809-A5A9-DAB173EFF016}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8276A19-CA64-4809-A5A9-DAB173EFF016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88E26607-76EA-4F88-824B-4FD20EBE3AE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88E26607-76EA-4F88-824B-4FD20EBE3AE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88E26607-76EA-4F88-824B-4FD20EBE3AE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88E26607-76EA-4F88-824B-4FD20EBE3AE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D59FDFD-FEF3-40A7-B280-8CCFB3E9233E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D59FDFD-FEF3-40A7-B280-8CCFB3E9233E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D59FDFD-FEF3-40A7-B280-8CCFB3E9233E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D59FDFD-FEF3-40A7-B280-8CCFB3E9233E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB1E76B-EAFB-49B6-B211-8560EB0EF905}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB1E76B-EAFB-49B6-B211-8560EB0EF905}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB1E76B-EAFB-49B6-B211-8560EB0EF905}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB1E76B-EAFB-49B6-B211-8560EB0EF905}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -91,5 +109,8 @@ Global
 		{E5678086-E8A1-4885-8700-A72652C5C7FA} = {F468EC0A-00FC-4B26-B729-858B21687576}
 		{A31B855F-072F-488A-BBBE-63EE3DF0DB55} = {FADF6549-FC27-40AB-8DBF-B185760560D9}
 		{B8276A19-CA64-4809-A5A9-DAB173EFF016} = {F468EC0A-00FC-4B26-B729-858B21687576}
+		{88E26607-76EA-4F88-824B-4FD20EBE3AE3} = {F468EC0A-00FC-4B26-B729-858B21687576}
+		{3D59FDFD-FEF3-40A7-B280-8CCFB3E9233E} = {FADF6549-FC27-40AB-8DBF-B185760560D9}
+		{DBB1E76B-EAFB-49B6-B211-8560EB0EF905} = {F468EC0A-00FC-4B26-B729-858B21687576}
 	EndGlobalSection
 EndGlobal

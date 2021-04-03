@@ -1,5 +1,5 @@
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.Restaurant;
+using Gastromio.Core.Domain.Model.Restaurants;
 
 namespace Gastromio.Core.Application.Commands.ChangeDeviatingOpeningDayStatusOfRestaurant
 {
@@ -12,7 +12,7 @@ namespace Gastromio.Core.Application.Commands.ChangeDeviatingOpeningDayStatusOfR
             Date = date;
             Status = status;
         }
-        
+
         public RestaurantId RestaurantId { get; }
         public Date Date { get; }
         public DeviatingOpeningDayStatus Status { get; }

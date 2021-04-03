@@ -5,6 +5,7 @@ import {RouterModule} from '@angular/router';
 import {HttpErrorHandlingService} from './services/http-error-handling.service';
 import {ClientPaginationComponent} from './components/pagination/client-pagination.component';
 import {ServerPaginationComponent} from './components/pagination/server-pagination.component';
+import {ScrollableNavBarComponent} from "./components/scrollable-nav-bar/scrollable-nav-bar.component";
 
 @NgModule({
   imports: [
@@ -13,14 +14,16 @@ import {ServerPaginationComponent} from './components/pagination/server-paginati
   ],
   declarations: [
     ClientPaginationComponent,
-    ServerPaginationComponent
+    ServerPaginationComponent,
+    ScrollableNavBarComponent
   ],
   providers: [
     HttpErrorHandlingService
   ],
   exports: [
     ClientPaginationComponent,
-    ServerPaginationComponent
+    ServerPaginationComponent,
+    ScrollableNavBarComponent
   ]
 })
 export class SharedModule {

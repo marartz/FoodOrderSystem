@@ -1,21 +1,52 @@
 <block-ui>
     <div id="root">
-        <div class="layout">
+        <div class="layout" style="background-color: #ADCCCB; background-image: url('../../../../assets/images/rough/blue.png'); background-repeat: repeat;">
 
             <div id="fp-alert" *ngIf="generalError !== undefined"><p>{{generalError}}</p></div>
 
             <header class="checkout-header" *ngIf="initialized">
-                <h1>Kasse</h1>
-                <h2>Deine Bestellung bei „{{restaurant.name}}“</h2>
-                <h3>{{getCart().getOrderTypeText()}} &ndash; etwa {{getCart().getAverageTime()}} Minuten</h3>
+                <h1
+					data-aos="gm-move-down"
+					data-aos-delay="100"
+					data-aos-duration="800"
+					data-aos-once="true"
+					>
+					Kasse
+				</h1>
+                <h2
+					data-aos="gm-move-down"
+					data-aos-delay="300"
+					data-aos-duration="800"
+					data-aos-once="true"
+					>
+					Deine Bestellung bei „{{restaurant.name}}“
+				</h2>
+                <h3
+					data-aos="gm-move-down"
+					data-aos-delay="600"
+					data-aos-duration="800"
+					data-aos-once="true"
+					>
+					{{getCart().getOrderTypeText()}} &ndash; etwa {{getCart().getAverageTime()}} Minuten
+				</h3>
             </header>
 
-            <div id="checkout" *ngIf="initialized">
+			<section class="common-container" style="align-items: center; justify-content: center; align-content: center; margin-left: auto; margin-right: auto;">
+				<div id="checkout" *ngIf="initialized">
                 <div id="body" class="info">
 
-                    <section id="infocard">
-                        <h3 *ngIf="getCart().isPickup()" class="title">Abholzeit</h3>
-                        <h3 *ngIf="getCart().isDelivery()" class="title">Lieferzeit</h3>
+                    <section
+							 data-aos="gm-move-down"
+							 data-aos-anchor="#checkout"
+							 data-aos-delay="700"
+							 data-aos-duration="800"
+							 data-aos-once="true"
+							 id="infocard"
+							 >
+                        <h3 class="title">
+							<ng-container *ngIf="getCart().isPickup()">Abholzeit</ng-container>
+							<ng-container *ngIf="getCart().isDelivery()">Lieferzeit</ng-container>
+						</h3>
 
                         <ng-container *ngIf="!restaurant.isOpen(undefined)">
                             <h4 class="subtitle">
@@ -36,6 +67,13 @@
                                     <span>{{restaurant.deviatingOpeningHoursText}}.</span>
                                 </ng-container>
                             </h4>
+
+                            <button type="button" class="pill" [class.active]="!serviceTime" (click)="onAsFastAsPossible()" style="background-color: #FFF !important;">
+                                Telefonische Bestellung:
+                                <svg fill="none" width="16" height="16" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" style="display: inline;" xmlns="http://www.w3.org/2000/svg"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                <ng-container *ngIf="!isPhoneNumberVisible"><button type="button" (click)="showPhone()" style="font-style: italic">anzeigen</button></ng-container>
+                                <ng-container *ngIf="isPhoneNumberVisible">&nbsp;<a href="tel:{{restaurant.contactInfo.phone}}">{{restaurant.contactInfo.phone}}</a></ng-container>
+                            </button>
 
                             <button *ngIf="restaurant.supportedOrderMode !== 'phone'" type="button" class="pill" [class.active]="serviceTime" (click)="onSelectServiceTime()">
                                 <span>Online-Vorbestellung</span>
@@ -90,7 +128,15 @@
 
                     <!-- Pickup -->
 
-                    <section *ngIf="getCart().isPickup()" id="infocard">
+                    <section
+							 data-aos="gm-move-down"
+							 data-aos-anchor="#checkout"
+							 data-aos-delay="800"
+							 data-aos-duration="800"
+							 data-aos-once="true"
+							 id="infocard"
+							 *ngIf="serviceTime && getCart().isPickup()"
+							 >
                         <h3 class="title">Deine Daten</h3>
                         <h4 class="subtitle">Wie kann das Restaurant Dich kontaktieren?</h4>
 
@@ -143,7 +189,11 @@
 
                     <!-- Delivery -->
 
-                    <section *ngIf="getCart().isDelivery()" id="infocard">
+                    <section *ngIf="serviceTime && getCart().isDelivery()" id="infocard" data-aos="gm-move-down"
+							 data-aos-anchor="#checkout"
+							 data-aos-delay="900"
+							 data-aos-duration="800"
+							 data-aos-once="true">
                         <h3 class="title">Lieferadresse</h3>
                         <h4 class="subtitle">Wohin soll Deine Bestellung geliefert werden?</h4>
 
@@ -227,7 +277,14 @@
                                placeholder="z.B. „Statt klingeln, bitte kurz anrufen.“" id="comments"/>
                     </section>
 
-                    <section id="infocard">
+                    <section *ngIf="serviceTime"
+                             id="infocard"
+							 data-aos="gm-move-down"
+							 data-aos-anchor="#checkout"
+							 data-aos-delay="1000"
+							 data-aos-duration="800"
+							 data-aos-once="true"
+							 >
                         <h3 class="title">Zahlungsmethode</h3>
                         <h4 class="subtitle">Wie möchtest du bezahlen? Weitere Zahlungsarten in Bearbeitung und
                             werden in Zukunft folgen.</h4>
@@ -240,10 +297,11 @@
                             <div>{{getPaymentError()}}</div>
                         </div>
                     </section>
-                    <button class="confirm-purchase" (click)="onCheckout()"
+
+                    <button *ngIf="serviceTime" class="confirm-purchase" (click)="onCheckout()"
                             [disabled]="getServiceTimeError() !== undefined">Kostenpflichtig bestellen
                     </button>
-                    <section id="disclaimer">
+                    <section *ngIf="serviceTime" id="disclaimer">
                         <p>
                             Mit dem Kauf stimmst Du unserer <a [routerLink]="['/privacy-policy']" target="_blank">Datenschutzerklärung</a>
                             zu.<br/><br/>
@@ -254,7 +312,14 @@
                         </p>
                     </section>
                 </div>
-                <div id="body" class="cart">
+                <div
+					 class="cart"
+					 data-aos="gm-move-down"
+					 data-aos-delay="700"
+					 data-aos-duration="800"
+					 data-aos-once="true"
+					 id="body"
+					 >
                     <section id="cart">
                         <h3 class="title">Warenkorb</h3>
                         <div id="dishes">
@@ -301,6 +366,8 @@
                 </div>
 
             </div>
+			</section>
+
 
         </div>
     </div>

@@ -1,4 +1,4 @@
-﻿using Gastromio.Core.Domain.Model.Dish;
+﻿using Gastromio.Core.Domain.Model.Dishes;
 
 namespace Gastromio.Core.Application.Commands.DecOrderOfDish
 {
@@ -8,7 +8,7 @@ namespace Gastromio.Core.Application.Commands.DecOrderOfDish
         {
             DishId = dishId;
         }
-        
-        public DishId DishId { get; } 
+
+        public DishId DishId { get; }
     }
 }

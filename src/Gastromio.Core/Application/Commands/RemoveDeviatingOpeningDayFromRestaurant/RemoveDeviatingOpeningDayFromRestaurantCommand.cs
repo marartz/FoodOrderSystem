@@ -1,6 +1,6 @@
 using System;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.Restaurant;
+using Gastromio.Core.Domain.Model.Restaurants;
 
 namespace Gastromio.Core.Application.Commands.RemoveDeviatingOpeningDayFromRestaurant
 {
@@ -11,7 +11,7 @@ namespace Gastromio.Core.Application.Commands.RemoveDeviatingOpeningDayFromResta
             RestaurantId = restaurantId;
             Date = date;
         }
-        
+
         public RestaurantId RestaurantId { get; }
         public Date Date { get; }
     }

@@ -56,24 +56,4 @@ export class TopBarComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  isOnOrderPage(): boolean {
-    return this.router.url.startsWith('/restaurants/');
-  }
-
-  getCurRestaurantId(): string {
-    const cart = this.orderFacade.getCart();
-    return cart?.getRestaurantId();
-  }
-
-  toggleCartVisibility(): void {
-    const cart = this.orderFacade.getCart();
-    if (!cart) {
-      return;
-    }
-    if (cart.isVisible()) {
-      this.orderFacade.hideCart();
-    } else {
-      this.orderFacade.showCart();
-    }
-  }
 }

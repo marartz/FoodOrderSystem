@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using Gastromio.Core.Application.DTOs;
 using Gastromio.Core.Application.Ports.Persistence;
 using Gastromio.Core.Common;
-using Gastromio.Core.Domain.Model.Dish;
-using Gastromio.Core.Domain.Model.Order;
-using Gastromio.Core.Domain.Model.PaymentMethod;
-using Gastromio.Core.Domain.Model.Restaurant;
-using Gastromio.Core.Domain.Model.User;
+using Gastromio.Core.Domain.Model.DishCategories;
+using Gastromio.Core.Domain.Model.Dishes;
+using Gastromio.Core.Domain.Model.Orders;
+using Gastromio.Core.Domain.Model.PaymentMethods;
+using Gastromio.Core.Domain.Model.Restaurants;
+using Gastromio.Core.Domain.Model.Users;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -20,16 +21,19 @@ namespace Gastromio.Core.Application.Commands.Checkout
     {
         private readonly ILogger<CheckoutCommandHandler> logger;
         private readonly IRestaurantRepository restaurantRepository;
+        private readonly IDishCategoryRepository dishCategoryRepository;
         private readonly IDishRepository dishRepository;
         private readonly IPaymentMethodRepository paymentMethodRepository;
         private readonly IOrderRepository orderRepository;
 
         public CheckoutCommandHandler(ILogger<CheckoutCommandHandler> logger,
-            IRestaurantRepository restaurantRepository, IDishRepository dishRepository,
-            IPaymentMethodRepository paymentMethodRepository, IOrderRepository orderRepository)
+            IRestaurantRepository restaurantRepository, IDishCategoryRepository dishCategoryRepository,
+            IDishRepository dishRepository, IPaymentMethodRepository paymentMethodRepository,
+            IOrderRepository orderRepository)
         {
             this.logger = logger;
             this.restaurantRepository = restaurantRepository;
+            this.dishCategoryRepository = dishCategoryRepository;
             this.dishRepository = dishRepository;
             this.paymentMethodRepository = paymentMethodRepository;
             this.orderRepository = orderRepository;
@@ -44,7 +48,7 @@ namespace Gastromio.Core.Application.Commands.Checkout
             var newOrderId = new OrderId(Guid.NewGuid());
 
             var commandJson = JsonConvert.SerializeObject(command);
-            
+
             logger.LogInformation($"Received order request {newOrderId.Value}: {commandJson}");
 
             Restaurant restaurant;
@@ -79,6 +83,8 @@ namespace Gastromio.Core.Application.Commands.Checkout
 
             decimal totalPrice = 0;
 
+            var dishCategoryDict = new Dictionary<DishCategoryId, DishCategory>();
+
             var dishDict = new Dictionary<Guid, Dish>();
             var variantDict = new Dictionary<Guid, DishVariant>();
             foreach (var cartDish in command.CartDishes)
@@ -94,6 +100,23 @@ namespace Gastromio.Core.Application.Commands.Checkout
                 if (dish.RestaurantId != restaurant.Id)
                 {
                     logger.LogInformation($"Declined order {newOrderId.Value}: dish does not belong to restaurant");
+                    return FailureResult<OrderDTO>.Create(FailureResultCode.OrderIsInvalid);
+                }
+
+                if (!dishCategoryDict.TryGetValue(dish.CategoryId, out var dishCategory))
+                {
+                    dishCategory =
+                        await dishCategoryRepository.FindByDishCategoryIdAsync(dish.CategoryId, cancellationToken);
+                    dishCategoryDict.Add(dish.CategoryId, dishCategory);
+                }
+                if (dishCategory == null)
+                {
+                    logger.LogInformation($"Declined order {newOrderId.Value}: dish category not found");
+                    return FailureResult<OrderDTO>.Create(FailureResultCode.OrderIsInvalid);
+                }
+                if (!dishCategory.Enabled)
+                {
+                    logger.LogInformation($"Declined order {newOrderId.Value}: dish category is disabled");
                     return FailureResult<OrderDTO>.Create(FailureResultCode.OrderIsInvalid);
                 }
 
@@ -149,7 +172,7 @@ namespace Gastromio.Core.Application.Commands.Checkout
 
                     break;
                 case OrderType.Reservation:
-                    if (!ValidateOrderTypeReservation(restaurant, newOrderId))
+                    if (!ValidateOrderTypeReservation(command, newOrderId, restaurant))
                     {
                         logger.LogInformation($"Declined order {newOrderId.Value}: reservation order is not valid");
                         return FailureResult<OrderDTO>.Create(FailureResultCode.OrderIsInvalid);
@@ -160,19 +183,24 @@ namespace Gastromio.Core.Application.Commands.Checkout
                     throw new ArgumentOutOfRangeException();
             }
 
-            var serviceTime = command.ServiceTime ?? DateTime.Now;
+            var serviceTime = command.ServiceTime ?? DateTimeOffset.Now;
             if (!restaurant.IsOrderPossibleAt(serviceTime))
             {
                 logger.LogInformation($"Declined order {newOrderId.Value}: order at this time is not possible");
                 return FailureResult<OrderDTO>.Create(FailureResultCode.OrderIsInvalid);
             }
 
-            var paymentMethod =
-                await paymentMethodRepository.FindByPaymentMethodIdAsync(command.PaymentMethodId, cancellationToken);
-            if (paymentMethod == null)
+            PaymentMethod paymentMethod = null;
+            if (command.OrderType == OrderType.Pickup || command.OrderType == OrderType.Delivery)
             {
-                logger.LogInformation($"Declined order {newOrderId.Value}: payment method is not known");
-                return FailureResult<OrderDTO>.Create(FailureResultCode.OrderIsInvalid);
+                paymentMethod =
+                    await paymentMethodRepository.FindByPaymentMethodIdAsync(command.PaymentMethodId,
+                        cancellationToken);
+                if (paymentMethod == null)
+                {
+                    logger.LogInformation($"Declined order {newOrderId.Value}: payment method is not known");
+                    return FailureResult<OrderDTO>.Create(FailureResultCode.OrderIsInvalid);
+                }
             }
 
             decimal costs = 0;
@@ -217,11 +245,17 @@ namespace Gastromio.Core.Application.Commands.Checkout
                 ),
                 command.Comments,
                 command.PaymentMethodId,
-                paymentMethod.Name,
-                paymentMethod.Description,
+                paymentMethod?.Name,
+                paymentMethod?.Description,
                 costs,
                 totalPrice,
-                command.ServiceTime
+                command.ServiceTime,
+                null,
+                null,
+                null,
+                DateTimeOffset.UtcNow,
+                null,
+                null
             );
 
             var shouldInformByMobile = restaurant.ContactInfo?.OrderNotificationByMobile ?? false;
@@ -353,11 +387,53 @@ namespace Gastromio.Core.Application.Commands.Checkout
             return true;
         }
 
-        private bool ValidateOrderTypeReservation(Restaurant restaurant, OrderId newOrderId)
+        private bool ValidateOrderTypeReservation(CheckoutCommand command, OrderId newOrderId, Restaurant restaurant)
         {
             if (restaurant.ReservationInfo == null || !restaurant.ReservationInfo.Enabled)
             {
                 logger.LogInformation($"Declined order {newOrderId.Value}: reservation is not enabled");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(command.GivenName))
+            {
+                logger.LogInformation($"Declined order {newOrderId.Value}: given name is empty");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(command.LastName))
+            {
+                logger.LogInformation($"Declined order {newOrderId.Value}: last name is empty");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(command.Street))
+            {
+                logger.LogInformation($"Declined order {newOrderId.Value}: street is empty");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(command.ZipCode))
+            {
+                logger.LogInformation($"Declined order {newOrderId.Value}: zip code is empty");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(command.City))
+            {
+                logger.LogInformation($"Declined order {newOrderId.Value}: city is empty");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(command.Email))
+            {
+                logger.LogInformation($"Declined order {newOrderId.Value}: email is empty");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(command.Phone))
+            {
+                logger.LogInformation($"Declined order {newOrderId.Value}: phone is empty");
                 return false;
             }
 

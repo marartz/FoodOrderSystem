@@ -1,0 +1,235 @@
+<block-ui>
+    <div id="root">
+        <div class="layout" style="background-color: #ADCCCB; background-image: url('../../../../assets/images/rough/blue.png'); background-repeat: repeat;">
+
+            <div id="fp-alert" *ngIf="generalError !== undefined"><p>{{generalError}}</p></div>
+
+            <header class="checkout-header" *ngIf="initialized">
+                <h1
+					data-aos="gm-move-down"
+					data-aos-delay="100"
+					data-aos-duration="800"
+					data-aos-once="true"
+					>
+					Tischreservierung
+				</h1>
+                <h2
+					data-aos="gm-move-down"
+					data-aos-delay="300"
+					data-aos-duration="800"
+					data-aos-once="true"
+					>
+                    Deine Reservierunganfrage bei „{{restaurant.name}}“
+				</h2>
+                <h3 *ngIf="showReservationValidFrom()"
+                    data-aos="gm-move-down"
+                    data-aos-delay="300"
+                    data-aos-duration="800"
+                    data-aos-once="true"
+                >
+                    sofern offiziell gestattet, bei einem Inzidenzwert im Kreis Borken unter 100
+                </h3>
+                <h3 *ngIf="showReservationValidFrom()"
+                    data-aos="gm-move-down"
+                    data-aos-delay="300"
+                    data-aos-duration="800"
+                    data-aos-once="true"
+                >
+                    (gem. aktueller Corona-Schutz-Verordnung)
+                </h3>
+            </header>
+
+			<section class="common-container" style="align-items: center; justify-content: center; align-content: center; margin-left: auto; margin-right: auto;">
+				<div id="checkout" *ngIf="initialized">
+                <div id="body" class="info">
+
+                    <section
+							 data-aos="gm-move-down"
+							 data-aos-anchor="#checkout"
+							 data-aos-delay="700"
+							 data-aos-duration="800"
+							 data-aos-once="true"
+							 id="infocard"
+							 >
+
+                        <ng-container *ngIf="!restaurant.isOpen(undefined)">
+                            <h4 class="subtitle">
+                                <span>{{restaurant.name}} ist im Moment {{restaurant.getRestaurantClosedReason(undefined)}}.</span>
+                                <ng-container *ngIf="restaurant.supportedOrderMode === 'phone'">
+                                    <span> Bitte rufe das Restaurant zur nächsten Öffnungzeit an.</span>
+                                </ng-container>
+                                <ng-container *ngIf="restaurant.supportedOrderMode === 'shift'">
+                                    Für wann möchtest Du einen Tisch reservieren?
+                                </ng-container>
+                                <br /><br />
+                                <span>{{restaurant.name}} hat für Dich geöffnet:</span>
+                                <br /><br />
+                                <span>{{restaurant.regularOpeningHoursText}}.</span>
+                                <ng-container *ngIf="restaurant.deviatingOpeningHoursText && restaurant.deviatingOpeningHoursText.length > 0">
+                                    <br />
+                                    <span>{{restaurant.deviatingOpeningHoursText}}.</span>
+                                </ng-container>
+                            </h4>
+
+                            <button type="button" class="pill" [class.active]="!serviceTime" (click)="onAsFastAsPossible()" style="background-color: #FFF !important;">
+                                Telefonische Reservierungsanfrage:
+                                <svg fill="none" width="16" height="16" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" style="display: inline;" xmlns="http://www.w3.org/2000/svg"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                <ng-container *ngIf="!isPhoneNumberVisible"><button type="button" (click)="showPhone()" style="font-style: italic">anzeigen</button></ng-container>
+                                <ng-container *ngIf="isPhoneNumberVisible">&nbsp;<a href="tel:{{restaurant.contactInfo.phone}}">{{restaurant.contactInfo.phone}}</a></ng-container>
+                            </button>
+
+                            <button *ngIf="restaurant.supportedOrderMode !== 'phone'" type="button" class="pill" [class.active]="serviceTime" (click)="onSelectServiceTime()">
+                                <span>Online-Reservierung</span>
+                                <span *ngIf="serviceTime">: {{getServiceTimeText()}}</span>
+                            </button>
+                        </ng-container>
+
+                        <ng-container *ngIf="restaurant.isOpen(undefined)">
+                            <h4 class="subtitle">
+                                <span>{{restaurant.name}} hat heute für dich von {{restaurant.openingHoursTodayText}} geöffnet.</span>
+                                Für wann möchtest Du einen Tisch reservieren?
+                                <ng-container *ngIf="restaurant.supportedOrderMode === 'phone'">
+                                    <br /><br />
+                                    <span *ngIf="restaurant.supportedOrderMode === 'phone'" style="font-weight: 500;">{{restaurant.name}} nimmt im Moment nur telefonische Bestellungen entgegen.</span>
+                                </ng-container>
+                                <ng-container *ngIf="restaurant.supportedOrderMode === 'shift'">
+                                    <br /><br />
+                                    <span *ngIf="restaurant.supportedOrderMode === 'shift'">
+                                        Für die aktuelle Öffnungszeit nimmt {{restaurant.name}} keine elektronischen Reservierungsanfragen für die jetzige Öffnungszeit entgegen, aber Du kannst jetzt entweder
+                                        telefonisch für die aktuelle Öffnungszeit oder elektronisch für eine spätere Öffnungszeit anfragen!
+                                    </span>
+                                </ng-container>
+                                <br /><br />
+                                <span>{{restaurant.name}} hat für Dich geöffnet:</span>
+                                <br /><br />
+                                <span>{{restaurant.regularOpeningHoursText}}.</span>
+                                <ng-container *ngIf="restaurant.deviatingOpeningHoursText && restaurant.deviatingOpeningHoursText.length > 0">
+                                    <br />
+                                    <span>{{restaurant.deviatingOpeningHoursText}}.</span>
+                                </ng-container>
+                            </h4>
+
+                            <button type="button" class="pill" [class.active]="!serviceTime" (click)="onAsFastAsPossible()" style="background-color: #FFF !important;">
+                                Telefonische Reservierungsanfrage:
+                                <svg fill="none" width="16" height="16" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" style="display: inline;" xmlns="http://www.w3.org/2000/svg"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                <ng-container *ngIf="!isPhoneNumberVisible"><button type="button" (click)="showPhone()" style="font-style: italic">anzeigen</button></ng-container>
+                                <ng-container *ngIf="isPhoneNumberVisible">&nbsp;<a href="tel:{{restaurant.contactInfo.phone}}">{{restaurant.contactInfo.phone}}</a></ng-container>
+                            </button>
+
+                            <button *ngIf="restaurant.supportedOrderMode !== 'phone'" type="button" class="pill" [class.active]="serviceTime" (click)="onSelectServiceTime()">
+                                <span>Online-Reservierung</span>
+                                <span *ngIf="serviceTime">: {{getServiceTimeText()}}</span>
+                            </button>
+                        </ng-container>
+
+                        <div class="invalid-feedback" *ngIf="serviceTime && getServiceTimeError()">
+                            <div>{{getServiceTimeError()}}</div>
+                        </div>
+                    </section>
+
+                    <section *ngIf="serviceTime"
+                             id="infocard" data-aos="gm-move-down"
+							 data-aos-anchor="#checkout"
+							 data-aos-delay="900"
+							 data-aos-duration="800"
+							 data-aos-once="true">
+                        <h3 class="title">Deine Adresse</h3>
+
+                        <div class="vorname-nachname">
+                            <div class="vorname">
+                                <label for="givenName">Vorname</label>
+                                <input autocomplete="off" type="text" id="givenName" [(ngModel)]="givenName"
+                                       [ngClass]="{ 'is-invalid': submitted && getGivenNameError() }"
+                                       [disabled]="getServiceTimeError() !== undefined"
+                                       placeholder="Bernd"/>
+                                <div class="invalid-feedback" *ngIf="submitted && getGivenNameError()">
+                                    <div>{{getGivenNameError()}}</div>
+                                </div>
+                            </div>
+                            <div class="nachname">
+                                <label for="lastName">Nachname</label>
+                                <input autocomplete="off" type="text" id="lastName" [(ngModel)]="lastName"
+                                       [ngClass]="{ 'is-invalid': submitted && getLastNameError() }"
+                                       [disabled]="getServiceTimeError() !== undefined"
+                                       placeholder="Mustermann"/>
+                                <div class="invalid-feedback" *ngIf="submitted && getLastNameError()">
+                                    <div>{{getLastNameError()}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label for="street">Straße</label>
+                        <input autocomplete="off" type="text" id="street" [(ngModel)]="street"
+                               [ngClass]="{ 'is-invalid': submitted && getStreetError() }"
+                               [disabled]="getServiceTimeError() !== undefined"
+                               placeholder="z.B. Bahnhofstr. 1a"/>
+                        <div class="invalid-feedback" *ngIf="submitted && getStreetError()">
+                            <div>{{getStreetError()}}</div>
+                        </div>
+
+                        <div class="plz-city">
+                            <div class="plz">
+                                <label for="zipCode">PLZ</label>
+                                <input autocomplete="off" type="number" maxlength="5" id="zipCode"
+                                       [(ngModel)]="zipCode"
+                                       [disabled]="getServiceTimeError() !== undefined"
+                                       [ngClass]="{ 'is-invalid': submitted && getZipCodeError() }"
+                                       placeholder="46395"/>
+                                <div class="invalid-feedback" *ngIf="submitted && getZipCodeError()">
+                                    <div>{{getZipCodeError()}}</div>
+                                </div>
+                            </div>
+                            <div class="city">
+                                <label for="city">Stadt</label>
+                                <input autocomplete="off" type="text" id="city" [(ngModel)]="city"
+                                       [ngClass]="{ 'is-invalid': submitted && getCityError() }"
+                                       [disabled]="getServiceTimeError() !== undefined"
+                                       placeholder="Bocholt"/>
+                                <div class="invalid-feedback" *ngIf="submitted && getCityError()">
+                                    <div>{{getCityError()}}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <label for="email">E-Mail-Adresse</label>
+                        <input autocomplete="off" type="email" id="email" [(ngModel)]="email"
+                               [ngClass]="{ 'is-invalid': submitted && getEmailError() }"
+                               [disabled]="getServiceTimeError() !== undefined"
+                               placeholder="bernd@beispiel.de"/>
+                        <div class="invalid-feedback" *ngIf="submitted && getEmailError()">
+                            <div>{{getEmailError()}}</div>
+                        </div>
+
+                        <label for="street">Telefonnummer</label>
+                        <input autocomplete="off" type="string" id="phone" [(ngModel)]="phone"
+                               [ngClass]="{ 'is-invalid': submitted && getPhoneError() }"
+                               [disabled]="getServiceTimeError() !== undefined"
+                               placeholder="0170 12345678"/>
+                        <div class="invalid-feedback" *ngIf="submitted && getPhoneError()">
+                            <div>{{getPhoneError()}}</div>
+                        </div>
+
+                        <label for="comments">Zusatz (optional)</label>
+                        <input autocomplete="off" type="text" maxlength="300" [(ngModel)]="comments"
+                               [disabled]="getServiceTimeError() !== undefined"
+                               placeholder="z.B. „Statt klingeln, bitte kurz anrufen.“" id="comments"/>
+                    </section>
+
+                    <button *ngIf="serviceTime" class="confirm-purchase" (click)="onCheckout()"
+                            [disabled]="getServiceTimeError() !== undefined">Reservierungsanfrage senden
+                    </button>
+                    <section *ngIf="serviceTime" id="disclaimer">
+                        <p>
+                            Mit der Bestätigung stimmst Du unserer <a [routerLink]="['/privacy-policy']" target="_blank">Datenschutzerklärung</a>
+                            zu.<br/><br/>
+                        </p>
+                    </section>
+                </div>
+
+            </div>
+			</section>
+
+
+        </div>
+    </div>
+</block-ui>

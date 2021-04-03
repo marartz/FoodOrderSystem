@@ -81,4 +81,4 @@ jobs:
         DOCKER_PASS: ${{ secrets.DOCKER_PASS }}
 
     - name: Push docker image
-      run: docker push marartz/gastromio
+      run: docker push marartz/gastromio:${TAG_NAME}

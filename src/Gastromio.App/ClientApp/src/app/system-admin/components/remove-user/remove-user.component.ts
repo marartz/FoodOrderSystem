@@ -1,14 +1,13 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {HttpErrorResponse} from '@angular/common/http';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+
+import {Observable} from "rxjs";
 
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
 
 import {UserModel} from '../../../shared/models/user.model';
 
-import {HttpErrorHandlingService} from '../../../shared/services/http-error-handling.service';
-
-import {UserAdminService} from '../../services/user-admin.service';
+import {SystemAdminFacade} from "../../system-admin.facade";
 
 @Component({
   selector: 'app-remove-user',
@@ -23,28 +22,31 @@ export class RemoveUserComponent implements OnInit {
   @Input() public user: UserModel;
   @BlockUI() blockUI: NgBlockUI;
 
-  message: string;
+  message$: Observable<string>;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private userAdminService: UserAdminService,
-    private httpErrorHandlingService: HttpErrorHandlingService
+    private facade: SystemAdminFacade
   ) {
   }
 
   ngOnInit() {
+    this.facade.getIsUpdating$()
+      .subscribe(isUpdating => {
+        if (isUpdating) {
+          this.blockUI.start('Verarbeite Daten...');
+        } else {
+          this.blockUI.stop();
+        }
+      });
+
+    this.message$ = this.facade.getUpdateError$();
   }
 
   onSubmit() {
-    this.blockUI.start('Verarbeite Daten...');
-    this.userAdminService.removeUserAsync(this.user.id)
+    this.facade.removeUser$(this.user.id)
       .subscribe(() => {
-        this.blockUI.stop();
-        this.message = undefined;
         this.activeModal.close('Close click');
-      }, (response: HttpErrorResponse) => {
-        this.blockUI.stop();
-        this.message = this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors();
       });
   }
 }

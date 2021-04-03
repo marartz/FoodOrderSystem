@@ -1,219 +1,81 @@
-.wrapper {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 15px;
-    padding-right: 15px;
+#table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     width: 100%;
 }
 
-@media only screen and (min-width: 510px) {
-    .wrapper {
-        max-width: 540px;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .wrapper {
-        max-width: 720px;
-    }
-}
-
-@media only screen and (min-width: 992px) {
-    .wrapper {
-        max-width: 960px;
-    }
-}
-
-@media only screen and (min-width: 1200px) {
-    .wrapper {
-        max-width: 1140px;
-    }
-}
-
-#import {
-    border: none;
-    position: relative;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #ADCCCB;
-    background-clip: border-box;
-    border-radius: 23px;
-}
-
-#import #header {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    min-height: 70px;
-    padding-top: 1.5rem !important;
-    padding-bottom: 0;
-    background-color: transparent;
-    border-radius: 0px;
-    padding: 2rem 2.25rem;
-    -ms-flex-wrap: wrap !important;
-    flex-wrap: wrap !important;
-}
-
-#import #header .title {
-    font-weight: 500;
-    font-size: 1.275rem;
-    color: #363636;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
+#table table {
     align-items: center;
-    margin: 0.5rem;
-    margin-left: 0;
-}
-
-#import #header .title h3 {
-    margin: 0 0.75rem 0 0;
-    font-family: "Apercu", sans-serif;
-    font-weight: 500;
-font-size: 1.275rem;
-color: #363636;
-}
-
-#import #header .toolbar {
-    display: -webkit-box;
-display: -ms-flexbox;
-display: flex;
--webkit-box-align: center;
--ms-flex-align: center;
-align-items: center;
-margin: 0.5rem 0;
--ms-flex-wrap: wrap;
-flex-wrap: wrap;
-}
-
-#import #header .toolbar a.import {
-    color: #FFFFFF;
-background-color: #3699FF;
-border-color: #3699FF;
-cursor: pointer;
-display: inline-block;
-text-align: center;
-user-select: none;
-padding: 0.65rem 1rem;
-font-size: 1rem;
-line-height: 1.5;
-border-radius: 0.42rem;
-}
-
-#import #header .toolbar a .svg-icon {
-    margin-right: 0.5rem;
-}
-
-#import .datatable-table {
-    background-color: #ffffff;
-border-collapse: collapse;
-overflow: hidden;
-width: 100%;
-}
-
-#import .datatable-table .datatable-head {
-    overflow: hidden;
-    visibility: visible;
-    display: block;
-    position: relative;
-}
-
-#import .datatable-table .datatable-head .datatable-row {
-    border-bottom: 1px solid #EBEDF3;
-    width: 100%;
-    display: table;
-    table-layout: initial;
-    position: relative;
-}
-
-#import .datatable-table .datatable-head .datatable-row .datatable-cell-sort {
-    cursor: pointer;
-}
-
-#import .datatable-table .datatable-head .datatable-row .datatable-cell {
-    padding: 0.75rem 1rem;
-    vertical-align: middle;
-    font-size: 1rem;
-}
-
-#import .datatable-table .datatable-head .datatable-row .datatable-cell span {
+    background-color: transparent;
+    border-collapse: separate;
+    border-spacing: 0px 16px;
     color: #363636;
-    font-size: 0.9rem;
-    text-transform: uppercase;
+    margin-bottom: 16px;
+    width: 100%;
+}
+
+#table table thead th {
+    background-color: transparent;
+    border: 0px;
+    font-family: "Apercu", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    padding: 0px 8px;
+    position: relative;
+    text-transform: none;
+}
+
+#table table th {
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.1rem;
-    display: block;
-overflow: hidden;
-text-overflow: ellipsis;
+    vertical-align: top;
+    white-space: nowrap;
 }
 
-#import .datatable-table .datatable-body {
-    max-height: 508px;
-    visibility: visible;
-display: block;
-position: relative;
-padding-bottom: 0;
-overflow: hidden !important;
-overflow-anchor: none;
+#table table tbody th {
+    background-color: #ADCCCB;
+    border: 0px;
+    padding: 8px;
+    position: relative;
 }
 
-#import .datatable-table .datatable-body .datatable-row {
-    display: table;
-table-layout: initial;
-border-bottom: 1px solid #EBEDF3;
-width: 100%;
+#table table tbody td {
+    border: 0px;
+    position: relative;
 }
 
-#import .datatable-table .datatable-body .datatable-row .datatable-cell {
-    transition: background-color 0.3s ease;
-    vertical-align: middle;
-padding: 1rem 1rem;
-font-size: 1rem;
+#table table tbody tr td {
+    background-color: #ADCCCB;
+	border-radius: 23px;
+	padding: 10px 20px
 }
 
-#import .datatable-table .datatable-body .datatable-row .datatable-cell span {
-    display: block;
-overflow: hidden;
-text-overflow: ellipsis;
-color: #3F4254;
-width: 30px;
+#table table tbody tr th .email {
+    color: #363636;
+    font-family: "Apercu", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0px;
 }
 
-
-
-
-
-#upload {
-    margin-top: 32px;
-    margin-bottom: 32px;
-    height: 500px;
-    background-color: #DECF80;
-    border-radius: 23px;
+#table table tbody tr td .role {
+    color: #718096;
+    font-family: "Apercu", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-bottom: 0px;
 }
 
-#upload .dropzone {
-    border-color: #363636;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    border: 2px dashed #EBEDF3;
-    border-radius: 23px;
-    min-height: auto;
+#table table .actions {
+    padding: 8px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+input.failure {
+    background-color: indianred;
 }

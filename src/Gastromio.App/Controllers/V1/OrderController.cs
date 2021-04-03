@@ -9,14 +9,14 @@ using Gastromio.Core.Application.Commands.Checkout;
 using Gastromio.Core.Application.DTOs;
 using Gastromio.Core.Application.Queries;
 using Gastromio.Core.Application.Queries.GetAllCuisines;
-using Gastromio.Core.Application.Queries.GetDishesOfRestaurant;
+using Gastromio.Core.Application.Queries.GetDishesOfRestaurantForOrder;
 using Gastromio.Core.Application.Queries.GetRestaurantById;
 using Gastromio.Core.Application.Queries.OrderSearchForRestaurants;
 using Gastromio.Core.Application.Services;
-using Gastromio.Core.Domain.Model.Cuisine;
-using Gastromio.Core.Domain.Model.Dish;
-using Gastromio.Core.Domain.Model.Order;
-using Gastromio.Core.Domain.Model.PaymentMethod;
+using Gastromio.Core.Domain.Model.Cuisines;
+using Gastromio.Core.Domain.Model.Dishes;
+using Gastromio.Core.Domain.Model.Orders;
+using Gastromio.Core.Domain.Model.PaymentMethods;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -58,15 +58,15 @@ namespace Gastromio.App.Controllers.V1
 
             var tempCuisineId = cuisineId != Guid.Empty ? new CuisineId(cuisineId) : null;
 
-            DateTime? openingHourDateTime = null;
+            DateTimeOffset? openingHourDateTime = null;
             if (!string.IsNullOrWhiteSpace(openingHour))
             {
-                if (DateTime.TryParse(openingHour, out var tempOpeningHour))
+                if (DateTimeOffset.TryParse(openingHour, out var tempOpeningHour))
                 {
                     openingHourDateTime = tempOpeningHour;
                 }
             }
-            
+
             var queryResult =
                 await queryDispatcher.PostAsync<OrderSearchForRestaurantsQuery, ICollection<RestaurantDTO>>(
                     new OrderSearchForRestaurantsQuery(search, orderTypeEnum, tempCuisineId, openingHourDateTime), null);
@@ -80,7 +80,7 @@ namespace Gastromio.App.Controllers.V1
             var queryResult =
                 await queryDispatcher.PostAsync<GetRestaurantByIdQuery, RestaurantDTO>(
                     new GetRestaurantByIdQuery(restaurant, true), null);
-            
+
             return ResultHelper.HandleResult(queryResult, failureMessageService);
         }
 
@@ -89,8 +89,8 @@ namespace Gastromio.App.Controllers.V1
         public async Task<IActionResult> GetDishesOfRestaurantAsync(string restaurant)
         {
             var queryResult =
-                await queryDispatcher.PostAsync<GetDishesOfRestaurantQuery, ICollection<DishCategoryDTO>>(
-                    new GetDishesOfRestaurantQuery(restaurant), null);
+                await queryDispatcher.PostAsync<GetDishesOfRestaurantForOrderQuery, ICollection<DishCategoryDTO>>(
+                    new GetDishesOfRestaurantForOrderQuery(restaurant), null);
             return ResultHelper.HandleResult(queryResult, failureMessageService);
         }
 
@@ -102,7 +102,7 @@ namespace Gastromio.App.Controllers.V1
             {
                 checkoutModel.ServiceTime = checkoutModel.ServiceTime.Value.ToLocalTime();
             }
-            
+
             var command = new CheckoutCommand(
                 checkoutModel.GivenName,
                 checkoutModel.LastName,
@@ -125,7 +125,7 @@ namespace Gastromio.App.Controllers.V1
                 new PaymentMethodId(checkoutModel.PaymentMethodId),
                 checkoutModel.ServiceTime
             );
-           
+
             var commandResult = await commandDispatcher.PostAsync<CheckoutCommand, OrderDTO>(command, null);
             return ResultHelper.HandleResult(commandResult, failureMessageService);
         }

@@ -188,10 +188,10 @@ export class CheckoutComponent implements OnInit {
 
   getEmailError(): string {
     if (!this.email || this.email.trim().length === 0)
-      return 'Bitte gib eine E-Mail-Adresse an.';
+      return 'Bitte gib eine E-Mail Adresse an.';
     const regex = RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$');
     if (!regex.test(this.email))
-      return 'Bitte gib eine gültige E-Mail-Adresse an.';
+      return 'Bitte gib eine gültige E-Mail Adresse an.';
     return undefined;
   }
 
