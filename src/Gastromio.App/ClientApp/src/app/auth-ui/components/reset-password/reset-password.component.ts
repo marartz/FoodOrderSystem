@@ -16,7 +16,7 @@ import {ConfirmPasswordValidator} from '../../../auth/validators/password.valida
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css', '../../../../assets/css/frontend_v2.min.css', '../../../../assets/css/backend_v2.min.css']
+  styleUrls: ['./reset-password.component.css', '../../../../assets/css/frontend_v3.min.css', '../../../../assets/css/backend_v2.min.css']
 })
 export class ResetPasswordComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI;
