@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Gastromio.App.Helper;
 using Gastromio.App.Models;
 using Gastromio.Core.Application.Commands;
+using Gastromio.Core.Application.Commands.ChangePassword;
 using Gastromio.Core.Application.Commands.ChangePasswordWithResetCode;
-using Gastromio.Core.Application.Commands.ChangeUserPassword;
 using Gastromio.Core.Application.Commands.Login;
 using Gastromio.Core.Application.Commands.RequestPasswordChange;
 using Gastromio.Core.Application.Commands.ValidatePasswordResetCode;
@@ -171,8 +171,8 @@ namespace Gastromio.App.Controllers.V1
 
             var curUserId = new UserId(currentUserId);
 
-            var commandResult = await commandDispatcher.PostAsync<ChangeUserPasswordCommand, bool>(
-                new ChangeUserPasswordCommand(curUserId, changeUserPasswordModel.Password), curUserId);
+            var commandResult = await commandDispatcher.PostAsync<ChangePasswordCommand, bool>(
+                new ChangePasswordCommand(changeUserPasswordModel.Password), curUserId);
 
             return commandResult is SuccessResult<bool>
                 ? Ok()
