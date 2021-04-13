@@ -24,6 +24,9 @@ namespace Gastromio.Core.Application.Commands.ChangePassword
             if (currentUser == null)
                 return FailureResult<bool>.Unauthorized();
 
+            if (currentUser.Role < Role.RestaurantAdmin)
+                return FailureResult<bool>.Forbidden();
+
             var result = currentUser.ChangePassword(command.Password, true, currentUser.Id);
             if (result.IsFailure)
                 return result;
