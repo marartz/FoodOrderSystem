@@ -21,7 +21,7 @@ namespace Gastromio.Domain.Tests.Application.Commands.ChangePassword
 
         public ChangePasswordCommandHandlerTests()
         {
-            fixture = new Fixture(Role.RestaurantAdmin);
+            fixture = new Fixture(Role.Customer);
         }
 
         [Fact]
@@ -37,6 +37,45 @@ namespace Gastromio.Domain.Tests.Application.Commands.ChangePassword
             using (new AssertionScope())
             {
                 await act.Should().ThrowAsync<ArgumentNullException>();
+            }
+        }
+
+        [Fact]
+        public async Task HandleAsync_CommandWithoutPassword_ShouldThrowArgumentNullException()
+        {
+            // Arrange
+            var testObject = fixture.CreateTestObject();
+
+            // Act
+            Func<Task> act = async () => await testObject.HandleAsync(new ChangePasswordCommand(null), fixture.UserWithMinimumRole, CancellationToken.None);
+
+            // Assert
+            using (new AssertionScope())
+            {
+                await act.Should()
+                    .ThrowAsync<ArgumentNullException>()
+                    .WithMessage("*password*");
+            }
+        }
+
+        [Fact]
+        public async Task HandleAsync_CommandWithInvalidPassword_ShouldFailBecauseOfInvalidPassword()
+        {
+            // Arrange
+            var testObject = fixture.CreateTestObject();
+
+            // Act
+            var result = await testObject.HandleAsync(new ChangePasswordCommand("test"), fixture.UserWithMinimumRole, CancellationToken.None);
+
+            // Assert
+            using (new AssertionScope())
+            {
+                result.Should().NotBeNull();
+                result?.IsFailure.Should().BeTrue();
+                result?.Should().BeOfType(typeof(FailureResult<bool>));
+                FailureResult<bool> fresult = (FailureResult<bool>)result;
+                fresult.Errors.Should().HaveCount(1);
+                fresult.Errors.Values.First().First().Code.Should().Be(FailureResultCode.PasswordIsNotValid);
             }
         }
 
@@ -59,29 +98,6 @@ namespace Gastromio.Domain.Tests.Application.Commands.ChangePassword
                 FailureResult<bool> fresult = (FailureResult<bool>)result;
                 fresult.Errors.Should().HaveCount(1);
                 fresult.Errors.Values.First().First().Code.Should().Be(FailureResultCode.SessionExpired);
-            }
-        }
-
-        [Fact]
-        public async Task HandleAsync_CustomerUser_ShouldReturnForbidden()
-        {
-            // Arrange
-            fixture.SetupUser(Role.Customer);
-            var testObject = fixture.CreateTestObject();
-            var command = fixture.CreateSuccessfulCommand();
-
-            // Act
-            var result = await testObject.HandleAsync(command, fixture.User, CancellationToken.None);
-
-            // Assert
-            using (new AssertionScope())
-            {
-                result.Should().NotBeNull();
-                result?.IsFailure.Should().BeTrue();
-                result?.Should().BeOfType(typeof(FailureResult<bool>));
-                FailureResult<bool> fresult = (FailureResult<bool>)result;
-                fresult.Errors.Should().HaveCount(1);
-                fresult.Errors.Values.First().First().Code.Should().Be(FailureResultCode.Forbidden);
             }
         }
 

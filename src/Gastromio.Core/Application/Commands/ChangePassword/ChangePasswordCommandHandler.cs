@@ -22,10 +22,7 @@ namespace Gastromio.Core.Application.Commands.ChangePassword
                 throw new ArgumentNullException(nameof(command));
 
             if (currentUser == null)
-                return FailureResult<bool>.Unauthorized();
-
-            if (currentUser.Role < Role.RestaurantAdmin)
-                return FailureResult<bool>.Forbidden();
+                return FailureResult<bool>.Unauthorized();           
 
             var result = currentUser.ChangePassword(command.Password, true, currentUser.Id);
             if (result.IsFailure)
