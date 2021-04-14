@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { Location } from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
 
 import {BlockUI, NgBlockUI} from 'ng-block-ui';
@@ -27,7 +28,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private httpErrorHandlingService: HttpErrorHandlingService
+    private httpErrorHandlingService: HttpErrorHandlingService,
+    private location: Location
   ) {
   }
 
@@ -60,5 +62,9 @@ export class ChangePasswordComponent implements OnInit {
         this.blockUI.stop();
         this.errorMessage = this.httpErrorHandlingService.handleError(response).getJoinedGeneralErrors();
       });
+  }
+
+  onBack(): void {
+    this.location.back();
   }
 }
