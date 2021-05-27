@@ -12,6 +12,7 @@ export class AuthService {
   private requestPasswordChangeUrl = 'api/v1/auth/requestpasswordchange';
   private validatePasswordResetCodeUrl = 'api/v1/auth/validatepasswordresetcode';
   private changePasswordWithResetCodeUrl = 'api/v1/auth/changepasswordwithresetcode';
+  private changePasswordUrl = 'api/v1/auth/changepassword';
   private pingUrl = 'api/v1/auth/ping';
 
   constructor(
@@ -102,6 +103,22 @@ export class AuthService {
     };
 
     return this.http.post(this.changePasswordWithResetCodeUrl, {userId, passwordResetCode, password}, httpOptions)
+      .pipe(
+        take(1),
+        map(() => {})
+      );
+  }
+
+  public changePasswordAsync(password: string): Observable<void> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + this.getToken(),
+      })
+    };
+
+    return this.http.post(this.changePasswordUrl, {password}, httpOptions)
       .pipe(
         take(1),
         map(() => {})
